@@ -2258,7 +2258,7 @@ $$ LANGUAGE plpgsql SECURITY INVOKER;
 --	raise_exception		- raise an exception on mismatch
 
 
-create or replace function schema_support.relation_diff(
+CREATE OR REPLACE FUNCTION schema_support.relation_diff(
 	schema			text,
 	old_rel			text,
 	new_rel		text,
@@ -2284,26 +2284,71 @@ DECLARE
 	_nj		jsonb;
 	_oldschema	TEXT;
 	_newschema	TEXT;
+    _tmpschema	TEXT;
 BEGIN
+	SELECT nspname
+		INTO _tmpschema
+		FROM pg_namespace
+		WHERE oid = pg_my_temp_schema();
+
+	--
+	-- validate that both old and new tables exist.  This has support for
+	-- temporary tabels on either end, which kind of ignore schema.
+	--
 	IF old_rel ~ '\.' THEN
 		_oldschema := regexp_replace(old_rel, '\..*$', '');
 		old_rel := regexp_replace(old_rel, '^[^\.]*\.', '');
 	ELSE
-		_oldschema:= schema;
+		EXECUTE 'SELECT count(*)
+			FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+			WHERE nspname = $1 AND relname = $2'
+			INTO _t1 USING schema, old_rel;
+		IF _t1 = 1 THEN
+			_oldschema:= schema;
+		ELSE
+			EXECUTE 'SELECT count(*)
+				FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+				WHERE nspname = $1 AND relname = $2'
+				INTO _t1 USING _tmpschema, old_rel;
+			IF _t1 = 1 THEN
+				_oldschema:= _tmpschema;
+			ELSE
+				RAISE EXCEPTION 'table %.% does not seem to exist', _schema, old_rel;
+			END IF;
+		END IF;
 	END IF;
-
 	IF new_rel ~ '\.' THEN
 		_newschema := regexp_replace(new_rel, '\..*$', '');
 		new_rel := regexp_replace(new_rel, '^[^\.]*\.', '');
 	ELSE
-		_newschema:= schema;
+		EXECUTE 'SELECT count(*)
+			FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+			WHERE nspname = $1 AND relname = $2'
+			INTO _t1 USING schema, new_rel;
+		IF _t1 = 1 THEN
+			_newschema:= schema;
+		ELSE
+			EXECUTE 'SELECT count(*)
+				FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+				WHERE nspname = $1 AND relname = $2'
+				INTO _t1 USING _tmpschema, new_rel;
+			IF _t1 = 1 THEN
+				_newschema:= _tmpschema;
+			ELSE
+				RAISE EXCEPTION 'table %.% does not seem to exist', _schema, new_rel;
+			END IF;
+		END IF;
 	END IF;
+
+	--
+	-- at this point, the proper schemas have been figured out.
+	--
 
 	RAISE NOTICE '% % % %', _oldschema, old_rel, _newschema, new_rel;
 
 	-- do a simple row count
-	EXECUTE 'SELECT count(*) FROM ' || _oldschema || '."' || old_rel || '"' INTO _t1;
-	EXECUTE 'SELECT count(*) FROM ' || _newschema || '."' || new_rel || '"' INTO _t2;
+	EXECUTE format('SELECT count(*) FROM %s.%s', _oldschema, old_rel) INTO _t1;
+	EXECUTE format('SELECT count(*) FROM %s.%s', _newschema, new_rel) INTO _t2;
 
 	_rv := true;
 
