@@ -1548,6 +1548,7 @@ BEGIN
 			INNER JOIN pg_class c on trg.tgrelid =  c.oid
 			INNER JOIN pg_namespace n on n.oid = c.relnamespace
 		WHERE n.nspname = schema and c.relname = object
+		AND NOT tgisinternal
 	LOOP
 		INSERT INTO __recreate (schema, object, type, ddl, tags , path)
 			VALUES (
