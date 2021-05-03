@@ -72,11 +72,7 @@ CREATE TABLE account
 	account_role         varchar(50)  NOT NULL ,
 	account_type         varchar(50)  NOT NULL ,
 	description          varchar(255)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE account
@@ -121,6 +117,11 @@ CREATE INDEX idx_account_account_tpe ON account
 	account_type
 );
 
+ALTER TABLE account ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: account_assigned_certificate
  ***********************************************/
@@ -130,15 +131,16 @@ CREATE TABLE account_assigned_certificate
 	account_id           integer  NOT NULL ,
 	x509_signed_certificate_id integer  NOT NULL ,
 	x509_key_usage       varchar(50)  NOT NULL ,
-	key_usage_reason_for_assignment varchar(50)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	key_usage_reason_for_assignment varchar(50)  NULL 
 );
 
 ALTER TABLE account_assigned_certificate
 	ADD CONSTRAINT pk_account_assigned_cer PRIMARY KEY (account_id,x509_signed_certificate_id,x509_key_usage);
+
+ALTER TABLE account_assigned_certificate ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_assigned_certificate ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_assigned_certificate ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_assigned_certificate ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: account_authentication_log
@@ -152,9 +154,7 @@ CREATE TABLE account_authentication_log
 	account_authentication_seq integer  NOT NULL ,
 	was_authentication_successful boolean  NOT NULL ,
 	authentication_resource_instance varchar(50)  NOT NULL ,
-	authentication_origin varchar(50)  NOT NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_ins_user        varchar(255)  NULL 
+	authentication_origin varchar(50)  NOT NULL 
 );
 
 ALTER TABLE account_authentication_log
@@ -166,6 +166,11 @@ CREATE INDEX xieacctauthlog_ts_arsrc ON account_authentication_log
 	authentication_resource
 );
 
+ALTER TABLE account_authentication_log ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_authentication_log ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_authentication_log ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_authentication_log ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: account_collection
  ***********************************************/
@@ -176,11 +181,7 @@ CREATE TABLE account_collection
 	account_collection_name varchar(255)  NOT NULL ,
 	account_collection_type varchar(50)  NOT NULL ,
 	external_id          varchar(255)  NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE account_collection
@@ -194,6 +195,11 @@ CREATE INDEX xif_acctcol_acctcoltype ON account_collection
 	account_collection_type
 );
 
+ALTER TABLE account_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 CREATE TABLE account_collection_account
 ( 
 	account_collection_id integer  NOT NULL ,
@@ -201,11 +207,7 @@ CREATE TABLE account_collection_account
 	account_collection_relation varchar(50)  NULL ,
 	account_id_rank      integer  NULL ,
 	start_date           timestamp without time zone  NULL ,
-	finish_date          timestamp without time zone  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	finish_date          timestamp without time zone  NULL 
 );
 
 ALTER TABLE account_collection_account
@@ -219,6 +221,11 @@ CREATE INDEX xifacctcollacct_ac_relate ON account_collection_account
 	account_collection_relation
 );
 
+ALTER TABLE account_collection_account ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_collection_account ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_collection_account ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_collection_account ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: account_collection_hier
  ***********************************************/
@@ -226,15 +233,16 @@ CREATE INDEX xifacctcollacct_ac_relate ON account_collection_account
 CREATE TABLE account_collection_hier
 ( 
 	account_collection_id integer  NOT NULL ,
-	child_account_collection_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	child_account_collection_id integer  NOT NULL 
 );
 
 ALTER TABLE account_collection_hier
 	ADD CONSTRAINT pk_account_collection_hier PRIMARY KEY (account_collection_id,child_account_collection_id);
+
+ALTER TABLE account_collection_hier ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_collection_hier ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_collection_hier ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_collection_hier ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: account_collection_type_relation
@@ -246,11 +254,7 @@ CREATE TABLE account_collection_type_relation
 	account_collection_type character varying(50)  NOT NULL ,
 	max_num_members      integer  NULL ,
 	max_num_collections  integer  NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE account_collection_type_relation
@@ -266,6 +270,11 @@ CREATE INDEX xifacct_coll_rel_type_type ON account_collection_type_relation
 	account_collection_type
 );
 
+ALTER TABLE account_collection_type_relation ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_collection_type_relation ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_collection_type_relation ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_collection_type_relation ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: account_password
  ***********************************************/
@@ -279,11 +288,7 @@ CREATE TABLE account_password
 	change_time          timestamp with time zone  NULL ,
 	expire_time          timestamp with time zone  NULL ,
 	unlock_time          timestamp with time zone  NULL ,
-	encryption_key_id    integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	encryption_key_id    integer  NULL 
 );
 
 ALTER TABLE account_password
@@ -311,6 +316,11 @@ CREATE INDEX xif_acct_pass_enc_key_id ON account_password
 	encryption_key_id ASC
 );
 
+ALTER TABLE account_password ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_password ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_password ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_password ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: account_realm
  ***********************************************/
@@ -318,11 +328,7 @@ CREATE INDEX xif_acct_pass_enc_key_id ON account_password
 CREATE TABLE account_realm
 ( 
 	account_realm_id     serial  NOT NULL ,
-	account_realm_name   varchar(100)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	account_realm_name   varchar(100)  NOT NULL 
 );
 
 ALTER TABLE account_realm
@@ -333,6 +339,11 @@ CREATE INDEX idx_account_realm_ar_name ON account_realm
 	account_realm_name
 );
 
+ALTER TABLE account_realm ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_realm ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_realm ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_realm ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: account_realm_account_collection_type
  ***********************************************/
@@ -340,11 +351,7 @@ CREATE INDEX idx_account_realm_ar_name ON account_realm
 CREATE TABLE account_realm_account_collection_type
 ( 
 	account_realm_id     integer  NOT NULL ,
-	account_collection_type character varying(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	account_collection_type character varying(50)  NOT NULL 
 );
 
 ALTER TABLE account_realm_account_collection_type
@@ -360,6 +367,11 @@ CREATE INDEX xif2_acct_realm_acct_coll_arid ON account_realm_account_collection_
 	account_realm_id
 );
 
+ALTER TABLE account_realm_account_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_realm_account_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_realm_account_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_realm_account_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: account_realm_company
  ***********************************************/
@@ -367,11 +379,7 @@ CREATE INDEX xif2_acct_realm_acct_coll_arid ON account_realm_account_collection_
 CREATE TABLE account_realm_company
 ( 
 	account_realm_id     integer  NOT NULL ,
-	company_id           integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	company_id           integer  NOT NULL 
 );
 
 ALTER TABLE account_realm_company
@@ -387,6 +395,11 @@ CREATE INDEX xif2account_realm_company ON account_realm_company
 	account_realm_id
 );
 
+ALTER TABLE account_realm_company ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_realm_company ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_realm_company ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_realm_company ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: account_realm_password_type
  ***********************************************/
@@ -395,11 +408,7 @@ CREATE TABLE account_realm_password_type
 ( 
 	password_type        character varying(50)  NOT NULL ,
 	account_realm_id     integer  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE account_realm_password_type
@@ -415,6 +424,11 @@ CREATE INDEX xif_acrlm_pwd_type ON account_realm_password_type
 	password_type
 );
 
+ALTER TABLE account_realm_password_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_realm_password_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_realm_password_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_realm_password_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: account_ssh_key
  ***********************************************/
@@ -422,11 +436,7 @@ CREATE INDEX xif_acrlm_pwd_type ON account_realm_password_type
 CREATE TABLE account_ssh_key
 ( 
 	account_id           integer  NOT NULL ,
-	ssh_key_id           integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	ssh_key_id           integer  NOT NULL 
 );
 
 ALTER TABLE account_ssh_key
@@ -442,6 +452,11 @@ CREATE INDEX xif1account_ssh_key ON account_ssh_key
 	account_id
 );
 
+ALTER TABLE account_ssh_key ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_ssh_key ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_ssh_key ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_ssh_key ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: account_token
  ***********************************************/
@@ -452,11 +467,7 @@ CREATE TABLE account_token
 	account_id           integer  NOT NULL ,
 	token_id             integer  NOT NULL ,
 	issued_date          timestamp with time zone  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE account_token
@@ -464,6 +475,11 @@ ALTER TABLE account_token
 
 ALTER TABLE account_token
 	ADD CONSTRAINT ak_account_token_tken_acct UNIQUE (account_id,token_id);
+
+ALTER TABLE account_token ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_token ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_token ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_token ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: account_unix_info
@@ -475,11 +491,7 @@ CREATE TABLE account_unix_info
 	unix_uid             integer  NOT NULL ,
 	unix_group_account_collection_id integer  NOT NULL ,
 	shell                varchar(255)  NOT NULL ,
-	default_home         varchar(50)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	default_home         varchar(50)  NULL 
 );
 
 ALTER TABLE account_unix_info
@@ -499,6 +511,94 @@ CREATE INDEX xif4account_unix_info ON account_unix_info
 	account_id
 );
 
+ALTER TABLE account_unix_info ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE account_unix_info ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE account_unix_info ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE account_unix_info ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: acl_group
+ ***********************************************/
+
+CREATE TABLE acl_group
+( 
+	acl_group_id         serial  NOT NULL ,
+	acl_group_name       varchar(50)  NOT NULL ,
+	acl_group_type       varchar(50)  NOT NULL ,
+	description          varchar(255)  NULL 
+);
+
+ALTER TABLE acl_group
+	ADD CONSTRAINT xpkacl_group PRIMARY KEY (acl_group_id);
+
+CREATE INDEX xif1acl_group ON acl_group
+( 
+	acl_group_type ASC
+);
+
+ALTER TABLE acl_group ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE acl_group ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE acl_group ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE acl_group ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: acl_rule
+ ***********************************************/
+
+CREATE TABLE acl_rule
+( 
+	acl_rule_id          serial  NOT NULL ,
+	acl_group_id         integer  NOT NULL ,
+	acl_rank             integer  NOT NULL ,
+	service_depend_id    integer  NULL ,
+	description          varchar(255)  NULL ,
+	acl_action           varchar(50)  NOT NULL ,
+	source_netblock_collection_id integer  NOT NULL ,
+	source_port_relation_restriction varchar(50)  NULL ,
+	source_port_range_id integer  NULL ,
+	destination_netblock_collection_id integer  NOT NULL ,
+	destination_port_relation_restriction varchar(50)  NULL ,
+	destination_port_range_id integer  NULL 
+);
+
+ALTER TABLE acl_rule
+	ADD CONSTRAINT xpkacl_rule PRIMARY KEY (acl_rule_id);
+
+CREATE INDEX xif1acl_rule ON acl_rule
+( 
+	acl_group_id ASC
+);
+
+CREATE INDEX xif2acl_rule ON acl_rule
+( 
+	service_depend_id ASC
+);
+
+CREATE INDEX xif5acl_rule ON acl_rule
+( 
+	source_port_range_id ASC
+);
+
+CREATE INDEX xif6acl_rule ON acl_rule
+( 
+	destination_port_range_id ASC
+);
+
+CREATE INDEX xif7acl_rule ON acl_rule
+( 
+	source_netblock_collection_id ASC
+);
+
+CREATE INDEX xif8acl_rule ON acl_rule
+( 
+	destination_netblock_collection_id ASC
+);
+
+ALTER TABLE acl_rule ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE acl_rule ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE acl_rule ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE acl_rule ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: appaal
  ***********************************************/
@@ -507,11 +607,7 @@ CREATE TABLE appaal
 ( 
 	appaal_id            serial  NOT NULL ,
 	appaal_name          varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE appaal
@@ -521,6 +617,11 @@ CREATE UNIQUE INDEX uq_appaal_name ON appaal
 ( 
 	appaal_name
 );
+
+ALTER TABLE appaal ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE appaal ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE appaal ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE appaal ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: appaal_instance
@@ -533,11 +634,7 @@ CREATE TABLE appaal_instance
 	service_environment_id integer  NOT NULL ,
 	file_mode            integer  NOT NULL ,
 	file_owner_account_id integer  NOT NULL ,
-	file_group_account_collection_id integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	file_group_account_collection_id integer  NULL 
 );
 
 ALTER TABLE appaal_instance
@@ -548,6 +645,11 @@ CREATE INDEX xifappaal_inst_filgrpacctcolid ON appaal_instance
 	file_group_account_collection_id
 );
 
+ALTER TABLE appaal_instance ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE appaal_instance ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE appaal_instance ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE appaal_instance ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: appaal_instance_device_collection
  ***********************************************/
@@ -555,15 +657,16 @@ CREATE INDEX xifappaal_inst_filgrpacctcolid ON appaal_instance
 CREATE TABLE appaal_instance_device_collection
 ( 
 	device_collection_id integer  NOT NULL ,
-	appaal_instance_id   integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	appaal_instance_id   integer  NOT NULL 
 );
 
 ALTER TABLE appaal_instance_device_collection
 	ADD CONSTRAINT pk_appaal_instance_device_coll PRIMARY KEY (device_collection_id,appaal_instance_id);
+
+ALTER TABLE appaal_instance_device_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE appaal_instance_device_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE appaal_instance_device_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE appaal_instance_device_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: appaal_instance_property
@@ -576,11 +679,7 @@ CREATE TABLE appaal_instance_property
 	appaal_group_name    varchar(50)  NOT NULL ,
 	appaal_group_rank    varchar(50)  NOT NULL ,
 	application_value    varchar(4000)  NOT NULL ,
-	encryption_key_id    integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	encryption_key_id    integer  NULL 
 );
 
 ALTER TABLE appaal_instance_property
@@ -600,6 +699,11 @@ CREATE INDEX ind_aaiprop_key_value ON appaal_instance_property
 	application_value
 );
 
+ALTER TABLE appaal_instance_property ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE appaal_instance_property ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE appaal_instance_property ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE appaal_instance_property ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: approval_instance
  ***********************************************/
@@ -611,11 +715,7 @@ CREATE TABLE approval_instance
 	approval_instance_name varchar(50)  NOT NULL ,
 	description          varchar(255)  NULL ,
 	approval_start       timestamp with time zone  NOT NULL ,
-	approval_end         timestamp with time zone  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	approval_end         timestamp with time zone  NULL 
 );
 
 ALTER TABLE approval_instance
@@ -625,6 +725,11 @@ CREATE INDEX xif1approval_instance ON approval_instance
 ( 
 	approval_process_id
 );
+
+ALTER TABLE approval_instance ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE approval_instance ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE approval_instance ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE approval_instance ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: approval_instance_item
@@ -642,11 +747,7 @@ CREATE TABLE approval_instance_item
 	approved_rhs         varchar(255)  NULL ,
 	is_approved          boolean  NULL ,
 	approved_account_id  integer  NULL ,
-	approval_note        text  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	approval_note        text  NULL 
 );
 
 ALTER TABLE approval_instance_item
@@ -672,6 +773,11 @@ CREATE INDEX xif4approval_instance_item ON approval_instance_item
 	approved_account_id
 );
 
+ALTER TABLE approval_instance_item ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE approval_instance_item ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE approval_instance_item ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE approval_instance_item ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: approval_instance_link
  ***********************************************/
@@ -681,15 +787,16 @@ CREATE TABLE approval_instance_link
 	approval_instance_link_id serial  NOT NULL ,
 	acct_collection_acct_seq_id integer  NULL ,
 	person_company_seq_id integer  NULL ,
-	property_seq_id      integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	property_seq_id      integer  NULL 
 );
 
 ALTER TABLE approval_instance_link
 	ADD CONSTRAINT pk_approval_instance_link PRIMARY KEY (approval_instance_link_id);
+
+ALTER TABLE approval_instance_link ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE approval_instance_link ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE approval_instance_link ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE approval_instance_link ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: approval_instance_step
@@ -708,11 +815,7 @@ CREATE TABLE approval_instance_step
 	approval_instance_step_end timestamp with time zone  NULL ,
 	approver_account_id  integer  NOT NULL ,
 	external_reference_name varchar(255)  NULL ,
-	is_completed         boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_completed         boolean  NOT NULL 
 );
 
 ALTER TABLE approval_instance_step
@@ -738,6 +841,11 @@ CREATE INDEX xif2approval_instance_step ON approval_instance_step
 	approver_account_id
 );
 
+ALTER TABLE approval_instance_step ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE approval_instance_step ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE approval_instance_step ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE approval_instance_step ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: approval_instance_step_notify
  ***********************************************/
@@ -748,11 +856,7 @@ CREATE TABLE approval_instance_step_notify
 	approval_instance_step_id integer  NOT NULL ,
 	approval_notify_type varchar(50)  NOT NULL ,
 	account_id           integer  NOT NULL ,
-	approval_notify_whence timestamp with time zone  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	approval_notify_whence timestamp with time zone  NOT NULL 
 );
 
 ALTER TABLE approval_instance_step_notify
@@ -773,6 +877,11 @@ CREATE INDEX xif3approval_instance_step_notify ON approval_instance_step_notify
 	account_id
 );
 
+ALTER TABLE approval_instance_step_notify ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE approval_instance_step_notify ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE approval_instance_step_notify ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE approval_instance_step_notify ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: approval_process
  ***********************************************/
@@ -790,11 +899,7 @@ CREATE TABLE approval_process
 	attestation_offset   integer  NULL ,
 	max_escalation_level integer  NULL ,
 	escalation_delay     varchar(50)  NULL ,
-	escalation_reminder_gap integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	escalation_reminder_gap integer  NULL 
 );
 
 ALTER TABLE approval_process
@@ -825,6 +930,11 @@ CREATE INDEX xif5approval_process ON approval_process
 	first_approval_process_chain_id
 );
 
+ALTER TABLE approval_process ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE approval_process ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE approval_process ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE approval_process ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: approval_process_chain
  ***********************************************/
@@ -846,11 +956,7 @@ CREATE TABLE approval_process_chain
 	refresh_all_data     boolean  NOT NULL ,
 	accept_approval_process_chain_id integer  NULL ,
 	reject_approval_process_chain_id integer  NULL ,
-	permit_immediate_resolution boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	permit_immediate_resolution boolean  NOT NULL 
 );
 
 ALTER TABLE approval_process_chain
@@ -871,6 +977,11 @@ CREATE INDEX xif3approval_process_chain ON approval_process_chain
 	accept_approval_process_chain_id
 );
 
+ALTER TABLE approval_process_chain ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE approval_process_chain ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE approval_process_chain ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE approval_process_chain ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: asset
  ***********************************************/
@@ -885,11 +996,7 @@ CREATE TABLE asset
 	part_number          varchar(255)  NULL ,
 	asset_tag            varchar(255)  NULL ,
 	ownership_status     character varying(50)  NOT NULL ,
-	lease_expiration_date timestamp with time zone  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	lease_expiration_date timestamp with time zone  NULL 
 );
 
 ALTER TABLE asset
@@ -913,6 +1020,11 @@ CREATE INDEX xif_asset_ownshp_stat ON asset
 	ownership_status
 );
 
+ALTER TABLE asset ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE asset ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE asset ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE asset ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: badge
  ***********************************************/
@@ -923,15 +1035,16 @@ CREATE TABLE badge
 	badge_type_id        integer  NOT NULL ,
 	badge_status         character varying(50)  NOT NULL ,
 	date_assigned        timestamp with time zone  NULL ,
-	date_reclaimed       timestamp with time zone  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	date_reclaimed       timestamp with time zone  NULL 
 );
 
 ALTER TABLE badge
 	ADD CONSTRAINT pk_badge PRIMARY KEY (card_number);
+
+ALTER TABLE badge ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE badge ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE badge ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE badge ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: badge_type
@@ -943,11 +1056,7 @@ CREATE TABLE badge_type
 	badge_type_name      varchar(50)  NOT NULL ,
 	description          varchar(255)  NULL ,
 	badge_color          varchar(50)  NOT NULL ,
-	badge_template_name  varchar(255)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	badge_template_name  varchar(255)  NOT NULL 
 );
 
 ALTER TABLE badge_type
@@ -959,6 +1068,11 @@ ALTER TABLE badge_type
 ALTER TABLE badge_type
 	ADD CONSTRAINT ak_uq_badge_type_name_badge_ty UNIQUE (badge_type_name);
 
+ALTER TABLE badge_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE badge_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE badge_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE badge_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: certificate_signing_request
  ***********************************************/
@@ -969,11 +1083,7 @@ CREATE TABLE certificate_signing_request
 	friendly_name        varchar(255)  NOT NULL ,
 	subject              varchar(255)  NOT NULL ,
 	certificate_signing_request text  NOT NULL ,
-	private_key_id       integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	private_key_id       integer  NULL 
 );
 
 ALTER TABLE certificate_signing_request
@@ -983,6 +1093,11 @@ CREATE INDEX fk_csr_pvtkeyid ON certificate_signing_request
 ( 
 	private_key_id
 );
+
+ALTER TABLE certificate_signing_request ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE certificate_signing_request ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE certificate_signing_request ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE certificate_signing_request ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: chassis_location
@@ -994,11 +1109,7 @@ CREATE TABLE chassis_location
 	chassis_device_type_id integer  NOT NULL ,
 	device_type_module_name character varying(255)  NOT NULL ,
 	chassis_device_id    integer  NOT NULL ,
-	module_device_type_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	module_device_type_id integer  NOT NULL 
 );
 
 ALTER TABLE chassis_location
@@ -1033,6 +1144,11 @@ CREATE INDEX xif5chassis_location ON chassis_location
 	device_type_module_name
 );
 
+ALTER TABLE chassis_location ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE chassis_location ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE chassis_location ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE chassis_location ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: circuit
  ***********************************************/
@@ -1048,11 +1164,7 @@ CREATE TABLE circuit
 	zloc_lec_company_id  integer  NULL ,
 	zloc_lec_circuit_id_str varchar(255)  NULL ,
 	zloc_parent_circuit_id integer  NULL ,
-	is_locally_managed   boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_locally_managed   boolean  NOT NULL 
 );
 
 ALTER TABLE circuit
@@ -1088,6 +1200,11 @@ CREATE INDEX idx_circuit_islclmngd ON circuit
 	is_locally_managed
 );
 
+ALTER TABLE circuit ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE circuit ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE circuit ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE circuit ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: company
  ***********************************************/
@@ -1099,11 +1216,7 @@ CREATE TABLE company
 	company_short_name   varchar(50)  NULL ,
 	parent_company_id    integer  NULL ,
 	description          varchar(4000)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE company
@@ -1113,6 +1226,11 @@ CREATE INDEX xif1company ON company
 ( 
 	parent_company_id
 );
+
+ALTER TABLE company ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE company ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE company ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE company ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: company_collection
@@ -1124,11 +1242,7 @@ CREATE TABLE company_collection
 	company_collection_name varchar(255)  NOT NULL ,
 	company_collection_type varchar(50)  NOT NULL ,
 	description          varchar(255)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE company_collection
@@ -1142,6 +1256,11 @@ CREATE INDEX xifcomp_coll_com_coll_type ON company_collection
 	company_collection_type
 );
 
+ALTER TABLE company_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE company_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE company_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE company_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: company_collection_company
  ***********************************************/
@@ -1149,11 +1268,7 @@ CREATE INDEX xifcomp_coll_com_coll_type ON company_collection
 CREATE TABLE company_collection_company
 ( 
 	company_collection_id integer  NOT NULL ,
-	company_id           integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	company_id           integer  NOT NULL 
 );
 
 ALTER TABLE company_collection_company
@@ -1169,6 +1284,11 @@ CREATE INDEX xifcompany_coll_company_id ON company_collection_company
 	company_id
 );
 
+ALTER TABLE company_collection_company ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE company_collection_company ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE company_collection_company ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE company_collection_company ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: company_collection_hier
  ***********************************************/
@@ -1176,11 +1296,7 @@ CREATE INDEX xifcompany_coll_company_id ON company_collection_company
 CREATE TABLE company_collection_hier
 ( 
 	company_collection_id integer  NOT NULL ,
-	child_company_collection_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	child_company_collection_id integer  NOT NULL 
 );
 
 ALTER TABLE company_collection_hier
@@ -1196,6 +1312,11 @@ CREATE INDEX xifcomp_coll_comp_coll_kid_id ON company_collection_hier
 	child_company_collection_id
 );
 
+ALTER TABLE company_collection_hier ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE company_collection_hier ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE company_collection_hier ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE company_collection_hier ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: company_type
  ***********************************************/
@@ -1204,11 +1325,7 @@ CREATE TABLE company_type
 ( 
 	company_id           integer  NOT NULL ,
 	company_type         character varying(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE company_type
@@ -1224,6 +1341,11 @@ CREATE INDEX xif2company_type ON company_type
 	company_type
 );
 
+ALTER TABLE company_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE company_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE company_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE company_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: component
  ***********************************************/
@@ -1234,11 +1356,7 @@ CREATE TABLE component
 	component_type_id    integer  NOT NULL ,
 	component_name       varchar(255)  NULL ,
 	rack_location_id     integer  NULL ,
-	parent_slot_id       integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	parent_slot_id       integer  NULL 
 );
 
 ALTER TABLE component
@@ -1265,6 +1383,11 @@ CREATE INDEX xif_component_rack_loc_id ON component
 	rack_location_id
 );
 
+ALTER TABLE component ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE component ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE component ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE component ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: component_property
  ***********************************************/
@@ -1281,11 +1404,7 @@ CREATE TABLE component_property
 	slot_id              integer  NULL ,
 	component_property_name character varying(50)  NULL ,
 	component_property_type varchar(50)  NULL ,
-	property_value       varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	property_value       varchar(255)  NULL 
 );
 
 ALTER TABLE component_property
@@ -1332,6 +1451,11 @@ CREATE INDEX xif_comp_prop_slt_typ_id ON component_property
 	slot_type_id
 );
 
+ALTER TABLE component_property ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE component_property ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE component_property ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE component_property ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: component_type
  ***********************************************/
@@ -1348,11 +1472,7 @@ CREATE TABLE component_type
 	asset_permitted      boolean  NOT NULL ,
 	is_rack_mountable    boolean  NOT NULL ,
 	is_virtual_component boolean  NOT NULL ,
-	size_units           varchar(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	size_units           varchar(50)  NOT NULL 
 );
 
 ALTER TABLE component_type
@@ -1368,6 +1488,11 @@ CREATE INDEX xif_component_type_slt_type_id ON component_type
 	slot_type_id
 );
 
+ALTER TABLE component_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE component_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE component_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE component_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: component_type_component_function
  ***********************************************/
@@ -1375,11 +1500,7 @@ CREATE INDEX xif_component_type_slt_type_id ON component_type
 CREATE TABLE component_type_component_function
 ( 
 	component_function   character varying(50)  NOT NULL ,
-	component_type_id    integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	component_type_id    integer  NOT NULL 
 );
 
 ALTER TABLE component_type_component_function
@@ -1394,6 +1515,11 @@ CREATE INDEX xif_cmptypecf_comp_typ_id ON component_type_component_function
 ( 
 	component_type_id
 );
+
+ALTER TABLE component_type_component_function ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE component_type_component_function ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE component_type_component_function ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE component_type_component_function ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: component_type_slot_template
@@ -1412,11 +1538,7 @@ CREATE TABLE component_type_slot_template
 	slot_x_offset        integer  NULL ,
 	slot_y_offset        INTEGER  NULL ,
 	slot_z_offset        integer  NULL ,
-	slot_side            varchar(50)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	slot_side            varchar(50)  NULL 
 );
 
 ALTER TABLE component_type_slot_template
@@ -1432,6 +1554,11 @@ CREATE INDEX xif_comp_typ_slt_tmplt_slttypid ON component_type_slot_template
 	slot_type_id
 );
 
+ALTER TABLE component_type_slot_template ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE component_type_slot_template ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE component_type_slot_template ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE component_type_slot_template ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: contract
  ***********************************************/
@@ -1443,11 +1570,7 @@ CREATE TABLE contract
 	contract_name        varchar(255)  NOT NULL ,
 	vendor_contract_name varchar(255)  NULL ,
 	description          varchar(255)  NULL ,
-	contract_termination_date timestamp with time zone  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	contract_termination_date timestamp with time zone  NULL 
 );
 
 ALTER TABLE contract
@@ -1458,6 +1581,11 @@ CREATE INDEX xifcontract_company_id ON contract
 	company_id
 );
 
+ALTER TABLE contract ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE contract ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE contract ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE contract ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: contract_type
  ***********************************************/
@@ -1465,11 +1593,7 @@ CREATE INDEX xifcontract_company_id ON contract
 CREATE TABLE contract_type
 ( 
 	contract_id          integer  NOT NULL ,
-	contract_type        character varying(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	contract_type        character varying(50)  NOT NULL 
 );
 
 ALTER TABLE contract_type
@@ -1485,6 +1609,11 @@ CREATE INDEX xif_contract_contract_type ON contract_type
 	contract_type
 );
 
+ALTER TABLE contract_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE contract_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE contract_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE contract_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: department
  ***********************************************/
@@ -1498,11 +1627,7 @@ CREATE TABLE department
 	dept_code            varchar(30)  NULL ,
 	cost_center_name     varchar(255)  NULL ,
 	cost_center_number   integer  NULL ,
-	default_badge_type_id integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	default_badge_type_id integer  NULL 
 );
 
 ALTER TABLE department
@@ -1534,6 +1659,11 @@ CREATE INDEX xifdept_company ON department
 	company_id
 );
 
+ALTER TABLE department ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE department ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE department ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE department ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: device
  ***********************************************/
@@ -1557,11 +1687,7 @@ CREATE TABLE device
 	operating_system_id  integer  NOT NULL ,
 	service_environment_id integer  NOT NULL ,
 	is_virtual_device    boolean  NOT NULL ,
-	date_in_service      timestamp with time zone  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	date_in_service      timestamp with time zone  NULL 
 );
 
 ALTER TABLE device
@@ -1650,6 +1776,11 @@ CREATE INDEX xif_dev_rack_location_id ON device
 	rack_location_id
 );
 
+ALTER TABLE device ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: device_collection
  ***********************************************/
@@ -1660,11 +1791,7 @@ CREATE TABLE device_collection
 	device_collection_name varchar(255)  NOT NULL ,
 	device_collection_type varchar(50)  NOT NULL ,
 	description          varchar(255)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE device_collection
@@ -1677,6 +1804,11 @@ CREATE INDEX idx_devcoll_devcolltype ON device_collection
 ( 
 	device_collection_type
 );
+
+ALTER TABLE device_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: device_collection_assigned_certificate
@@ -1694,15 +1826,16 @@ CREATE TABLE device_collection_assigned_certificate
 	file_owner_account_id integer  NOT NULL ,
 	file_group_account_collection_id integer  NOT NULL ,
 	file_passphrase_path varchar(255)  NULL ,
-	key_usage_reason_for_assignment varchar(50)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	key_usage_reason_for_assignment varchar(50)  NULL 
 );
 
 ALTER TABLE device_collection_assigned_certificate
 	ADD CONSTRAINT pk_device_collection_assigned PRIMARY KEY (device_collection_id,x509_signed_certificate_id,x509_key_usage);
+
+ALTER TABLE device_collection_assigned_certificate ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_collection_assigned_certificate ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_collection_assigned_certificate ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_collection_assigned_certificate ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: device_collection_device
@@ -1712,11 +1845,7 @@ CREATE TABLE device_collection_device
 ( 
 	device_id            integer  NOT NULL ,
 	device_collection_id integer  NOT NULL ,
-	device_id_rank       integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	device_id_rank       integer  NULL 
 );
 
 ALTER TABLE device_collection_device
@@ -1730,6 +1859,11 @@ CREATE INDEX ix_dev_col_dev_dev_colid ON device_collection_device
 	device_collection_id
 );
 
+ALTER TABLE device_collection_device ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_collection_device ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_collection_device ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_collection_device ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: device_collection_hier
  ***********************************************/
@@ -1737,15 +1871,16 @@ CREATE INDEX ix_dev_col_dev_dev_colid ON device_collection_device
 CREATE TABLE device_collection_hier
 ( 
 	device_collection_id integer  NOT NULL ,
-	child_device_collection_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	child_device_collection_id integer  NOT NULL 
 );
 
 ALTER TABLE device_collection_hier
 	ADD CONSTRAINT pk_device_collection_hier PRIMARY KEY (device_collection_id,child_device_collection_id);
+
+ALTER TABLE device_collection_hier ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_collection_hier ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_collection_hier ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_collection_hier ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: device_collection_ssh_key
@@ -1756,11 +1891,7 @@ CREATE TABLE device_collection_ssh_key
 	ssh_key_id           integer  NOT NULL ,
 	device_collection_id integer  NOT NULL ,
 	account_collection_id integer  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE device_collection_ssh_key
@@ -1781,6 +1912,11 @@ CREATE INDEX xif3device_collection_ssh_key ON device_collection_ssh_key
 	account_collection_id
 );
 
+ALTER TABLE device_collection_ssh_key ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_collection_ssh_key ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_collection_ssh_key ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_collection_ssh_key ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: device_encapsulation_domain
  ***********************************************/
@@ -1789,11 +1925,7 @@ CREATE TABLE device_encapsulation_domain
 ( 
 	device_id            integer  NOT NULL ,
 	encapsulation_type   character varying(50)  NOT NULL ,
-	encapsulation_domain character varying(50)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	encapsulation_domain character varying(50)  NULL 
 );
 
 ALTER TABLE device_encapsulation_domain
@@ -1815,6 +1947,11 @@ CREATE INDEX xif_dev_encap_domain_enc_domtyp ON device_encapsulation_domain
 	encapsulation_type
 );
 
+ALTER TABLE device_encapsulation_domain ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_encapsulation_domain ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_encapsulation_domain ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_encapsulation_domain ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: device_layer2_network
  ***********************************************/
@@ -1822,11 +1959,7 @@ CREATE INDEX xif_dev_encap_domain_enc_domtyp ON device_encapsulation_domain
 CREATE TABLE device_layer2_network
 ( 
 	device_id            integer  NOT NULL ,
-	layer2_network_id    integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	layer2_network_id    integer  NOT NULL 
 );
 
 ALTER TABLE device_layer2_network
@@ -1842,6 +1975,11 @@ CREATE INDEX xif_device_l2_net_l2netid ON device_layer2_network
 	layer2_network_id
 );
 
+ALTER TABLE device_layer2_network ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_layer2_network ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_layer2_network ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_layer2_network ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: device_management_controller
  ***********************************************/
@@ -1851,11 +1989,7 @@ CREATE TABLE device_management_controller
 	manager_device_id    integer  NOT NULL ,
 	device_id            integer  NOT NULL ,
 	device_management_control_type character varying(255)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE device_management_controller
@@ -1876,6 +2010,11 @@ CREATE INDEX xif3device_management_controller ON device_management_controller
 	device_management_control_type
 );
 
+ALTER TABLE device_management_controller ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_management_controller ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_management_controller ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_management_controller ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: device_note
  ***********************************************/
@@ -1886,11 +2025,7 @@ CREATE TABLE device_note
 	device_id            integer  NOT NULL ,
 	note_text            varchar(4000)  NOT NULL ,
 	note_date            timestamp with time zone  NOT NULL ,
-	note_user            varchar(30)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	note_user            varchar(30)  NOT NULL 
 );
 
 ALTER TABLE device_note
@@ -1901,6 +2036,11 @@ CREATE INDEX idx_devnote_devid ON device_note
 	device_id
 );
 
+ALTER TABLE device_note ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_note ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_note ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_note ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: device_ssh_key
  ***********************************************/
@@ -1908,11 +2048,7 @@ CREATE INDEX idx_devnote_devid ON device_note
 CREATE TABLE device_ssh_key
 ( 
 	device_id            integer  NOT NULL ,
-	ssh_key_id           integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	ssh_key_id           integer  NOT NULL 
 );
 
 ALTER TABLE device_ssh_key
@@ -1928,6 +2064,11 @@ CREATE INDEX xif2device_ssh_key ON device_ssh_key
 	device_id
 );
 
+ALTER TABLE device_ssh_key ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_ssh_key ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_ssh_key ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_ssh_key ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: device_ticket
  ***********************************************/
@@ -1937,11 +2078,7 @@ CREATE TABLE device_ticket
 	device_id            integer  NOT NULL ,
 	ticketing_system_id  integer  NOT NULL ,
 	ticket_number        varchar(30)  NOT NULL ,
-	device_ticket_notes  varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	device_ticket_notes  varchar(255)  NULL 
 );
 
 ALTER TABLE device_ticket
@@ -1956,6 +2093,11 @@ CREATE INDEX xifdev_tkt_tkt_system ON device_ticket
 ( 
 	ticketing_system_id
 );
+
+ALTER TABLE device_ticket ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_ticket ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_ticket ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_ticket ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: device_type
@@ -1978,11 +2120,7 @@ CREATE TABLE device_type
 	has_802_3_interface  boolean  NOT NULL ,
 	has_802_11_interface boolean  NOT NULL ,
 	snmp_capable         boolean  NOT NULL ,
-	is_chassis           boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_chassis           boolean  NOT NULL 
 );
 
 ALTER TABLE device_type
@@ -2008,6 +2146,11 @@ CREATE INDEX xif_fevtyp_component_id ON device_type
 	component_type_id
 );
 
+ALTER TABLE device_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: device_type_module
  ***********************************************/
@@ -2020,11 +2163,7 @@ CREATE TABLE device_type_module
 	device_type_x_offset varchar(50)  NULL ,
 	device_type_y_offset varchar(50)  NULL ,
 	device_type_z_offset varchar(50)  NULL ,
-	device_type_side     varchar(50)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	device_type_side     varchar(50)  NULL 
 );
 
 ALTER TABLE device_type_module
@@ -2035,6 +2174,11 @@ CREATE INDEX xif1device_type_module ON device_type_module
 	device_type_id
 );
 
+ALTER TABLE device_type_module ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_type_module ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_type_module ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_type_module ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: device_type_module_device_type
  ***********************************************/
@@ -2044,11 +2188,7 @@ CREATE TABLE device_type_module_device_type
 	module_device_type_id integer  NOT NULL ,
 	device_type_id       integer  NOT NULL ,
 	device_type_module_name character varying(255)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE device_type_module_device_type
@@ -2065,6 +2205,11 @@ CREATE INDEX xif_dt_mod_dev_type_mod_dtid ON device_type_module_device_type
 	module_device_type_id
 );
 
+ALTER TABLE device_type_module_device_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE device_type_module_device_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE device_type_module_device_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE device_type_module_device_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: dns_change_record
  ***********************************************/
@@ -2074,11 +2219,7 @@ CREATE TABLE dns_change_record
 	dns_change_record_id bigserial  NOT NULL ,
 	dns_domain_id        integer  NULL ,
 	ip_universe_id       integer  NULL ,
-	ip_address           inet  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	ip_address           inet  NULL 
 );
 
 ALTER TABLE dns_change_record
@@ -2094,6 +2235,11 @@ CREATE INDEX xif2dns_change_record ON dns_change_record
 	ip_universe_id
 );
 
+ALTER TABLE dns_change_record ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE dns_change_record ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE dns_change_record ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE dns_change_record ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: dns_domain
  ***********************************************/
@@ -2105,11 +2251,7 @@ CREATE TABLE dns_domain
 	dns_domain_type      varchar(50)  NOT NULL ,
 	parent_dns_domain_id integer  NULL ,
 	description          varchar(255)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE dns_domain
@@ -2128,6 +2270,11 @@ CREATE INDEX xifdns_dom_dns_dom_type ON dns_domain
 	dns_domain_type
 );
 
+ALTER TABLE dns_domain ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE dns_domain ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE dns_domain ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE dns_domain ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: dns_domain_collection
  ***********************************************/
@@ -2138,11 +2285,7 @@ CREATE TABLE dns_domain_collection
 	dns_domain_collection_name varchar(50)  NOT NULL ,
 	dns_domain_collection_type varchar(50)  NOT NULL ,
 	description          varchar(4000)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE dns_domain_collection
@@ -2156,6 +2299,11 @@ CREATE INDEX xif1dns_domain_collection ON dns_domain_collection
 	dns_domain_collection_type
 );
 
+ALTER TABLE dns_domain_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE dns_domain_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE dns_domain_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE dns_domain_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: dns_domain_collection_dns_domain
  ***********************************************/
@@ -2163,11 +2311,7 @@ CREATE INDEX xif1dns_domain_collection ON dns_domain_collection
 CREATE TABLE dns_domain_collection_dns_domain
 ( 
 	dns_domain_collection_id integer  NOT NULL ,
-	dns_domain_id        integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	dns_domain_id        integer  NOT NULL 
 );
 
 ALTER TABLE dns_domain_collection_dns_domain
@@ -2183,6 +2327,11 @@ CREATE INDEX xif2dns_domain_collection_dns_domain ON dns_domain_collection_dns_d
 	dns_domain_collection_id
 );
 
+ALTER TABLE dns_domain_collection_dns_domain ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE dns_domain_collection_dns_domain ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE dns_domain_collection_dns_domain ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE dns_domain_collection_dns_domain ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: dns_domain_collection_hier
  ***********************************************/
@@ -2190,11 +2339,7 @@ CREATE INDEX xif2dns_domain_collection_dns_domain ON dns_domain_collection_dns_d
 CREATE TABLE dns_domain_collection_hier
 ( 
 	dns_domain_collection_id integer  NOT NULL ,
-	child_dns_domain_collection_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	child_dns_domain_collection_id integer  NOT NULL 
 );
 
 ALTER TABLE dns_domain_collection_hier
@@ -2209,6 +2354,11 @@ CREATE INDEX xif2dns_domain_collection_hier ON dns_domain_collection_hier
 ( 
 	dns_domain_collection_id
 );
+
+ALTER TABLE dns_domain_collection_hier ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE dns_domain_collection_hier ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE dns_domain_collection_hier ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE dns_domain_collection_hier ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: dns_domain_ip_universe
@@ -2228,11 +2378,7 @@ CREATE TABLE dns_domain_ip_universe
 	soa_mname            varchar(255)  NULL ,
 	soa_rname            varchar(255)  NOT NULL ,
 	should_generate      boolean  NOT NULL ,
-	last_generated       timestamp with time zone  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	last_generated       timestamp with time zone  NULL 
 );
 
 ALTER TABLE dns_domain_ip_universe
@@ -2247,6 +2393,11 @@ CREATE INDEX xifdnsdom_ipu_ipu ON dns_domain_ip_universe
 ( 
 	ip_universe_id
 );
+
+ALTER TABLE dns_domain_ip_universe ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE dns_domain_ip_universe ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE dns_domain_ip_universe ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE dns_domain_ip_universe ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: dns_record
@@ -2272,11 +2423,7 @@ CREATE TABLE dns_record
 	dns_value_record_id  integer  NULL ,
 	should_generate_ptr  boolean  NOT NULL ,
 	external_id          varchar(255)  NULL ,
-	is_enabled           boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_enabled           boolean  NOT NULL 
 );
 
 ALTER TABLE dns_record
@@ -2321,6 +2468,11 @@ CREATE INDEX xif_ref_dnsrec_dnserc ON dns_record
 	dns_domain_id
 );
 
+ALTER TABLE dns_record ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE dns_record ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE dns_record ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE dns_record ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: dns_record_relation
  ***********************************************/
@@ -2329,15 +2481,16 @@ CREATE TABLE dns_record_relation
 ( 
 	dns_record_id        integer  NOT NULL ,
 	related_dns_record_id integer  NOT NULL ,
-	dns_record_relation_type varchar(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	dns_record_relation_type varchar(50)  NOT NULL 
 );
 
 ALTER TABLE dns_record_relation
 	ADD CONSTRAINT pk_dns_record_relation PRIMARY KEY (dns_record_id,related_dns_record_id,dns_record_relation_type);
+
+ALTER TABLE dns_record_relation ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE dns_record_relation ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE dns_record_relation ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE dns_record_relation ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: encapsulation_domain
@@ -2347,11 +2500,7 @@ CREATE TABLE encapsulation_domain
 ( 
 	encapsulation_domain varchar(50)  NOT NULL ,
 	encapsulation_type   character varying(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE encapsulation_domain
@@ -2362,6 +2511,11 @@ CREATE INDEX xif_encap_domain_encap_typ ON encapsulation_domain
 	encapsulation_type
 );
 
+ALTER TABLE encapsulation_domain ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE encapsulation_domain ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE encapsulation_domain ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE encapsulation_domain ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: encapsulation_range
  ***********************************************/
@@ -2371,11 +2525,7 @@ CREATE TABLE encapsulation_range
 	encapsulation_range_id serial  NOT NULL ,
 	parent_encapsulation_range_id integer  NULL ,
 	site_code            character varying(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE encapsulation_range
@@ -2391,6 +2541,11 @@ CREATE INDEX ixf_encap_range_sitecode ON encapsulation_range
 	site_code
 );
 
+ALTER TABLE encapsulation_range ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE encapsulation_range ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE encapsulation_range ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE encapsulation_range ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: encryption_key
  ***********************************************/
@@ -2402,15 +2557,16 @@ CREATE TABLE encryption_key
 	encryption_key_purpose varchar(50)  NOT NULL ,
 	encryption_key_purpose_version integer  NOT NULL ,
 	encryption_method    character varying(50)  NOT NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE encryption_key
 	ADD CONSTRAINT pk_encryption_key PRIMARY KEY (encryption_key_id);
+
+ALTER TABLE encryption_key ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE encryption_key ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE encryption_key ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE encryption_key ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: inter_component_connection
@@ -2421,11 +2577,7 @@ CREATE TABLE inter_component_connection
 	inter_component_connection_id serial  NOT NULL ,
 	slot1_id             integer  NOT NULL ,
 	slot2_id             integer  NOT NULL ,
-	circuit_id           integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	circuit_id           integer  NULL 
 );
 
 ALTER TABLE inter_component_connection
@@ -2452,6 +2604,11 @@ CREATE INDEX xif_intercom_conn_circ_id ON inter_component_connection
 	circuit_id
 );
 
+ALTER TABLE inter_component_connection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE inter_component_connection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE inter_component_connection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE inter_component_connection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: ip_universe
  ***********************************************/
@@ -2462,11 +2619,7 @@ CREATE TABLE ip_universe
 	ip_universe_name     varchar(50)  NOT NULL ,
 	ip_namespace         varchar(50)  NOT NULL ,
 	should_generate_dns  boolean  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE ip_universe
@@ -2480,6 +2633,11 @@ CREATE INDEX xif1ip_universe ON ip_universe
 	ip_namespace
 );
 
+ALTER TABLE ip_universe ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE ip_universe ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE ip_universe ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE ip_universe ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: ip_universe_visibility
  ***********************************************/
@@ -2488,11 +2646,7 @@ CREATE TABLE ip_universe_visibility
 ( 
 	ip_universe_id       integer  NOT NULL ,
 	visible_ip_universe_id integer  NOT NULL ,
-	propagate_dns        boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	propagate_dns        boolean  NOT NULL 
 );
 
 ALTER TABLE ip_universe_visibility
@@ -2508,6 +2662,11 @@ CREATE INDEX xifip_universe_vis_ip_univ_vis ON ip_universe_visibility
 	visible_ip_universe_id
 );
 
+ALTER TABLE ip_universe_visibility ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE ip_universe_visibility ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE ip_universe_visibility ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE ip_universe_visibility ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: kerberos_realm
  ***********************************************/
@@ -2515,11 +2674,7 @@ CREATE INDEX xifip_universe_vis_ip_univ_vis ON ip_universe_visibility
 CREATE TABLE kerberos_realm
 ( 
 	krb_realm_id         serial  NOT NULL ,
-	realm_name           varchar(100)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	realm_name           varchar(100)  NOT NULL 
 );
 
 ALTER TABLE kerberos_realm
@@ -2529,6 +2684,11 @@ CREATE INDEX idx_realm_name ON kerberos_realm
 ( 
 	realm_name
 );
+
+ALTER TABLE kerberos_realm ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE kerberos_realm ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE kerberos_realm ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE kerberos_realm ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: klogin
@@ -2541,11 +2701,7 @@ CREATE TABLE klogin
 	account_collection_id integer  NULL ,
 	krb_realm_id         integer  NOT NULL ,
 	krb_instance         varchar(50)  NULL ,
-	destination_account_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	destination_account_id integer  NOT NULL 
 );
 
 ALTER TABLE klogin
@@ -2566,6 +2722,11 @@ CREATE INDEX idx_klogin_krbrealmid ON klogin
 	krb_realm_id
 );
 
+ALTER TABLE klogin ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE klogin ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE klogin ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE klogin ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: klogin_mclass
  ***********************************************/
@@ -2573,15 +2734,16 @@ CREATE INDEX idx_klogin_krbrealmid ON klogin
 CREATE TABLE klogin_mclass
 ( 
 	klogin_id            integer  NOT NULL ,
-	device_collection_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	device_collection_id integer  NOT NULL 
 );
 
 ALTER TABLE klogin_mclass
 	ADD CONSTRAINT pk_klogin_mclass PRIMARY KEY (klogin_id,device_collection_id);
+
+ALTER TABLE klogin_mclass ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE klogin_mclass ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE klogin_mclass ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE klogin_mclass ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: layer2_connection
@@ -2591,11 +2753,7 @@ CREATE TABLE layer2_connection
 ( 
 	layer2_connection_id serial  NOT NULL ,
 	logical_port1_id     integer  NULL ,
-	logical_port2_id     integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	logical_port2_id     integer  NULL 
 );
 
 ALTER TABLE layer2_connection
@@ -2611,6 +2769,11 @@ CREATE INDEX xif_l2_conn_l2port ON layer2_connection
 	logical_port2_id
 );
 
+ALTER TABLE layer2_connection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer2_connection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer2_connection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer2_connection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: layer2_connection_layer2_network
  ***********************************************/
@@ -2621,11 +2784,7 @@ CREATE TABLE layer2_connection_layer2_network
 	layer2_network_id    integer  NOT NULL ,
 	encapsulation_mode   varchar(50)  NULL ,
 	encapsulation_type   character varying(50)  NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE layer2_connection_layer2_network
@@ -2653,6 +2812,11 @@ CREATE INDEX xif_l2c_l2n_l2netid ON layer2_connection_layer2_network
 	layer2_network_id
 );
 
+ALTER TABLE layer2_connection_layer2_network ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer2_connection_layer2_network ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer2_connection_layer2_network ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer2_connection_layer2_network ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: layer2_network
  ***********************************************/
@@ -2666,11 +2830,7 @@ CREATE TABLE layer2_network
 	encapsulation_tag    integer  NULL ,
 	description          varchar(255)  NULL ,
 	external_id          varchar(255)  NULL ,
-	encapsulation_range_id integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	encapsulation_range_id integer  NULL 
 );
 
 ALTER TABLE layer2_network
@@ -2696,6 +2856,11 @@ CREATE INDEX xif_l2_net_encap_range_id ON layer2_network
 	encapsulation_range_id
 );
 
+ALTER TABLE layer2_network ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer2_network ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer2_network ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer2_network ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: layer2_network_collection
  ***********************************************/
@@ -2706,11 +2871,7 @@ CREATE TABLE layer2_network_collection
 	layer2_network_collection_name varchar(255)  NOT NULL ,
 	layer2_network_collection_type varchar(50)  NULL ,
 	description          varchar(255)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE layer2_network_collection
@@ -2724,6 +2885,11 @@ CREATE INDEX xif_l2netcoll_type ON layer2_network_collection
 	layer2_network_collection_type
 );
 
+ALTER TABLE layer2_network_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer2_network_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer2_network_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer2_network_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: layer2_network_collection_hier
  ***********************************************/
@@ -2731,11 +2897,7 @@ CREATE INDEX xif_l2netcoll_type ON layer2_network_collection
 CREATE TABLE layer2_network_collection_hier
 ( 
 	layer2_network_collection_id integer  NOT NULL ,
-	child_layer2_network_collection_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	child_layer2_network_collection_id integer  NOT NULL 
 );
 
 ALTER TABLE layer2_network_collection_hier
@@ -2751,17 +2913,18 @@ CREATE INDEX xif_l2net_collhier_l2net ON layer2_network_collection_hier
 	layer2_network_collection_id
 );
 
+ALTER TABLE layer2_network_collection_hier ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer2_network_collection_hier ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer2_network_collection_hier ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer2_network_collection_hier ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 CREATE TABLE layer2_network_collection_layer2_network
 ( 
 	layer2_network_collection_id integer  NOT NULL ,
 	layer2_network_id    integer  NOT NULL ,
 	layer2_network_id_rank integer  NULL ,
 	start_date           timestamp without time zone  NULL ,
-	finish_date          timestamp without time zone  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	finish_date          timestamp without time zone  NULL 
 );
 
 ALTER TABLE layer2_network_collection_layer2_network
@@ -2779,6 +2942,11 @@ CREATE INDEX xif_l2netcl2net_l2netid ON layer2_network_collection_layer2_network
 ( 
 	layer2_network_id
 );
+
+ALTER TABLE layer2_network_collection_layer2_network ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer2_network_collection_layer2_network ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer2_network_collection_layer2_network ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer2_network_collection_layer2_network ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: layer3_interface
@@ -2798,11 +2966,7 @@ CREATE TABLE layer3_interface
 	is_interface_up      boolean  NOT NULL ,
 	mac_addr             macaddr  NULL ,
 	should_monitor       boolean  NOT NULL ,
-	should_manage        boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	should_manage        boolean  NOT NULL 
 );
 
 ALTER TABLE layer3_interface
@@ -2858,6 +3022,64 @@ CREATE INDEX xif_netint_typeid ON layer3_interface
 	layer3_interface_type
 );
 
+ALTER TABLE layer3_interface ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer3_interface ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer3_interface ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer3_interface ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: layer3_interface_acl
+ ***********************************************/
+
+CREATE TABLE layer3_interface_acl
+( 
+	layer3_interface_acl_id serial  NOT NULL ,
+	layer3_interface_id  serial  NOT NULL ,
+	traffic_direction    varchar(50)  NOT NULL 
+);
+
+ALTER TABLE layer3_interface_acl
+	ADD CONSTRAINT xpklayer3_interface_acl PRIMARY KEY (layer3_interface_acl_id,layer3_interface_id);
+
+CREATE INDEX xif1layer3_interface_acl ON layer3_interface_acl
+( 
+	layer3_interface_acl_id ASC
+);
+
+CREATE INDEX xif2layer3_interface_acl ON layer3_interface_acl
+( 
+	layer3_interface_id ASC
+);
+
+ALTER TABLE layer3_interface_acl ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer3_interface_acl ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer3_interface_acl ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer3_interface_acl ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: layer3_interface_acl_chain
+ ***********************************************/
+
+CREATE TABLE layer3_interface_acl_chain
+( 
+	layer3_interface_acl_id serial  NOT NULL ,
+	acl_group_id         integer  NOT NULL ,
+	layer3_interface_acl_rank integer  NOT NULL 
+);
+
+ALTER TABLE layer3_interface_acl_chain
+	ADD CONSTRAINT xpklayer3_interface_acl_chain PRIMARY KEY (layer3_interface_acl_id);
+
+CREATE INDEX xif1layer3_interface_acl_chain ON layer3_interface_acl_chain
+( 
+	acl_group_id ASC
+);
+
+ALTER TABLE layer3_interface_acl_chain ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer3_interface_acl_chain ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer3_interface_acl_chain ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer3_interface_acl_chain ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: layer3_interface_netblock
  ***********************************************/
@@ -2867,11 +3089,7 @@ CREATE TABLE layer3_interface_netblock
 	netblock_id          integer  NOT NULL ,
 	layer3_interface_id  integer  NOT NULL ,
 	device_id            integer  NOT NULL ,
-	layer3_interface_rank integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	layer3_interface_rank integer  NOT NULL 
 );
 
 ALTER TABLE layer3_interface_netblock
@@ -2895,6 +3113,11 @@ CREATE UNIQUE INDEX xif_netint_nb_netint_id ON layer3_interface_netblock
 	netblock_id
 );
 
+ALTER TABLE layer3_interface_netblock ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer3_interface_netblock ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer3_interface_netblock ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer3_interface_netblock ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: layer3_interface_purpose
  ***********************************************/
@@ -2904,11 +3127,7 @@ CREATE TABLE layer3_interface_purpose
 	device_id            integer  NOT NULL ,
 	layer3_interface_purpose character varying(50)  NOT NULL ,
 	layer3_interface_id  integer  NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE layer3_interface_purpose
@@ -2930,6 +3149,11 @@ CREATE INDEX xifnetint_purp_dev_ni_id ON layer3_interface_purpose
 	device_id
 );
 
+ALTER TABLE layer3_interface_purpose ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer3_interface_purpose ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer3_interface_purpose ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer3_interface_purpose ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: layer3_network
  ***********************************************/
@@ -2942,11 +3166,7 @@ CREATE TABLE layer3_network
 	default_gateway_netblock_id integer  NULL ,
 	rendezvous_netblock_id integer  NULL ,
 	description          varchar(255)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE layer3_network
@@ -2976,6 +3196,11 @@ CREATE INDEX xif_layer3_network_netblock_id ON layer3_network
 	netblock_id
 );
 
+ALTER TABLE layer3_network ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer3_network ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer3_network ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer3_network ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: layer3_network_collection
  ***********************************************/
@@ -2986,11 +3211,7 @@ CREATE TABLE layer3_network_collection
 	layer3_network_collection_name varchar(255)  NOT NULL ,
 	layer3_network_collection_type varchar(50)  NULL ,
 	description          varchar(255)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE layer3_network_collection
@@ -3004,6 +3225,11 @@ CREATE INDEX xif_l3_netcol_netcol_type ON layer3_network_collection
 	layer3_network_collection_type
 );
 
+ALTER TABLE layer3_network_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer3_network_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer3_network_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer3_network_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: layer3_network_collection_hier
  ***********************************************/
@@ -3011,11 +3237,7 @@ CREATE INDEX xif_l3_netcol_netcol_type ON layer3_network_collection
 CREATE TABLE layer3_network_collection_hier
 ( 
 	layer3_network_collection_id integer  NOT NULL ,
-	child_layer3_network_collection_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	child_layer3_network_collection_id integer  NOT NULL 
 );
 
 ALTER TABLE layer3_network_collection_hier
@@ -3031,17 +3253,18 @@ CREATE INDEX xif_l3nethier_chld_l3netid ON layer3_network_collection_hier
 	child_layer3_network_collection_id
 );
 
+ALTER TABLE layer3_network_collection_hier ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer3_network_collection_hier ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer3_network_collection_hier ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer3_network_collection_hier ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 CREATE TABLE layer3_network_collection_layer3_network
 ( 
 	layer3_network_collection_id integer  NOT NULL ,
 	layer3_network_id    integer  NOT NULL ,
 	layer3_network_id_rank integer  NULL ,
 	start_date           timestamp without time zone  NULL ,
-	finish_date          timestamp without time zone  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	finish_date          timestamp without time zone  NULL 
 );
 
 ALTER TABLE layer3_network_collection_layer3_network
@@ -3060,6 +3283,11 @@ CREATE INDEX xif_l3netcol_l3_net_l3netid ON layer3_network_collection_layer3_net
 	layer3_network_id
 );
 
+ALTER TABLE layer3_network_collection_layer3_network ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE layer3_network_collection_layer3_network ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE layer3_network_collection_layer3_network ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE layer3_network_collection_layer3_network ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: logical_port
  ***********************************************/
@@ -3073,11 +3301,7 @@ CREATE TABLE logical_port
 	mlag_peering_id      integer  NULL ,
 	mlag_id              integer  NULL ,
 	parent_logical_port_id integer  NULL ,
-	mac_address          macaddr  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	mac_address          macaddr  NULL 
 );
 
 ALTER TABLE logical_port
@@ -3115,6 +3339,11 @@ CREATE INDEX xif_logical_port_parnet_id ON logical_port
 	parent_logical_port_id
 );
 
+ALTER TABLE logical_port ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE logical_port ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE logical_port ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE logical_port ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: logical_port_slot
  ***********************************************/
@@ -3122,11 +3351,7 @@ CREATE INDEX xif_logical_port_parnet_id ON logical_port
 CREATE TABLE logical_port_slot
 ( 
 	logical_port_id      integer  NOT NULL ,
-	slot_id              integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	slot_id              integer  NOT NULL 
 );
 
 ALTER TABLE logical_port_slot
@@ -3142,6 +3367,11 @@ CREATE INDEX xif_lgl_port_slot_slot_id ON logical_port_slot
 	slot_id 
 );
 
+ALTER TABLE logical_port_slot ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE logical_port_slot ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE logical_port_slot ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE logical_port_slot ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: logical_volume
  ***********************************************/
@@ -3155,11 +3385,7 @@ CREATE TABLE logical_volume
 	device_id            integer  NOT NULL ,
 	logical_volume_size_in_bytes bigint  NOT NULL ,
 	logical_volume_offset_in_bytes bigint  NULL ,
-	filesystem_type      varchar(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	filesystem_type      varchar(50)  NOT NULL 
 );
 
 ALTER TABLE logical_volume
@@ -3195,6 +3421,11 @@ CREATE INDEX xif_logvol_vgid ON logical_volume
 	device_id
 );
 
+ALTER TABLE logical_volume ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE logical_volume ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE logical_volume ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE logical_volume ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: logical_volume_property
  ***********************************************/
@@ -3207,11 +3438,7 @@ CREATE TABLE logical_volume_property
 	logical_volume_purpose varchar(50)  NULL ,
 	filesystem_type      character varying(50)  NULL ,
 	logical_volume_property_name varchar(50)  NULL ,
-	logical_volume_property_value varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	logical_volume_property_value varchar(255)  NULL 
 );
 
 ALTER TABLE logical_volume_property
@@ -3242,6 +3469,11 @@ CREATE INDEX xif_lvprop_type ON logical_volume_property
 	logical_volume_type
 );
 
+ALTER TABLE logical_volume_property ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE logical_volume_property ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE logical_volume_property ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE logical_volume_property ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: logical_volume_purpose
  ***********************************************/
@@ -3250,11 +3482,7 @@ CREATE TABLE logical_volume_purpose
 ( 
 	logical_volume_purpose character varying(50)  NOT NULL ,
 	logical_volume_id    integer  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE logical_volume_purpose
@@ -3270,6 +3498,11 @@ CREATE INDEX xif_lvpurp_val_lgpuprp ON logical_volume_purpose
 	logical_volume_purpose
 );
 
+ALTER TABLE logical_volume_purpose ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE logical_volume_purpose ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE logical_volume_purpose ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE logical_volume_purpose ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: mlag_peering
  ***********************************************/
@@ -3280,11 +3513,7 @@ CREATE TABLE mlag_peering
 	device1_id           integer  NULL ,
 	device2_id           integer  NULL ,
 	domain_id            varchar(50)  NULL ,
-	system_id            macaddr  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	system_id            macaddr  NULL 
 );
 
 ALTER TABLE mlag_peering
@@ -3299,6 +3528,11 @@ CREATE INDEX xif_mlag_peering_devid2 ON mlag_peering
 ( 
 	device2_id
 );
+
+ALTER TABLE mlag_peering ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE mlag_peering ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE mlag_peering ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE mlag_peering ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: netblock
@@ -3315,11 +3549,7 @@ CREATE TABLE netblock
 	netblock_status      varchar(50)  NOT NULL ,
 	ip_universe_id       integer  NOT NULL ,
 	description          varchar(255)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE netblock
@@ -3353,6 +3583,11 @@ CREATE INDEX ix_netblk_ip_address_parent ON netblock
 	parent_netblock_id
 );
 
+ALTER TABLE netblock ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE netblock ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE netblock ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE netblock ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: netblock_collection
  ***********************************************/
@@ -3364,11 +3599,7 @@ CREATE TABLE netblock_collection
 	netblock_collection_type varchar(50)  NULL ,
 	netblock_ip_family_restriction integer  NULL ,
 	description          varchar(255)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE netblock_collection
@@ -3382,6 +3613,11 @@ CREATE INDEX xifk_nb_col_val_nb_col_typ ON netblock_collection
 	netblock_collection_type
 );
 
+ALTER TABLE netblock_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE netblock_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE netblock_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE netblock_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: netblock_collection_hier
  ***********************************************/
@@ -3389,11 +3625,7 @@ CREATE INDEX xifk_nb_col_val_nb_col_typ ON netblock_collection
 CREATE TABLE netblock_collection_hier
 ( 
 	netblock_collection_id integer  NOT NULL ,
-	child_netblock_collection_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	child_netblock_collection_id integer  NOT NULL 
 );
 
 ALTER TABLE netblock_collection_hier
@@ -3409,17 +3641,18 @@ CREATE INDEX xifk_nblk_c_hier_prnt_nc ON netblock_collection_hier
 	netblock_collection_id
 );
 
+ALTER TABLE netblock_collection_hier ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE netblock_collection_hier ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE netblock_collection_hier ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE netblock_collection_hier ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 CREATE TABLE netblock_collection_netblock
 ( 
 	netblock_collection_id integer  NOT NULL ,
 	netblock_id          integer  NOT NULL ,
 	netblock_id_rank     integer  NULL ,
 	start_date           timestamp without time zone  NULL ,
-	finish_date          timestamp without time zone  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	finish_date          timestamp without time zone  NULL 
 );
 
 ALTER TABLE netblock_collection_netblock
@@ -3438,6 +3671,11 @@ CREATE INDEX xifk_nb_col_nb_nbcolid ON netblock_collection_netblock
 	netblock_collection_id
 );
 
+ALTER TABLE netblock_collection_netblock ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE netblock_collection_netblock ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE netblock_collection_netblock ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE netblock_collection_netblock ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: network_range
  ***********************************************/
@@ -3452,11 +3690,7 @@ CREATE TABLE network_range
 	stop_netblock_id     integer  NOT NULL ,
 	dns_prefix           varchar(255)  NULL ,
 	dns_domain_id        integer  NULL ,
-	lease_time           integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	lease_time           integer  NULL 
 );
 
 ALTER TABLE network_range
@@ -3487,6 +3721,11 @@ CREATE INDEX xif_netrng_stopnetblk ON network_range
 	stop_netblock_id
 );
 
+ALTER TABLE network_range ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE network_range ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE network_range ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE network_range ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: network_service
  ***********************************************/
@@ -3501,11 +3740,7 @@ CREATE TABLE network_service
 	device_id            integer  NULL ,
 	layer3_interface_id  integer  NULL ,
 	dns_record_id        integer  NULL ,
-	service_environment_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	service_environment_id integer  NOT NULL 
 );
 
 ALTER TABLE network_service
@@ -3541,6 +3776,11 @@ CREATE INDEX ix_netsvc_netintid ON network_service
 	layer3_interface_id
 );
 
+ALTER TABLE network_service ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE network_service ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE network_service ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE network_service ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: operating_system
  ***********************************************/
@@ -3553,11 +3793,7 @@ CREATE TABLE operating_system
 	company_id           integer  NULL ,
 	major_version        varchar(50)  NOT NULL ,
 	version              varchar(255)  NOT NULL ,
-	operating_system_family varchar(50)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	operating_system_family varchar(50)  NULL 
 );
 
 ALTER TABLE operating_system
@@ -3579,6 +3815,11 @@ CREATE INDEX xif_os_os_family ON operating_system
 	operating_system_family
 );
 
+ALTER TABLE operating_system ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE operating_system ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE operating_system ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE operating_system ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: operating_system_snapshot
  ***********************************************/
@@ -3588,11 +3829,7 @@ CREATE TABLE operating_system_snapshot
 	operating_system_snapshot_id serial  NOT NULL ,
 	operating_system_snapshot_name varchar(255)  NOT NULL ,
 	operating_system_snapshot_type varchar(50)  NOT NULL ,
-	operating_system_id  integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	operating_system_id  integer  NOT NULL 
 );
 
 ALTER TABLE operating_system_snapshot
@@ -3610,6 +3847,11 @@ CREATE INDEX xif_os_snap_snap_type ON operating_system_snapshot
 ( 
 	operating_system_snapshot_type
 );
+
+ALTER TABLE operating_system_snapshot ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE operating_system_snapshot ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE operating_system_snapshot ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE operating_system_snapshot ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: person
@@ -3631,11 +3873,7 @@ CREATE TABLE person
 	diet                 varchar(255)  NULL ,
 	shirt_size           varchar(20)  NULL ,
 	pant_size            varchar(20)  NULL ,
-	hat_size             varchar(20)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	hat_size             varchar(20)  NULL 
 );
 
 ALTER TABLE person
@@ -3657,6 +3895,11 @@ CREATE INDEX idx_person_name ON person
 	last_name
 );
 
+ALTER TABLE person ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: person_account_realm_company
  ***********************************************/
@@ -3665,11 +3908,7 @@ CREATE TABLE person_account_realm_company
 ( 
 	person_id            integer  NOT NULL ,
 	company_id           integer  NOT NULL ,
-	account_realm_id     integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	account_realm_id     integer  NOT NULL 
 );
 
 ALTER TABLE person_account_realm_company
@@ -3686,6 +3925,11 @@ CREATE INDEX xif3person_account_realm_company ON person_account_realm_company
 	person_id
 );
 
+ALTER TABLE person_account_realm_company ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_account_realm_company ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_account_realm_company ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_account_realm_company ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: person_authentication_question
  ***********************************************/
@@ -3695,11 +3939,7 @@ CREATE TABLE person_authentication_question
 	authentication_question_id integer  NOT NULL ,
 	person_id            integer  NOT NULL ,
 	user_answer          varchar(255)  NOT NULL ,
-	is_active            boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_active            boolean  NOT NULL 
 );
 
 ALTER TABLE person_authentication_question
@@ -3714,6 +3954,11 @@ CREATE INDEX ix_person_aq_auth_ques_id ON person_authentication_question
 ( 
 	authentication_question_id
 );
+
+ALTER TABLE person_authentication_question ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_authentication_question ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_authentication_question ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_authentication_question ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: person_company
@@ -3733,11 +3978,7 @@ CREATE TABLE person_company
 	hire_date            timestamp with time zone  NULL ,
 	termination_date     timestamp with time zone  NULL ,
 	manager_person_id    integer  NULL ,
-	nickname             varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	nickname             varchar(255)  NULL 
 );
 
 ALTER TABLE person_company
@@ -3768,6 +4009,11 @@ CREATE INDEX xifperson_company_person_id ON person_company
 	person_id
 );
 
+ALTER TABLE person_company ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_company ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_company ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_company ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: person_company_attribute
  ***********************************************/
@@ -3781,11 +4027,7 @@ CREATE TABLE person_company_attribute
 	attribute_value_timestamp timestamp with time zone  NULL ,
 	attribute_value_person_id integer  NULL ,
 	start_date           timestamp with time zone  NULL ,
-	finish_date          timestamp with time zone  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	finish_date          timestamp with time zone  NULL 
 );
 
 ALTER TABLE person_company_attribute
@@ -3810,6 +4052,11 @@ CREATE INDEX xif3person_company_attribute ON person_company_attribute
 	person_company_attribute_name
 );
 
+ALTER TABLE person_company_attribute ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_company_attribute ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_company_attribute ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_company_attribute ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: person_company_badge
  ***********************************************/
@@ -3819,11 +4066,7 @@ CREATE TABLE person_company_badge
 	company_id           integer  NOT NULL ,
 	person_id            integer  NOT NULL ,
 	badge_id             varchar(255)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE person_company_badge
@@ -3834,6 +4077,11 @@ CREATE INDEX xif1person_company_badge ON person_company_badge
 	company_id,
 	person_id
 );
+
+ALTER TABLE person_company_badge ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_company_badge ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_company_badge ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_company_badge ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: person_contact
@@ -3854,11 +4102,7 @@ CREATE TABLE person_contact
 	phone_pin            integer  NULL ,
 	person_contact_account_name varchar(255)  NULL ,
 	person_contact_order integer  NOT NULL ,
-	person_contact_notes varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	person_contact_notes varchar(4000)  NULL 
 );
 
 ALTER TABLE person_contact
@@ -3893,6 +4137,11 @@ CREATE INDEX xif_person_type_iso_code ON person_contact
 	iso_country_code
 );
 
+ALTER TABLE person_contact ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_contact ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_contact ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_contact ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: person_image
  ***********************************************/
@@ -3906,11 +4155,7 @@ CREATE TABLE person_image
 	image_blob           oid  NOT NULL ,
 	image_checksum       varchar(255)  NULL ,
 	image_label          varchar(255)  NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE person_image
@@ -3926,6 +4171,11 @@ CREATE INDEX idx_prsnimg_img_type ON person_image
 	image_type
 );
 
+ALTER TABLE person_image ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_image ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_image ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_image ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: person_image_usage
  ***********************************************/
@@ -3933,11 +4183,7 @@ CREATE INDEX idx_prsnimg_img_type ON person_image
 CREATE TABLE person_image_usage
 ( 
 	person_image_id      integer  NOT NULL ,
-	person_image_usage   varchar(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	person_image_usage   varchar(50)  NOT NULL 
 );
 
 ALTER TABLE person_image_usage
@@ -3953,6 +4199,11 @@ CREATE INDEX xif2person_image_usage ON person_image_usage
 	person_image_usage
 );
 
+ALTER TABLE person_image_usage ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_image_usage ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_image_usage ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_image_usage ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: person_location
  ***********************************************/
@@ -3967,11 +4218,7 @@ CREATE TABLE person_location
 	building             varchar(50)  NULL ,
 	floor                varchar(10)  NULL ,
 	section              varchar(50)  NULL ,
-	seat_number          varchar(10)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	seat_number          varchar(10)  NULL 
 );
 
 ALTER TABLE person_location
@@ -3997,6 +4244,11 @@ CREATE INDEX xifpersloc_sitecode ON person_location
 	site_code
 );
 
+ALTER TABLE person_location ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_location ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_location ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_location ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: person_note
  ***********************************************/
@@ -4007,11 +4259,7 @@ CREATE TABLE person_note
 	person_id            integer  NULL ,
 	note_text            varchar(4000)  NOT NULL ,
 	note_date            timestamp with time zone  NOT NULL ,
-	note_user            varchar(30)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	note_user            varchar(30)  NOT NULL 
 );
 
 ALTER TABLE person_note
@@ -4022,6 +4270,11 @@ CREATE INDEX xif1person_note ON person_note
 	person_id
 );
 
+ALTER TABLE person_note ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_note ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_note ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_note ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: person_parking_pass
  ***********************************************/
@@ -4029,11 +4282,7 @@ CREATE INDEX xif1person_note ON person_note
 CREATE TABLE person_parking_pass
 ( 
 	person_parking_pass_id serial  NOT NULL ,
-	person_id            integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	person_id            integer  NOT NULL 
 );
 
 ALTER TABLE person_parking_pass
@@ -4043,6 +4292,11 @@ CREATE INDEX xif2person_parking_pass ON person_parking_pass
 ( 
 	person_id
 );
+
+ALTER TABLE person_parking_pass ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_parking_pass ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_parking_pass ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_parking_pass ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: person_vehicle
@@ -4057,11 +4311,7 @@ CREATE TABLE person_vehicle
 	vehicle_year         varchar(5)  NOT NULL ,
 	vehicle_color        varchar(50)  NOT NULL ,
 	vehicle_license_plate varchar(8)  NOT NULL ,
-	vehicle_license_state CHAR(2)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	vehicle_license_state CHAR(2)  NOT NULL 
 );
 
 ALTER TABLE person_vehicle
@@ -4074,6 +4324,11 @@ CREATE INDEX xif2person_vehicle ON person_vehicle
 ( 
 	person_id
 );
+
+ALTER TABLE person_vehicle ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE person_vehicle ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE person_vehicle ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE person_vehicle ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: physical_address
@@ -4098,11 +4353,7 @@ CREATE TABLE physical_address
 	address_region       varchar(100)  NULL ,
 	postal_code          varchar(20)  NULL ,
 	iso_country_code     CHAR(2)  NOT NULL ,
-	address_freeform     varchar(50)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	address_freeform     varchar(50)  NULL 
 );
 
 ALTER TABLE physical_address
@@ -4126,6 +4377,11 @@ CREATE INDEX xif_physaddr_type_val ON physical_address
 	physical_address_type
 );
 
+ALTER TABLE physical_address ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE physical_address ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE physical_address ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE physical_address ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: physical_connection
  ***********************************************/
@@ -4135,11 +4391,7 @@ CREATE TABLE physical_connection
 	physical_connection_id serial  NOT NULL ,
 	slot1_id             integer  NULL ,
 	slot2_id             integer  NULL ,
-	cable_type           character varying(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	cable_type           character varying(50)  NOT NULL 
 );
 
 ALTER TABLE physical_connection
@@ -4160,6 +4412,11 @@ CREATE INDEX xif_physical_conn_v_cable_type ON physical_connection
 	cable_type
 );
 
+ALTER TABLE physical_connection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE physical_connection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE physical_connection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE physical_connection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: physicalish_volume
  ***********************************************/
@@ -4171,11 +4428,7 @@ CREATE TABLE physicalish_volume
 	physicalish_volume_type varchar(50)  NOT NULL ,
 	device_id            integer  NOT NULL ,
 	logical_volume_id    integer  NULL ,
-	component_id         integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	component_id         integer  NULL 
 );
 
 ALTER TABLE physicalish_volume
@@ -4208,6 +4461,40 @@ CREATE INDEX xif_physvol_lvid ON physicalish_volume
 	logical_volume_id
 );
 
+ALTER TABLE physicalish_volume ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE physicalish_volume ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE physicalish_volume ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE physicalish_volume ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: port_range
+ ***********************************************/
+
+CREATE TABLE port_range
+( 
+	port_range_id        serial  NOT NULL ,
+	port_range_name      varchar(50)  NOT NULL ,
+	port_range_type      varchar(50)  NOT NULL ,
+	protocol             varchar(50)  NOT NULL ,
+	port_start           integer  NOT NULL ,
+	port_end             integer  NOT NULL ,
+	is_singleton         boolean  NOT NULL 
+);
+
+ALTER TABLE port_range
+	ADD CONSTRAINT xpkport_range PRIMARY KEY (port_range_id);
+
+CREATE INDEX xif1port_range ON port_range
+( 
+	port_range_type ASC,
+	protocol ASC
+);
+
+ALTER TABLE port_range ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE port_range ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE port_range ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE port_range ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: private_key
  ***********************************************/
@@ -4220,11 +4507,7 @@ CREATE TABLE private_key
 	subject_key_identifier varchar(255)  NULL ,
 	private_key          text  NOT NULL ,
 	passphrase           varchar(255)  NULL ,
-	encryption_key_id    integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	encryption_key_id    integer  NULL 
 );
 
 ALTER TABLE private_key
@@ -4242,6 +4525,11 @@ CREATE INDEX fk_pvtkey_enctype ON private_key
 ( 
 	private_key_encryption_type
 );
+
+ALTER TABLE private_key ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE private_key ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE private_key ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE private_key ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: property
@@ -4265,6 +4553,7 @@ CREATE TABLE property
 	operating_system_snapshot_id integer  NULL ,
 	property_name_collection_id integer  NULL ,
 	service_environment_collection_id integer  NULL ,
+	service_version_collection_id integer  NULL ,
 	site_code            character varying(50)  NULL ,
 	x509_signed_certificate_id integer  NULL ,
 	property_name        varchar(255)  NOT NULL ,
@@ -4278,21 +4567,28 @@ CREATE TABLE property
 	property_value_netblock_collection_id integer  NULL ,
 	property_value_password_type character varying(50)  NULL ,
 	property_value_private_key_id integer  NULL ,
+	property_value_service_version_collection_id integer  NULL ,
 	property_value_sw_package_id integer  NULL ,
 	property_value_timestamp timestamp without time zone  NULL ,
 	property_value_token_collection_id integer  NULL ,
 	property_rank        integer  NULL ,
 	start_date           timestamp without time zone  NULL ,
 	finish_date          timestamp without time zone  NULL ,
-	is_enabled           boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_enabled           boolean  NOT NULL 
 );
 
 ALTER TABLE property
 	ADD CONSTRAINT pk_property PRIMARY KEY (property_id);
+
+CREATE INDEX xif37property ON property
+( 
+	service_version_collection_id ASC
+);
+
+CREATE INDEX xif38property ON property
+( 
+	property_value_service_version_collection_id ASC
+);
 
 CREATE INDEX xifprop_account_id ON property
 ( 
@@ -4425,6 +4721,11 @@ CREATE INDEX xifprop_x509_signed_cert_id ON property
 	x509_signed_certificate_id
 );
 
+ALTER TABLE property ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE property ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE property ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE property ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: property_name_collection
  ***********************************************/
@@ -4434,11 +4735,7 @@ CREATE TABLE property_name_collection
 	property_name_collection_id serial  NOT NULL ,
 	property_name_collection_name varchar(255)  NOT NULL ,
 	property_name_collection_type varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE property_name_collection
@@ -4452,6 +4749,11 @@ CREATE INDEX xif1property_name_collection ON property_name_collection
 	property_name_collection_type
 );
 
+ALTER TABLE property_name_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE property_name_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE property_name_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE property_name_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: property_name_collection_hier
  ***********************************************/
@@ -4459,11 +4761,7 @@ CREATE INDEX xif1property_name_collection ON property_name_collection
 CREATE TABLE property_name_collection_hier
 ( 
 	property_name_collection_id integer  NOT NULL ,
-	child_property_name_collection_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	child_property_name_collection_id integer  NOT NULL 
 );
 
 ALTER TABLE property_name_collection_hier
@@ -4479,6 +4777,11 @@ CREATE INDEX xif2property_name_collection_hier ON property_name_collection_hier
 	child_property_name_collection_id
 );
 
+ALTER TABLE property_name_collection_hier ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE property_name_collection_hier ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE property_name_collection_hier ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE property_name_collection_hier ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: property_name_collection_property_name
  ***********************************************/
@@ -4488,11 +4791,7 @@ CREATE TABLE property_name_collection_property_name
 	property_name_collection_id integer  NOT NULL ,
 	property_name        character varying(255)  NOT NULL ,
 	property_type        character varying(50)  NOT NULL ,
-	property_id_rank     integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	property_id_rank     integer  NULL 
 );
 
 ALTER TABLE property_name_collection_property_name
@@ -4512,6 +4811,30 @@ CREATE INDEX xifprop_coll_prop_prop_coll_id ON property_name_collection_property
 	property_name_collection_id
 );
 
+ALTER TABLE property_name_collection_property_name ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE property_name_collection_property_name ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE property_name_collection_property_name ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE property_name_collection_property_name ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: protocol
+ ***********************************************/
+
+CREATE TABLE protocol
+( 
+	protocol             varchar(50)  NOT NULL ,
+	protocol_number      integer  NULL ,
+	description          varchar(255)  NULL 
+);
+
+ALTER TABLE protocol
+	ADD CONSTRAINT xpkprotocol PRIMARY KEY (protocol);
+
+ALTER TABLE protocol ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE protocol ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE protocol ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE protocol ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: pseudo_klogin
  ***********************************************/
@@ -4520,11 +4843,7 @@ CREATE TABLE pseudo_klogin
 ( 
 	pseudo_klogin_id     serial  NOT NULL ,
 	principal            varchar(100)  NULL ,
-	dest_account_id      integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	dest_account_id      integer  NOT NULL 
 );
 
 ALTER TABLE pseudo_klogin
@@ -4534,6 +4853,11 @@ CREATE INDEX idx_psklogin_dacctid ON pseudo_klogin
 ( 
 	dest_account_id
 );
+
+ALTER TABLE pseudo_klogin ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE pseudo_klogin ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE pseudo_klogin ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE pseudo_klogin ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: rack
@@ -4551,11 +4875,7 @@ CREATE TABLE rack
 	rack_type            varchar(255)  NULL ,
 	description          varchar(255)  NULL ,
 	rack_height_in_u     integer  NOT NULL ,
-	display_from_bottom  boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	display_from_bottom  boolean  NOT NULL 
 );
 
 ALTER TABLE rack
@@ -4569,6 +4889,11 @@ CREATE INDEX xif2rack ON rack
 	rack_type
 );
 
+ALTER TABLE rack ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE rack ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE rack ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE rack ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: rack_location
  ***********************************************/
@@ -4578,11 +4903,7 @@ CREATE TABLE rack_location
 	rack_location_id     serial  NOT NULL ,
 	rack_id              integer  NOT NULL ,
 	rack_u_offset_of_device_top integer  NOT NULL ,
-	rack_side            varchar(10)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	rack_side            varchar(10)  NOT NULL 
 );
 
 ALTER TABLE rack_location
@@ -4590,6 +4911,498 @@ ALTER TABLE rack_location
 
 ALTER TABLE rack_location
 	ADD CONSTRAINT ak_uq_rack_offset_sid_location UNIQUE (rack_id,rack_u_offset_of_device_top,rack_side);
+
+ALTER TABLE rack_location ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE rack_location ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE rack_location ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE rack_location ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service
+ ***********************************************/
+
+CREATE TABLE service
+( 
+	service_id           serial  NOT NULL ,
+	service_name         varchar(50)  NOT NULL ,
+	description          varchar(255)  NULL ,
+	is_active            boolean  NOT NULL ,
+	is_synthesized       boolean  NOT NULL 
+);
+
+ALTER TABLE service
+	ADD CONSTRAINT xpkservice PRIMARY KEY (service_id);
+
+ALTER TABLE service ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_acl
+ ***********************************************/
+
+CREATE TABLE service_acl
+( 
+	service_depend_id    integer  NOT NULL ,
+	description          varchar(255)  NULL ,
+	is_enabled           boolean  NOT NULL 
+);
+
+ALTER TABLE service_acl
+	ADD CONSTRAINT xpkservice_acl PRIMARY KEY (service_depend_id);
+
+CREATE UNIQUE INDEX xif1service_acl ON service_acl
+( 
+	service_depend_id ASC
+);
+
+ALTER TABLE service_acl ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_acl ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_acl ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_acl ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_depend
+ ***********************************************/
+
+CREATE TABLE service_depend
+( 
+	service_depend_id    serial  NOT NULL ,
+	service_version_id   integer  NOT NULL ,
+	service_id           integer  NOT NULL ,
+	minimum_service_version_id integer  NULL ,
+	maximum_service_version_id integer  NULL ,
+	service_sla_id       integer  NULL ,
+	service_endpoint_provider_id integer  NULL 
+);
+
+ALTER TABLE service_depend
+	ADD CONSTRAINT xpkservice_depend PRIMARY KEY (service_depend_id);
+
+CREATE INDEX xif1service_depend ON service_depend
+( 
+	service_version_id ASC
+);
+
+CREATE INDEX xif2service_depend ON service_depend
+( 
+	service_id ASC
+);
+
+CREATE INDEX xif3service_depend ON service_depend
+( 
+	minimum_service_version_id ASC
+);
+
+CREATE INDEX xif4service_depend ON service_depend
+( 
+	maximum_service_version_id ASC
+);
+
+CREATE INDEX xif5service_depend ON service_depend
+( 
+	service_sla_id ASC
+);
+
+CREATE INDEX xif6service_depend ON service_depend
+( 
+	service_endpoint_provider_id ASC
+);
+
+ALTER TABLE service_depend ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_depend ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_depend ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_depend ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_depend_service_feature
+ ***********************************************/
+
+CREATE TABLE service_depend_service_feature
+( 
+	service_depend_id    integer  NOT NULL ,
+	service_feature      varchar(50)  NOT NULL 
+);
+
+ALTER TABLE service_depend_service_feature
+	ADD CONSTRAINT xpkservice_depend_service_feature PRIMARY KEY (service_depend_id,service_feature);
+
+CREATE INDEX xif1service_depend_service_feature ON service_depend_service_feature
+( 
+	service_depend_id ASC
+);
+
+CREATE INDEX xif2service_depend_service_feature ON service_depend_service_feature
+( 
+	service_feature ASC
+);
+
+ALTER TABLE service_depend_service_feature ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_depend_service_feature ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_depend_service_feature ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_depend_service_feature ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_endpoint
+ ***********************************************/
+
+CREATE TABLE service_endpoint
+( 
+	service_endpoint_id  serial  NOT NULL ,
+	service_id           integer  NOT NULL ,
+	dns_record_id        integer  NULL ,
+	dns_name             varchar(50)  NULL ,
+	dns_domain_id        integer  NULL ,
+	port_range_id        integer  NULL ,
+	uri                  varchar(255)  NULL ,
+	description          varchar(255)  NULL ,
+	is_synthesized       boolean  NOT NULL 
+);
+
+ALTER TABLE service_endpoint
+	ADD CONSTRAINT xpkservice_endpoint PRIMARY KEY (service_endpoint_id);
+
+CREATE INDEX xif1service_endpoint ON service_endpoint
+( 
+	service_id ASC
+);
+
+CREATE INDEX xif2service_endpoint ON service_endpoint
+( 
+	dns_record_id ASC
+);
+
+CREATE INDEX xif3service_endpoint ON service_endpoint
+( 
+	dns_domain_id ASC
+);
+
+CREATE INDEX xif4service_endpoint ON service_endpoint
+( 
+	port_range_id ASC
+);
+
+ALTER TABLE service_endpoint ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_endpoint ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_endpoint ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_endpoint ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_endpoint_health_check
+ ***********************************************/
+
+CREATE TABLE service_endpoint_health_check
+( 
+	service_endpoint_health_check_id serial  NOT NULL ,
+	service_endpoint_id  integer  NOT NULL ,
+	protocol             varchar(50)  NOT NULL ,
+	rank                 integer  NOT NULL ,
+	request_string       varchar(255)  NULL ,
+	search_string        varchar(255)  NULL ,
+	is_enabled           boolean  NOT NULL 
+);
+
+ALTER TABLE service_endpoint_health_check
+	ADD CONSTRAINT xpkservice_endpoint_health_check PRIMARY KEY (service_endpoint_health_check_id);
+
+CREATE INDEX xif1service_endpoint_health_check ON service_endpoint_health_check
+( 
+	service_endpoint_id ASC
+);
+
+CREATE INDEX xif2service_endpoint_health_check ON service_endpoint_health_check
+( 
+	protocol ASC
+);
+
+ALTER TABLE service_endpoint_health_check ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_endpoint_health_check ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_endpoint_health_check ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_endpoint_health_check ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_endpoint_provider
+ ***********************************************/
+
+CREATE TABLE service_endpoint_provider
+( 
+	service_endpoint_provider_id serial  NOT NULL ,
+	service_endpoint_provider_name varchar(50)  NOT NULL ,
+	service_endpoint_provider_type varchar(50)  NOT NULL ,
+	dns_record_id        integer  NULL ,
+	dns_value            text  NULL ,
+	netblock_id          integer  NULL ,
+	description          varchar(255)  NULL ,
+	is_synthesized       boolean  NOT NULL 
+);
+
+ALTER TABLE service_endpoint_provider
+	ADD CONSTRAINT xpkservice_endpoint_provider PRIMARY KEY (service_endpoint_provider_id);
+
+CREATE INDEX xif1service_endpoint_provider ON service_endpoint_provider
+( 
+	service_endpoint_provider_type ASC
+);
+
+CREATE INDEX xif2service_endpoint_provider ON service_endpoint_provider
+( 
+	dns_record_id ASC
+);
+
+CREATE INDEX xif3service_endpoint_provider ON service_endpoint_provider
+( 
+	netblock_id ASC
+);
+
+ALTER TABLE service_endpoint_provider ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_endpoint_provider ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_endpoint_provider ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_endpoint_provider ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_endpoint_provider_collection
+ ***********************************************/
+
+CREATE TABLE service_endpoint_provider_collection
+( 
+	service_endpoint_provider_collection_id serial  NOT NULL ,
+	service_endpoint_provider_collection_name varchar(50)  NOT NULL ,
+	service_endpoint_provider_collection_type varchar(50)  NOT NULL ,
+	description          varchar(255)  NULL 
+);
+
+ALTER TABLE service_endpoint_provider_collection
+	ADD CONSTRAINT xpkservice_endpoint_provider_collection PRIMARY KEY (service_endpoint_provider_collection_id);
+
+CREATE INDEX xif1service_endpoint_provider_collection ON service_endpoint_provider_collection
+( 
+	service_endpoint_provider_collection_type ASC
+);
+
+ALTER TABLE service_endpoint_provider_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_endpoint_provider_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_endpoint_provider_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_endpoint_provider_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_endpoint_provider_collection_service_endpoint_provider
+ ***********************************************/
+
+CREATE TABLE service_endpoint_provider_collection_service_endpoint_provider
+( 
+	service_endpoint_provider_collection_id serial  NOT NULL ,
+	service_endpoint_provider_id serial  NOT NULL 
+);
+
+ALTER TABLE service_endpoint_provider_collection_service_endpoint_provider
+	ADD CONSTRAINT xpkservice_endpoint_provider_collection_service_endpoint_provid PRIMARY KEY (service_endpoint_provider_collection_id,service_endpoint_provider_id);
+
+CREATE INDEX xif1service_endpoint_provider_collection_service_endpoint_provi ON service_endpoint_provider_collection_service_endpoint_provider
+( 
+	service_endpoint_provider_collection_id ASC
+);
+
+CREATE INDEX xif2service_endpoint_provider_collection_service_endpoint_provi ON service_endpoint_provider_collection_service_endpoint_provider
+( 
+	service_endpoint_provider_id ASC
+);
+
+ALTER TABLE service_endpoint_provider_collection_service_endpoint_provider ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_endpoint_provider_collection_service_endpoint_provider ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_endpoint_provider_collection_service_endpoint_provider ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_endpoint_provider_collection_service_endpoint_provider ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_endpoint_provider_service_instance
+ ***********************************************/
+
+CREATE TABLE service_endpoint_provider_service_instance
+( 
+	service_endpoint_provider_service_instance_id serial  NOT NULL ,
+	service_endpoint_provider_id integer  NOT NULL ,
+	service_instance_id  integer  NOT NULL ,
+	port_range_id        integer  NULL ,
+	rank                 integer  NOT NULL ,
+	is_enabled           boolean  NOT NULL 
+);
+
+ALTER TABLE service_endpoint_provider_service_instance
+	ADD CONSTRAINT xpkservice_endpoint_provider_service_instance PRIMARY KEY (service_endpoint_provider_service_instance_id);
+
+CREATE INDEX xif1service_endpoint_provider_service_instance ON service_endpoint_provider_service_instance
+( 
+	service_endpoint_provider_id ASC
+);
+
+CREATE INDEX xif2service_endpoint_provider_service_instance ON service_endpoint_provider_service_instance
+( 
+	service_instance_id ASC
+);
+
+CREATE INDEX xif3service_endpoint_provider_service_instance ON service_endpoint_provider_service_instance
+( 
+	port_range_id ASC
+);
+
+ALTER TABLE service_endpoint_provider_service_instance ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_endpoint_provider_service_instance ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_endpoint_provider_service_instance ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_endpoint_provider_service_instance ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_endpoint_provider_x509_certificate
+ ***********************************************/
+
+CREATE TABLE service_endpoint_provider_x509_certificate
+( 
+	service_endpoint_provider_id integer  NOT NULL ,
+	x509_signed_certificate_id integer  NOT NULL ,
+	x509_certificate_rank integer  NOT NULL 
+);
+
+ALTER TABLE service_endpoint_provider_x509_certificate
+	ADD CONSTRAINT xpkservice_endpoint_provider_x509_certificate PRIMARY KEY (service_endpoint_provider_id,x509_signed_certificate_id);
+
+CREATE INDEX xif1service_endpoint_provider_x509_certificate ON service_endpoint_provider_x509_certificate
+( 
+	service_endpoint_provider_id ASC
+);
+
+CREATE INDEX xif2service_endpoint_provider_x509_certificate ON service_endpoint_provider_x509_certificate
+( 
+	x509_signed_certificate_id ASC
+);
+
+ALTER TABLE service_endpoint_provider_x509_certificate ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_endpoint_provider_x509_certificate ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_endpoint_provider_x509_certificate ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_endpoint_provider_x509_certificate ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_endpoint_service_endpoint_provider_collection
+ ***********************************************/
+
+CREATE TABLE service_endpoint_service_endpoint_provider_collection
+( 
+	service_endpoint_id  integer  NOT NULL ,
+	service_endpoint_provider_collection_id integer  NOT NULL ,
+	service_endpoint_relation_type varchar(50)  NOT NULL ,
+	service_endpoint_relation_key varchar(255)  NOT NULL ,
+	weight               integer  NOT NULL ,
+	maximum_capacity     integer  NOT NULL ,
+	is_enabled           boolean  NOT NULL 
+);
+
+ALTER TABLE service_endpoint_service_endpoint_provider_collection
+	ADD CONSTRAINT xpkservice_endpoint_service_endpoint_provider_collection PRIMARY KEY (service_endpoint_id,service_endpoint_provider_collection_id,service_endpoint_relation_type,service_endpoint_relation_key);
+
+CREATE INDEX xif1service_endpoint_service_endpoint_provider_collection ON service_endpoint_service_endpoint_provider_collection
+( 
+	service_endpoint_id ASC
+);
+
+CREATE INDEX xif2service_endpoint_service_endpoint_provider_collection ON service_endpoint_service_endpoint_provider_collection
+( 
+	service_endpoint_provider_collection_id ASC
+);
+
+ALTER TABLE service_endpoint_service_endpoint_provider_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_endpoint_service_endpoint_provider_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_endpoint_service_endpoint_provider_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_endpoint_service_endpoint_provider_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_endpoint_service_sla
+ ***********************************************/
+
+CREATE TABLE service_endpoint_service_sla
+( 
+	service_endpoint_service_sla_id serial  NOT NULL ,
+	service_endpoint_id  integer  NOT NULL ,
+	service_sla_id       integer  NOT NULL ,
+	service_environment_id integer  NOT NULL 
+);
+
+ALTER TABLE service_endpoint_service_sla
+	ADD CONSTRAINT xpkservice_endpoint_service_sla PRIMARY KEY (service_endpoint_service_sla_id);
+
+CREATE INDEX xif1service_endpoint_service_sla ON service_endpoint_service_sla
+( 
+	service_endpoint_id ASC
+);
+
+CREATE INDEX xif2service_endpoint_service_sla ON service_endpoint_service_sla
+( 
+	service_sla_id ASC
+);
+
+CREATE INDEX xif3service_endpoint_service_sla ON service_endpoint_service_sla
+( 
+	service_environment_id ASC
+);
+
+ALTER TABLE service_endpoint_service_sla ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_endpoint_service_sla ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_endpoint_service_sla ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_endpoint_service_sla ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_endpoint_service_sla_service_feature
+ ***********************************************/
+
+CREATE TABLE service_endpoint_service_sla_service_feature
+( 
+	service_endpoint_service_sla_id integer  NOT NULL ,
+	service_feature      varchar(50)  NOT NULL 
+);
+
+ALTER TABLE service_endpoint_service_sla_service_feature
+	ADD CONSTRAINT xpkservice_endpoint_service_sla_service_feature PRIMARY KEY (service_endpoint_service_sla_id,service_feature);
+
+CREATE INDEX xif1service_endpoint_service_sla_service_feature ON service_endpoint_service_sla_service_feature
+( 
+	service_endpoint_service_sla_id ASC
+);
+
+CREATE INDEX xif2service_endpoint_service_sla_service_feature ON service_endpoint_service_sla_service_feature
+( 
+	service_feature ASC
+);
+
+ALTER TABLE service_endpoint_service_sla_service_feature ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_endpoint_service_sla_service_feature ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_endpoint_service_sla_service_feature ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_endpoint_service_sla_service_feature ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_endpoint_x509_certificate
+ ***********************************************/
+
+CREATE TABLE service_endpoint_x509_certificate
+( 
+	service_endpoint_id  integer  NOT NULL ,
+	x509_signed_certificate_id integer  NOT NULL ,
+	x509_certificate_rank integer  NOT NULL 
+);
+
+ALTER TABLE service_endpoint_x509_certificate
+	ADD CONSTRAINT xpkservice_endpoint_x509_certificate PRIMARY KEY (service_endpoint_id,x509_signed_certificate_id);
+
+CREATE INDEX xif1service_endpoint_x509_certificate ON service_endpoint_x509_certificate
+( 
+	service_endpoint_id ASC
+);
+
+CREATE INDEX xif2service_endpoint_x509_certificate ON service_endpoint_x509_certificate
+( 
+	x509_signed_certificate_id ASC
+);
+
+ALTER TABLE service_endpoint_x509_certificate ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_endpoint_x509_certificate ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_endpoint_x509_certificate ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_endpoint_x509_certificate ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: service_environment
@@ -4602,11 +5415,7 @@ CREATE TABLE service_environment
 	service_environment_type varchar(50)  NOT NULL ,
 	production_state     varchar(50)  NOT NULL ,
 	description          varchar(4000)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE service_environment
@@ -4625,6 +5434,11 @@ CREATE INDEX xifsvcenv_type ON service_environment
 	service_environment_type ASC
 );
 
+ALTER TABLE service_environment ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_environment ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_environment ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_environment ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: service_environment_collection
  ***********************************************/
@@ -4635,11 +5449,7 @@ CREATE TABLE service_environment_collection
 	service_environment_collection_name varchar(50)  NOT NULL ,
 	service_environment_collection_type varchar(50)  NULL ,
 	description          varchar(4000)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE service_environment_collection
@@ -4653,6 +5463,11 @@ CREATE INDEX xif1service_environment_collection ON service_environment_collectio
 	service_environment_collection_type
 );
 
+ALTER TABLE service_environment_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_environment_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_environment_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_environment_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: service_environment_collection_hier
  ***********************************************/
@@ -4661,11 +5476,7 @@ CREATE TABLE service_environment_collection_hier
 ( 
 	service_environment_collection_id integer  NOT NULL ,
 	child_service_environment_collection_id integer  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE service_environment_collection_hier
@@ -4681,6 +5492,11 @@ CREATE INDEX xif2service_environment_collection_hier ON service_environment_coll
 	service_environment_collection_id
 );
 
+ALTER TABLE service_environment_collection_hier ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_environment_collection_hier ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_environment_collection_hier ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_environment_collection_hier ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: service_environment_collection_service_environment
  ***********************************************/
@@ -4689,11 +5505,7 @@ CREATE TABLE service_environment_collection_service_environment
 ( 
 	service_environment_collection_id integer  NOT NULL ,
 	service_environment_id integer  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE service_environment_collection_service_environment
@@ -4709,6 +5521,380 @@ CREATE INDEX xif2service_environment_collection_service_environment ON service_e
 	service_environment_collection_id
 );
 
+ALTER TABLE service_environment_collection_service_environment ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_environment_collection_service_environment ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_environment_collection_service_environment ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_environment_collection_service_environment ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_instance
+ ***********************************************/
+
+CREATE TABLE service_instance
+( 
+	service_instance_id  serial  NOT NULL ,
+	device_id            integer  NOT NULL ,
+	service_version_id   integer  NOT NULL ,
+	netblock_id          integer  NULL 
+);
+
+ALTER TABLE service_instance
+	ADD CONSTRAINT xpkservice_instance PRIMARY KEY (service_instance_id);
+
+CREATE INDEX xif1service_instance ON service_instance
+( 
+	device_id ASC
+);
+
+CREATE INDEX xif2service_instance ON service_instance
+( 
+	netblock_id ASC
+);
+
+CREATE INDEX xif3service_instance ON service_instance
+( 
+	service_version_id ASC
+);
+
+ALTER TABLE service_instance ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_instance ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_instance ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_instance ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_instance_provided_feature
+ ***********************************************/
+
+CREATE TABLE service_instance_provided_feature
+( 
+	service_instance_id  integer  NOT NULL ,
+	service_feature      varchar(50)  NOT NULL 
+);
+
+ALTER TABLE service_instance_provided_feature
+	ADD CONSTRAINT xpkservice_instance_provided_feature PRIMARY KEY (service_instance_id,service_feature);
+
+CREATE INDEX xif1service_instance_provided_feature ON service_instance_provided_feature
+( 
+	service_instance_id ASC
+);
+
+CREATE INDEX xif2service_instance_provided_feature ON service_instance_provided_feature
+( 
+	service_feature ASC
+);
+
+ALTER TABLE service_instance_provided_feature ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_instance_provided_feature ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_instance_provided_feature ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_instance_provided_feature ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_sla
+ ***********************************************/
+
+CREATE TABLE service_sla
+( 
+	service_sla_id       serial  NOT NULL ,
+	service_sla_name     varchar(50)  NOT NULL ,
+	availability         integer  NULL ,
+	minimum_service_affinity varchar(255)  NULL ,
+	maximum_service_affinity varchar(255)  NULL 
+);
+
+ALTER TABLE service_sla
+	ADD CONSTRAINT xpkservice_sla PRIMARY KEY (service_sla_id);
+
+CREATE INDEX xif1service_sla ON service_sla
+( 
+	minimum_service_affinity ASC
+);
+
+CREATE INDEX xif2service_sla ON service_sla
+( 
+	maximum_service_affinity ASC
+);
+
+ALTER TABLE service_sla ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_sla ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_sla ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_sla ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_software_repository
+ ***********************************************/
+
+CREATE TABLE service_software_repository
+( 
+	service_id           integer  NOT NULL ,
+	software_artifact_repository_id serial  NOT NULL 
+);
+
+ALTER TABLE service_software_repository
+	ADD CONSTRAINT xpkservice_software_repository PRIMARY KEY (service_id,software_artifact_repository_id);
+
+CREATE INDEX xif1service_software_repository ON service_software_repository
+( 
+	service_id ASC
+);
+
+ALTER TABLE service_software_repository ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_software_repository ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_software_repository ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_software_repository ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_source_repository
+ ***********************************************/
+
+CREATE TABLE service_source_repository
+( 
+	service_source_repository_id serial  NOT NULL ,
+	service_id           integer  NOT NULL ,
+	source_repository_location_id integer  NOT NULL ,
+	service_source_policy_repository_path varchar(255)  NULL ,
+	is_enabled           boolean  NOT NULL ,
+	is_primary           boolean  NOT NULL 
+);
+
+ALTER TABLE service_source_repository
+	ADD CONSTRAINT xpkservice_source_repository PRIMARY KEY (service_source_repository_id);
+
+CREATE INDEX xif1service_source_repository ON service_source_repository
+( 
+	service_id ASC
+);
+
+CREATE INDEX xif2service_source_repository ON service_source_repository
+( 
+	source_repository_location_id ASC
+);
+
+ALTER TABLE service_source_repository ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_source_repository ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_source_repository ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_source_repository ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_version
+ ***********************************************/
+
+CREATE TABLE service_version
+( 
+	service_version_id   serial  NOT NULL ,
+	service_id           integer  NOT NULL ,
+	service_type         varchar(50)  NOT NULL ,
+	version_name         varchar(50)  NOT NULL ,
+	is_enabled           boolean  NOT NULL ,
+	is_deprecated        boolean  NOT NULL 
+);
+
+ALTER TABLE service_version
+	ADD CONSTRAINT xpkservice_version PRIMARY KEY (service_version_id);
+
+CREATE INDEX xif1service_version ON service_version
+( 
+	service_id ASC
+);
+
+ALTER TABLE service_version ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_version ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_version ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_version ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_version_artifact
+ ***********************************************/
+
+CREATE TABLE service_version_artifact
+( 
+	service_version_id   integer  NOT NULL ,
+	software_artifact_type varchar(50)  NOT NULL ,
+	checksum_algorithm   varchar(50)  NOT NULL ,
+	software_artifact_repository_id serial  NOT NULL ,
+	checksum             varchar(50)  NULL 
+);
+
+ALTER TABLE service_version_artifact
+	ADD CONSTRAINT xpkservice_version_artifact PRIMARY KEY (service_version_id,software_artifact_type,checksum_algorithm);
+
+CREATE INDEX xif1service_version_artifact ON service_version_artifact
+( 
+	service_version_id ASC
+);
+
+ALTER TABLE service_version_artifact ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_version_artifact ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_version_artifact ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_version_artifact ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_version_collection
+ ***********************************************/
+
+CREATE TABLE service_version_collection
+( 
+	service_version_collection_id serial  NOT NULL ,
+	service_version_collection_name varchar(50)  NOT NULL ,
+	service_version_collection_type varchar(50)  NOT NULL ,
+	description          varchar(255)  NULL ,
+	external_id          varchar(255)  NULL 
+);
+
+ALTER TABLE service_version_collection
+	ADD CONSTRAINT xpkservice_version_collection PRIMARY KEY (service_version_collection_id);
+
+CREATE INDEX xif1service_version_collection ON service_version_collection
+( 
+	service_version_collection_type ASC
+);
+
+ALTER TABLE service_version_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_version_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_version_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_version_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_version_collection_hier
+ ***********************************************/
+
+CREATE TABLE service_version_collection_hier
+( 
+	service_version_collection_id integer  NOT NULL ,
+	child_service_version_collection_id integer  NOT NULL 
+);
+
+ALTER TABLE service_version_collection_hier
+	ADD CONSTRAINT xpkservice_version_collection_hier PRIMARY KEY (service_version_collection_id,child_service_version_collection_id);
+
+CREATE INDEX xif1service_version_collection_hier ON service_version_collection_hier
+( 
+	service_version_collection_id ASC
+);
+
+CREATE INDEX xif2service_version_collection_hier ON service_version_collection_hier
+( 
+	child_service_version_collection_id ASC
+);
+
+ALTER TABLE service_version_collection_hier ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_version_collection_hier ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_version_collection_hier ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_version_collection_hier ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_version_collection_permitted_feature
+ ***********************************************/
+
+CREATE TABLE service_version_collection_permitted_feature
+( 
+	service_version_collection_id integer  NOT NULL ,
+	service_feature      varchar(50)  NOT NULL 
+);
+
+ALTER TABLE service_version_collection_permitted_feature
+	ADD CONSTRAINT xpkservice_version_collection_permitted_feature PRIMARY KEY (service_version_collection_id,service_feature);
+
+CREATE INDEX xif1service_version_collection_permitted_feature ON service_version_collection_permitted_feature
+( 
+	service_version_collection_id ASC
+);
+
+CREATE INDEX xif2service_version_collection_permitted_feature ON service_version_collection_permitted_feature
+( 
+	service_feature ASC
+);
+
+ALTER TABLE service_version_collection_permitted_feature ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_version_collection_permitted_feature ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_version_collection_permitted_feature ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_version_collection_permitted_feature ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_version_collection_service_version
+ ***********************************************/
+
+CREATE TABLE service_version_collection_service_version
+( 
+	service_version_collection_id integer  NOT NULL ,
+	service_version_id   integer  NOT NULL 
+);
+
+ALTER TABLE service_version_collection_service_version
+	ADD CONSTRAINT xpkservice_version_collection_service_version PRIMARY KEY (service_version_collection_id,service_version_id);
+
+CREATE INDEX xif1service_version_collection_service_version ON service_version_collection_service_version
+( 
+	service_version_collection_id ASC
+);
+
+CREATE INDEX xif2service_version_collection_service_version ON service_version_collection_service_version
+( 
+	service_version_id ASC
+);
+
+ALTER TABLE service_version_collection_service_version ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_version_collection_service_version ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_version_collection_service_version ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_version_collection_service_version ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_version_software_artifact_repository
+ ***********************************************/
+
+CREATE TABLE service_version_software_artifact_repository
+( 
+	service_version_id   integer  NOT NULL ,
+	software_artifact_repository_id serial  NOT NULL 
+);
+
+ALTER TABLE service_version_software_artifact_repository
+	ADD CONSTRAINT xpkservice_version_software_artifact_repository PRIMARY KEY (service_version_id,software_artifact_repository_id);
+
+CREATE INDEX xif1service_version_software_artifact_repository ON service_version_software_artifact_repository
+( 
+	service_version_id ASC
+);
+
+CREATE INDEX xif2service_version_software_artifact_repository ON service_version_software_artifact_repository
+( 
+	software_artifact_repository_id ASC
+);
+
+ALTER TABLE service_version_software_artifact_repository ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_version_software_artifact_repository ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_version_software_artifact_repository ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_version_software_artifact_repository ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: service_version_source_repository
+ ***********************************************/
+
+CREATE TABLE service_version_source_repository
+( 
+	service_source_repository_id integer  NOT NULL ,
+	service_version_id   integer  NOT NULL ,
+	software_tag         varchar(255)  NOT NULL 
+);
+
+ALTER TABLE service_version_source_repository
+	ADD CONSTRAINT xpkservice_version_source_repository PRIMARY KEY (service_source_repository_id,service_version_id);
+
+CREATE INDEX xif1service_version_source_repository ON service_version_source_repository
+( 
+	service_source_repository_id ASC
+);
+
+CREATE INDEX xif2service_version_source_repository ON service_version_source_repository
+( 
+	service_version_id ASC
+);
+
+ALTER TABLE service_version_source_repository ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE service_version_source_repository ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE service_version_source_repository ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE service_version_source_repository ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: shared_netblock
  ***********************************************/
@@ -4718,11 +5904,7 @@ CREATE TABLE shared_netblock
 	shared_netblock_id   serial  NOT NULL ,
 	shared_netblock_protocol varchar(50)  NOT NULL ,
 	netblock_id          integer  NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE shared_netblock
@@ -4741,6 +5923,11 @@ CREATE INDEX xif2shared_netblock ON shared_netblock
 	netblock_id
 );
 
+ALTER TABLE shared_netblock ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE shared_netblock ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE shared_netblock ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE shared_netblock ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: shared_netblock_layer3_interface
  ***********************************************/
@@ -4749,11 +5936,7 @@ CREATE TABLE shared_netblock_layer3_interface
 ( 
 	shared_netblock_id   integer  NOT NULL ,
 	layer3_interface_id  integer  NOT NULL ,
-	priority             integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	priority             integer  NOT NULL 
 );
 
 ALTER TABLE shared_netblock_layer3_interface
@@ -4769,6 +5952,11 @@ CREATE INDEX xif2shared_netblock_layer3_interface ON shared_netblock_layer3_inte
 	layer3_interface_id
 );
 
+ALTER TABLE shared_netblock_layer3_interface ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE shared_netblock_layer3_interface ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE shared_netblock_layer3_interface ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE shared_netblock_layer3_interface ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: site
  ***********************************************/
@@ -4779,11 +5967,7 @@ CREATE TABLE site
 	colo_company_id      integer  NULL ,
 	physical_address_id  integer  NULL ,
 	site_status          varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE site
@@ -4798,6 +5982,11 @@ CREATE INDEX xifsite_physaddr_id ON site
 ( 
 	physical_address_id
 );
+
+ALTER TABLE site ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE site ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE site ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE site ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: slot
@@ -4818,11 +6007,7 @@ CREATE TABLE slot
 	slot_x_offset        integer  NULL ,
 	slot_y_offset        integer  NULL ,
 	slot_z_offset        integer  NULL ,
-	slot_side            varchar(50)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	slot_side            varchar(50)  NULL 
 );
 
 ALTER TABLE slot
@@ -4849,6 +6034,11 @@ CREATE INDEX xif_slot_slot_type_id ON slot
 	slot_type_id
 );
 
+ALTER TABLE slot ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE slot ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE slot ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE slot ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: slot_type
  ***********************************************/
@@ -4860,11 +6050,7 @@ CREATE TABLE slot_type
 	slot_function        character varying(50)  NOT NULL ,
 	slot_physical_interface_type character varying(50)  NOT NULL ,
 	description          varchar(255)  NULL ,
-	remote_slot_permitted boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	remote_slot_permitted boolean  NOT NULL 
 );
 
 ALTER TABLE slot_type
@@ -4884,6 +6070,11 @@ CREATE INDEX xif_slot_type_slt_func ON slot_type
 	slot_function
 );
 
+ALTER TABLE slot_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE slot_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE slot_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE slot_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: slot_type_permitted_component_slot_type
  ***********************************************/
@@ -4891,11 +6082,7 @@ CREATE INDEX xif_slot_type_slt_func ON slot_type
 CREATE TABLE slot_type_permitted_component_slot_type
 ( 
 	slot_type_id         integer  NOT NULL ,
-	component_slot_type_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	component_slot_type_id integer  NOT NULL 
 );
 
 ALTER TABLE slot_type_permitted_component_slot_type
@@ -4911,6 +6098,11 @@ CREATE INDEX xif_stpcst_slot_type_id ON slot_type_permitted_component_slot_type
 	component_slot_type_id
 );
 
+ALTER TABLE slot_type_permitted_component_slot_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE slot_type_permitted_component_slot_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE slot_type_permitted_component_slot_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE slot_type_permitted_component_slot_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: slot_type_permitted_remote_slot_type
  ***********************************************/
@@ -4918,11 +6110,7 @@ CREATE INDEX xif_stpcst_slot_type_id ON slot_type_permitted_component_slot_type
 CREATE TABLE slot_type_permitted_remote_slot_type
 ( 
 	slot_type_id         integer  NOT NULL ,
-	remote_slot_type_id  integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	remote_slot_type_id  integer  NOT NULL 
 );
 
 ALTER TABLE slot_type_permitted_remote_slot_type
@@ -4938,6 +6126,171 @@ CREATE INDEX xif_stprst_slot_type_id ON slot_type_permitted_remote_slot_type
 	slot_type_id
 );
 
+ALTER TABLE slot_type_permitted_remote_slot_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE slot_type_permitted_remote_slot_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE slot_type_permitted_remote_slot_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE slot_type_permitted_remote_slot_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: software_artifact_repository
+ ***********************************************/
+
+CREATE TABLE software_artifact_repository
+( 
+	software_artifact_repository_id serial  NOT NULL ,
+	software_artifact_repository_name varchar(50)  NOT NULL ,
+	software_artifact_system_id integer  NOT NULL 
+);
+
+ALTER TABLE software_artifact_repository
+	ADD CONSTRAINT xpksoftware_artifact_repository PRIMARY KEY (software_artifact_repository_id);
+
+CREATE INDEX xif1software_artifact_repository ON software_artifact_repository
+( 
+	software_artifact_system_id ASC
+);
+
+ALTER TABLE software_artifact_repository ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE software_artifact_repository ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE software_artifact_repository ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE software_artifact_repository ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: software_artifact_repository_location
+ ***********************************************/
+
+CREATE TABLE software_artifact_repository_location
+( 
+	software_artifact_repository_id integer  NOT NULL ,
+	software_artifact_repository_location_type varchar(50)  NOT NULL ,
+	sw_package_type      varchar(50)  NOT NULL ,
+	repository_uri       varchar(255)  NOT NULL ,
+	service_environment_collection_id integer  NULL 
+);
+
+ALTER TABLE software_artifact_repository_location
+	ADD CONSTRAINT xpksoftware_artifact_repository_location PRIMARY KEY (software_artifact_repository_id,software_artifact_repository_location_type);
+
+CREATE INDEX xif1software_artifact_repository_location ON software_artifact_repository_location
+( 
+	software_artifact_repository_id ASC
+);
+
+CREATE INDEX xif2software_artifact_repository_location ON software_artifact_repository_location
+( 
+	sw_package_type ASC
+);
+
+CREATE INDEX xif3software_artifact_repository_location ON software_artifact_repository_location
+( 
+	service_environment_collection_id ASC
+);
+
+ALTER TABLE software_artifact_repository_location ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE software_artifact_repository_location ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE software_artifact_repository_location ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE software_artifact_repository_location ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: software_artifact_repository_relation
+ ***********************************************/
+
+CREATE TABLE software_artifact_repository_relation
+( 
+	software_artifact_repository_id integer  NOT NULL ,
+	related_software_artifact_repository_id integer  NOT NULL ,
+	software_artifact_relationship varchar(50)  NOT NULL 
+);
+
+ALTER TABLE software_artifact_repository_relation
+	ADD CONSTRAINT xpksoftware_artifact_repository_relation PRIMARY KEY (software_artifact_repository_id,related_software_artifact_repository_id);
+
+CREATE INDEX xif1software_artifact_repository_relation ON software_artifact_repository_relation
+( 
+	software_artifact_repository_id ASC
+);
+
+CREATE INDEX xif2software_artifact_repository_relation ON software_artifact_repository_relation
+( 
+	related_software_artifact_repository_id ASC
+);
+
+ALTER TABLE software_artifact_repository_relation ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE software_artifact_repository_relation ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE software_artifact_repository_relation ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE software_artifact_repository_relation ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: software_artifact_system
+ ***********************************************/
+
+CREATE TABLE software_artifact_system
+( 
+	software_artifact_system_id serial  NOT NULL ,
+	software_artifact_system_name varchar(50)  NOT NULL ,
+	software_artifact_system_url varchar(255)  NOT NULL 
+);
+
+ALTER TABLE software_artifact_system
+	ADD CONSTRAINT xpksoftware_artifact_system PRIMARY KEY (software_artifact_system_id);
+
+ALTER TABLE software_artifact_system ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE software_artifact_system ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE software_artifact_system ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE software_artifact_system ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: source_repository
+ ***********************************************/
+
+CREATE TABLE source_repository
+( 
+	source_repository_id serial  NOT NULL ,
+	source_repository_name varchar(50)  NOT NULL ,
+	source_repository_method varchar(255)  NOT NULL ,
+	source_repository_view_url varchar(255)  NOT NULL ,
+	source_repository_checkout_url varchar(50)  NOT NULL ,
+	description          varchar(255)  NULL 
+);
+
+ALTER TABLE source_repository
+	ADD CONSTRAINT xpksource_repository PRIMARY KEY (source_repository_id);
+
+CREATE INDEX xif1source_repository ON source_repository
+( 
+	source_repository_method ASC
+);
+
+ALTER TABLE source_repository ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE source_repository ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE source_repository ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE source_repository ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: source_repository_location
+ ***********************************************/
+
+CREATE TABLE source_repository_location
+( 
+	source_repository_location_id serial  NOT NULL ,
+	source_repository_id integer  NOT NULL ,
+	service_source_control_purpose varchar(255)  NOT NULL ,
+	service_source_repository_path varchar(50)  NOT NULL 
+);
+
+ALTER TABLE source_repository_location
+	ADD CONSTRAINT xpksource_repository_location PRIMARY KEY (source_repository_location_id);
+
+CREATE INDEX xif1source_repository_location ON source_repository_location
+( 
+	source_repository_id ASC
+);
+
+ALTER TABLE source_repository_location ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE source_repository_location ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE source_repository_location ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE source_repository_location ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: ssh_key
  ***********************************************/
@@ -4949,11 +6302,7 @@ CREATE TABLE ssh_key
 	ssh_public_key       varchar(4096)  NOT NULL ,
 	ssh_private_key      varchar(4096)  NULL ,
 	encryption_key_id    integer  NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE ssh_key
@@ -4975,6 +6324,11 @@ CREATE INDEX xif2ssh_key ON ssh_key
 	ssh_key_type
 );
 
+ALTER TABLE ssh_key ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE ssh_key ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE ssh_key ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE ssh_key ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: static_route
  ***********************************************/
@@ -4984,11 +6338,7 @@ CREATE TABLE static_route
 	static_route_id      serial  NOT NULL ,
 	device_source_id     integer  NOT NULL ,
 	layer3_interface_destination_id integer  NOT NULL ,
-	netblock_id          integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	netblock_id          integer  NOT NULL 
 );
 
 ALTER TABLE static_route
@@ -5009,6 +6359,11 @@ CREATE INDEX idx_staticrt_netintdstid ON static_route
 	layer3_interface_destination_id
 );
 
+ALTER TABLE static_route ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE static_route ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE static_route ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE static_route ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: static_route_template
  ***********************************************/
@@ -5019,15 +6374,16 @@ CREATE TABLE static_route_template
 	netblock_source_id   integer  NOT NULL ,
 	layer3_interface_destination_id integer  NOT NULL ,
 	netblock_id          integer  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE static_route_template
 	ADD CONSTRAINT pk_static_route_template PRIMARY KEY (static_route_template_id);
+
+ALTER TABLE static_route_template ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE static_route_template ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE static_route_template ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE static_route_template ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: sudo_account_collection_device_collection
@@ -5040,15 +6396,16 @@ CREATE TABLE sudo_account_collection_device_collection
 	account_collection_id integer  NOT NULL ,
 	run_as_account_collection_id integer  NULL ,
 	requires_password    boolean  NOT NULL ,
-	can_exec_child       boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	can_exec_child       boolean  NOT NULL 
 );
 
 ALTER TABLE sudo_account_collection_device_collection
 	ADD CONSTRAINT pk_sudo_acct_col_dev_coll PRIMARY KEY (sudo_alias_name,device_collection_id,account_collection_id);
+
+ALTER TABLE sudo_account_collection_device_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE sudo_account_collection_device_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE sudo_account_collection_device_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE sudo_account_collection_device_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: sudo_alias
@@ -5057,15 +6414,16 @@ ALTER TABLE sudo_account_collection_device_collection
 CREATE TABLE sudo_alias
 ( 
 	sudo_alias_name      varchar(50)  NOT NULL ,
-	sudo_alias_value     varchar(4000)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	sudo_alias_value     varchar(4000)  NOT NULL 
 );
 
 ALTER TABLE sudo_alias
 	ADD CONSTRAINT pk_sudo_alias PRIMARY KEY (sudo_alias_name);
+
+ALTER TABLE sudo_alias ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE sudo_alias ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE sudo_alias ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE sudo_alias ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: sw_package
@@ -5076,11 +6434,7 @@ CREATE TABLE sw_package
 	sw_package_id        serial  NOT NULL ,
 	sw_package_name      varchar(50)  NOT NULL ,
 	sw_package_type      character varying(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE sw_package
@@ -5088,6 +6442,11 @@ ALTER TABLE sw_package
 
 COMMENT ON CONSTRAINT pk_sw_package ON sw_package
 	 IS 'This should actually be lower(sw_package_name) but erwin isn''t being cooperative.';
+
+ALTER TABLE sw_package ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE sw_package ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE sw_package ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE sw_package ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: ticketing_system
@@ -5098,15 +6457,16 @@ CREATE TABLE ticketing_system
 	ticketing_system_id  serial  NOT NULL ,
 	ticketing_system_name varchar(50)  NOT NULL ,
 	ticketing_system_url varchar(255)  NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE ticketing_system
 	ADD CONSTRAINT pk_ticketing_system_id PRIMARY KEY (ticketing_system_id);
+
+ALTER TABLE ticketing_system ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE ticketing_system ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE ticketing_system ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE ticketing_system ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: token
@@ -5130,11 +6490,7 @@ CREATE TABLE token
 	is_token_locked      boolean  NOT NULL ,
 	token_unlock_time    timestamp with time zone  NULL ,
 	bad_logins           integer  NULL ,
-	last_updated         timestamp with time zone  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	last_updated         timestamp with time zone  NOT NULL 
 );
 
 ALTER TABLE token
@@ -5153,6 +6509,11 @@ CREATE INDEX idx_token_tokentype ON token
 	token_type
 );
 
+ALTER TABLE token ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE token ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE token ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE token ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: token_collection
  ***********************************************/
@@ -5163,11 +6524,7 @@ CREATE TABLE token_collection
 	token_collection_name varchar(50)  NOT NULL ,
 	token_collection_type varchar(50)  NOT NULL ,
 	description          varchar(255)  NULL ,
-	external_id          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	external_id          varchar(255)  NULL 
 );
 
 ALTER TABLE token_collection
@@ -5176,6 +6533,11 @@ ALTER TABLE token_collection
 ALTER TABLE token_collection
 	ADD CONSTRAINT uq_token_coll_name_type UNIQUE (token_collection_name,token_collection_type);
 
+ALTER TABLE token_collection ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE token_collection ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE token_collection ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE token_collection ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: token_collection_hier
  ***********************************************/
@@ -5183,11 +6545,7 @@ ALTER TABLE token_collection
 CREATE TABLE token_collection_hier
 ( 
 	token_collection_id  integer  NOT NULL ,
-	child_token_collection_id integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	child_token_collection_id integer  NOT NULL 
 );
 
 ALTER TABLE token_collection_hier
@@ -5203,6 +6561,11 @@ CREATE INDEX xif_tok_col_hier_tok_colid ON token_collection_hier
 	child_token_collection_id
 );
 
+ALTER TABLE token_collection_hier ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE token_collection_hier ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE token_collection_hier ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE token_collection_hier ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: token_collection_token
  ***********************************************/
@@ -5211,11 +6574,7 @@ CREATE TABLE token_collection_token
 ( 
 	token_collection_id  integer  NOT NULL ,
 	token_id             integer  NOT NULL ,
-	token_id_rank        integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	token_id_rank        integer  NULL 
 );
 
 ALTER TABLE token_collection_token
@@ -5233,6 +6592,11 @@ CREATE INDEX idx_tok_col_token_tok_id ON token_collection_token
 ( 
 	token_id
 );
+
+ALTER TABLE token_collection_token ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE token_collection_token ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE token_collection_token ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE token_collection_token ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: token_sequence
@@ -5256,11 +6620,7 @@ CREATE TABLE unix_group
 ( 
 	account_collection_id integer  NOT NULL ,
 	unix_gid             integer  NOT NULL ,
-	group_password       varchar(20)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	group_password       varchar(20)  NULL 
 );
 
 ALTER TABLE unix_group
@@ -5274,6 +6634,11 @@ CREATE UNIQUE INDEX xifunixgrp_uclass_id ON unix_group
 	account_collection_id
 );
 
+ALTER TABLE unix_group ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE unix_group ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE unix_group ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE unix_group ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_account_collection_relation
  ***********************************************/
@@ -5281,15 +6646,16 @@ CREATE UNIQUE INDEX xifunixgrp_uclass_id ON unix_group
 CREATE TABLE val_account_collection_relation
 ( 
 	account_collection_relation varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_account_collection_relation
 	ADD CONSTRAINT pk_val_account_collection_relation PRIMARY KEY (account_collection_relation);
+
+ALTER TABLE val_account_collection_relation ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_account_collection_relation ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_account_collection_relation ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_account_collection_relation ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_account_collection_type
@@ -5303,11 +6669,7 @@ CREATE TABLE val_account_collection_type
 	max_num_members      integer  NULL ,
 	max_num_collections  integer  NULL ,
 	can_have_hierarchy   boolean  NOT NULL ,
-	account_realm_id     integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	account_realm_id     integer  NULL 
 );
 
 ALTER TABLE val_account_collection_type
@@ -5318,6 +6680,11 @@ CREATE INDEX xif1val_account_collection_type ON val_account_collection_type
 	account_realm_id
 );
 
+ALTER TABLE val_account_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_account_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_account_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_account_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_account_role
  ***********************************************/
@@ -5326,15 +6693,16 @@ CREATE TABLE val_account_role
 ( 
 	account_role         varchar(50)  NOT NULL ,
 	uid_gid_forced       boolean  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_account_role
 	ADD CONSTRAINT pk_val_account_role PRIMARY KEY (account_role);
+
+ALTER TABLE val_account_role ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_account_role ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_account_role ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_account_role ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_account_type
@@ -5345,11 +6713,7 @@ CREATE TABLE val_account_type
 	account_type         varchar(50)  NOT NULL ,
 	is_person            boolean  NOT NULL ,
 	uid_gid_forced       boolean  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_account_type
@@ -5360,6 +6724,29 @@ CREATE INDEX idx_vaccount_type_isperson ON val_account_type
 	is_person
 );
 
+ALTER TABLE val_account_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_account_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_account_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_account_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: val_acl_group_type
+ ***********************************************/
+
+CREATE TABLE val_acl_group_type
+( 
+	acl_group_type       varchar(50)  NOT NULL ,
+	description          varchar(255)  NULL 
+);
+
+ALTER TABLE val_acl_group_type
+	ADD CONSTRAINT xpkval_acl_group_type PRIMARY KEY (acl_group_type);
+
+ALTER TABLE val_acl_group_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_acl_group_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_acl_group_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_acl_group_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_appaal_group_name
  ***********************************************/
@@ -5367,15 +6754,16 @@ CREATE INDEX idx_vaccount_type_isperson ON val_account_type
 CREATE TABLE val_appaal_group_name
 ( 
 	appaal_group_name    varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_appaal_group_name
 	ADD CONSTRAINT pk_val_appaal_group_name PRIMARY KEY (appaal_group_name);
+
+ALTER TABLE val_appaal_group_name ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_appaal_group_name ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_appaal_group_name ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_appaal_group_name ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_application_key
@@ -5385,11 +6773,7 @@ CREATE TABLE val_application_key
 ( 
 	appaal_group_name    varchar(50)  NOT NULL ,
 	application_key      varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_application_key
@@ -5400,6 +6784,11 @@ CREATE INDEX xif1val_application_key ON val_application_key
 	appaal_group_name
 );
 
+ALTER TABLE val_application_key ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_application_key ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_application_key ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_application_key ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_application_key_values
  ***********************************************/
@@ -5408,15 +6797,16 @@ CREATE TABLE val_application_key_values
 ( 
 	appaal_group_name    character varying(50)  NOT NULL ,
 	application_key      character varying(50)  NOT NULL ,
-	application_value    varchar(4000)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	application_value    varchar(4000)  NOT NULL 
 );
 
 ALTER TABLE val_application_key_values
 	ADD CONSTRAINT pk_val_app_key_values PRIMARY KEY (appaal_group_name,application_key,application_value);
+
+ALTER TABLE val_application_key_values ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_application_key_values ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_application_key_values ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_application_key_values ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_approval_chain_response_period
@@ -5425,15 +6815,16 @@ ALTER TABLE val_application_key_values
 CREATE TABLE val_approval_chain_response_period
 ( 
 	approval_chain_response_period varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_approval_chain_response_period
 	ADD CONSTRAINT pk_val_approval_chain_resp_prd PRIMARY KEY (approval_chain_response_period);
+
+ALTER TABLE val_approval_chain_response_period ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_approval_chain_response_period ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_approval_chain_response_period ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_approval_chain_response_period ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_approval_expiration_action
@@ -5442,15 +6833,16 @@ ALTER TABLE val_approval_chain_response_period
 CREATE TABLE val_approval_expiration_action
 ( 
 	approval_expiration_action varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_approval_expiration_action
 	ADD CONSTRAINT pk_val_approval_expiration_action PRIMARY KEY (approval_expiration_action);
+
+ALTER TABLE val_approval_expiration_action ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_approval_expiration_action ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_approval_expiration_action ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_approval_expiration_action ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_approval_notifty_type
@@ -5459,15 +6851,16 @@ ALTER TABLE val_approval_expiration_action
 CREATE TABLE val_approval_notifty_type
 ( 
 	approval_notify_type varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_approval_notifty_type
 	ADD CONSTRAINT pk_val_approval_notify_type PRIMARY KEY (approval_notify_type);
+
+ALTER TABLE val_approval_notifty_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_approval_notifty_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_approval_notifty_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_approval_notifty_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_approval_process_type
@@ -5476,15 +6869,16 @@ ALTER TABLE val_approval_notifty_type
 CREATE TABLE val_approval_process_type
 ( 
 	approval_process_type varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_approval_process_type
 	ADD CONSTRAINT pk_val_approval_process_type PRIMARY KEY (approval_process_type);
+
+ALTER TABLE val_approval_process_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_approval_process_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_approval_process_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_approval_process_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_approval_type
@@ -5493,15 +6887,16 @@ ALTER TABLE val_approval_process_type
 CREATE TABLE val_approval_type
 ( 
 	approval_type        varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_approval_type
 	ADD CONSTRAINT pk_val_approval_type PRIMARY KEY (approval_type);
+
+ALTER TABLE val_approval_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_approval_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_approval_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_approval_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_attestation_frequency
@@ -5510,15 +6905,16 @@ ALTER TABLE val_approval_type
 CREATE TABLE val_attestation_frequency
 ( 
 	attestation_frequency varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_attestation_frequency
 	ADD CONSTRAINT pk_val_attestation_frequency PRIMARY KEY (attestation_frequency);
+
+ALTER TABLE val_attestation_frequency ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_attestation_frequency ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_attestation_frequency ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_attestation_frequency ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_authentication_question
@@ -5527,15 +6923,16 @@ ALTER TABLE val_attestation_frequency
 CREATE TABLE val_authentication_question
 ( 
 	authentication_question_id serial  NOT NULL ,
-	question_text        varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	question_text        varchar(4000)  NULL 
 );
 
 ALTER TABLE val_authentication_question
 	ADD CONSTRAINT pk_val_auth_question PRIMARY KEY (authentication_question_id);
+
+ALTER TABLE val_authentication_question ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_authentication_question ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_authentication_question ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_authentication_question ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_authentication_resource
@@ -5544,15 +6941,16 @@ ALTER TABLE val_authentication_question
 CREATE TABLE val_authentication_resource
 ( 
 	authentication_resource varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_authentication_resource
 	ADD CONSTRAINT pk_val_auth_resource PRIMARY KEY (authentication_resource);
+
+ALTER TABLE val_authentication_resource ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_authentication_resource ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_authentication_resource ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_authentication_resource ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_badge_status
@@ -5561,15 +6959,16 @@ ALTER TABLE val_authentication_resource
 CREATE TABLE val_badge_status
 ( 
 	badge_status         varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_badge_status
 	ADD CONSTRAINT pk_val_badge_status PRIMARY KEY (badge_status);
+
+ALTER TABLE val_badge_status ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_badge_status ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_badge_status ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_badge_status ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_cable_type
@@ -5578,15 +6977,16 @@ ALTER TABLE val_badge_status
 CREATE TABLE val_cable_type
 ( 
 	cable_type           varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_cable_type
 	ADD CONSTRAINT pk_cable_type PRIMARY KEY (cable_type);
+
+ALTER TABLE val_cable_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_cable_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_cable_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_cable_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_company_collection_type
@@ -5599,15 +6999,16 @@ CREATE TABLE val_company_collection_type
 	is_infrastructure_type boolean  NOT NULL ,
 	max_num_members      integer  NULL ,
 	max_num_collections  integer  NULL ,
-	can_have_hierarchy   boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	can_have_hierarchy   boolean  NOT NULL 
 );
 
 ALTER TABLE val_company_collection_type
 	ADD CONSTRAINT pk_company_collection_type PRIMARY KEY (company_collection_type);
+
+ALTER TABLE val_company_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_company_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_company_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_company_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_company_type
@@ -5617,11 +7018,7 @@ CREATE TABLE val_company_type
 ( 
 	company_type         varchar(50)  NOT NULL ,
 	description          varchar(4000)  NULL ,
-	company_type_purpose varchar(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	company_type_purpose varchar(50)  NOT NULL 
 );
 
 ALTER TABLE val_company_type
@@ -5632,6 +7029,11 @@ CREATE INDEX xif_v_comptyp_comptyppurp ON val_company_type
 	company_type_purpose
 );
 
+ALTER TABLE val_company_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_company_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_company_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_company_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_company_type_purpose
  ***********************************************/
@@ -5639,15 +7041,16 @@ CREATE INDEX xif_v_comptyp_comptyppurp ON val_company_type
 CREATE TABLE val_company_type_purpose
 ( 
 	company_type_purpose varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_company_type_purpose
 	ADD CONSTRAINT pk_val_company_type_purpose PRIMARY KEY (company_type_purpose);
+
+ALTER TABLE val_company_type_purpose ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_company_type_purpose ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_company_type_purpose ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_company_type_purpose ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_component_function
@@ -5656,15 +7059,16 @@ ALTER TABLE val_company_type_purpose
 CREATE TABLE val_component_function
 ( 
 	component_function   varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_component_function
 	ADD CONSTRAINT pk_val_component_function PRIMARY KEY (component_function);
+
+ALTER TABLE val_component_function ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_component_function ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_component_function ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_component_function ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_component_property
@@ -5687,11 +7091,7 @@ CREATE TABLE val_component_property
 	required_slot_type_id integer  NULL ,
 	permit_slot_function char(10)  NOT NULL ,
 	required_slot_function character varying(50)  NULL ,
-	permit_slot_id       char(10)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	permit_slot_id       char(10)  NOT NULL 
 );
 
 ALTER TABLE val_component_property
@@ -5722,6 +7122,11 @@ CREATE INDEX xif_vcomp_prop_rqd_slttyp_id ON val_component_property
 	required_slot_type_id
 );
 
+ALTER TABLE val_component_property ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_component_property ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_component_property ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_component_property ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_component_property_type
  ***********************************************/
@@ -5730,15 +7135,16 @@ CREATE TABLE val_component_property_type
 ( 
 	component_property_type varchar(50)  NOT NULL ,
 	description          varchar(4000)  NULL ,
-	is_multivalue        boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_multivalue        boolean  NOT NULL 
 );
 
 ALTER TABLE val_component_property_type
 	ADD CONSTRAINT pk_val_component_property_type PRIMARY KEY (component_property_type);
+
+ALTER TABLE val_component_property_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_component_property_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_component_property_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_component_property_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_component_property_value
@@ -5749,11 +7155,7 @@ CREATE TABLE val_component_property_value
 	component_property_name character varying(50)  NOT NULL ,
 	component_property_type varchar(50)  NOT NULL ,
 	valid_property_value varchar(255)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_component_property_value
@@ -5765,6 +7167,11 @@ CREATE INDEX xif_comp_prop_val_nametyp ON val_component_property_value
 	component_property_type
 );
 
+ALTER TABLE val_component_property_value ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_component_property_value ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_component_property_value ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_component_property_value ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_contract_type
  ***********************************************/
@@ -5772,15 +7179,16 @@ CREATE INDEX xif_comp_prop_val_nametyp ON val_component_property_value
 CREATE TABLE val_contract_type
 ( 
 	contract_type        varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_contract_type
 	ADD CONSTRAINT pk_val_contract_type PRIMARY KEY (contract_type);
+
+ALTER TABLE val_contract_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_contract_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_contract_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_contract_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_country_code
@@ -5792,11 +7200,7 @@ CREATE TABLE val_country_code
 	dial_country_code    varchar(4)  NOT NULL ,
 	primary_iso_currency_code CHAR(3)  NULL ,
 	country_name         varchar(255)  NULL ,
-	display_priority     integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	display_priority     integer  NULL 
 );
 
 ALTER TABLE val_country_code
@@ -5806,6 +7210,11 @@ CREATE INDEX xif1val_country_code ON val_country_code
 ( 
 	primary_iso_currency_code
 );
+
+ALTER TABLE val_country_code ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_country_code ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_country_code ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_country_code ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_device_collection_type
@@ -5817,15 +7226,16 @@ CREATE TABLE val_device_collection_type
 	description          varchar(4000)  NULL ,
 	max_num_members      integer  NULL ,
 	max_num_collections  integer  NULL ,
-	can_have_hierarchy   boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	can_have_hierarchy   boolean  NOT NULL 
 );
 
 ALTER TABLE val_device_collection_type
 	ADD CONSTRAINT pk_val_device_collection_type PRIMARY KEY (device_collection_type);
+
+ALTER TABLE val_device_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_device_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_device_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_device_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_device_management_controller_type
@@ -5833,16 +7243,17 @@ ALTER TABLE val_device_collection_type
 
 CREATE TABLE val_device_management_controller_type
 ( 
-	device_mgmt_control_type varchar(255)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	device_management_controller_type varchar(255)  NOT NULL ,
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_device_management_controller_type
-	ADD CONSTRAINT pk_val_device_mgmt_ctrl_type PRIMARY KEY (device_mgmt_control_type);
+	ADD CONSTRAINT pk_val_device_mgmt_ctrl_type PRIMARY KEY (device_management_controller_type);
+
+ALTER TABLE val_device_management_controller_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_device_management_controller_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_device_management_controller_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_device_management_controller_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_device_status
@@ -5851,15 +7262,16 @@ ALTER TABLE val_device_management_controller_type
 CREATE TABLE val_device_status
 ( 
 	device_status        varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_device_status
 	ADD CONSTRAINT pk_val_status PRIMARY KEY (device_status);
+
+ALTER TABLE val_device_status ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_device_status ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_device_status ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_device_status ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_diet
@@ -5867,15 +7279,16 @@ ALTER TABLE val_device_status
 
 CREATE TABLE val_diet
 ( 
-	diet                 varchar(255)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	diet                 varchar(255)  NOT NULL 
 );
 
 ALTER TABLE val_diet
 	ADD CONSTRAINT pk_val_diet PRIMARY KEY (diet);
+
+ALTER TABLE val_diet ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_diet ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_diet ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_diet ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_dns_class
@@ -5884,15 +7297,16 @@ ALTER TABLE val_diet
 CREATE TABLE val_dns_class
 ( 
 	dns_class            varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_dns_class
 	ADD CONSTRAINT pk_val_dns_class PRIMARY KEY (dns_class);
+
+ALTER TABLE val_dns_class ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_dns_class ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_dns_class ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_dns_class ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_dns_domain_collection_type
@@ -5904,29 +7318,31 @@ CREATE TABLE val_dns_domain_collection_type
 	description          varchar(4000)  NULL ,
 	max_num_members      integer  NULL ,
 	max_num_collections  integer  NULL ,
-	can_have_hierarchy   boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	can_have_hierarchy   boolean  NOT NULL 
 );
 
 ALTER TABLE val_dns_domain_collection_type
 	ADD CONSTRAINT pk_val_dns_domain_collection_type PRIMARY KEY (dns_domain_collection_type);
 
+ALTER TABLE val_dns_domain_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_dns_domain_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_dns_domain_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_dns_domain_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 CREATE TABLE val_dns_domain_type
 ( 
 	dns_domain_type      varchar(50)  NOT NULL ,
 	can_generate         boolean  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_dns_domain_type
 	ADD CONSTRAINT pkval_dns_domain_type PRIMARY KEY (dns_domain_type);
+
+ALTER TABLE val_dns_domain_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_dns_domain_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_dns_domain_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_dns_domain_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_dns_record_relation_type
@@ -5935,15 +7351,16 @@ ALTER TABLE val_dns_domain_type
 CREATE TABLE val_dns_record_relation_type
 ( 
 	dns_record_relation_type varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_dns_record_relation_type
 	ADD CONSTRAINT pk_val_dns_record_relation_typ PRIMARY KEY (dns_record_relation_type);
+
+ALTER TABLE val_dns_record_relation_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_dns_record_relation_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_dns_record_relation_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_dns_record_relation_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_dns_srv_service
@@ -5952,15 +7369,16 @@ ALTER TABLE val_dns_record_relation_type
 CREATE TABLE val_dns_srv_service
 ( 
 	dns_srv_service      varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_dns_srv_service
 	ADD CONSTRAINT pk_val_dns_srv_srvice PRIMARY KEY (dns_srv_service);
+
+ALTER TABLE val_dns_srv_service ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_dns_srv_service ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_dns_srv_service ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_dns_srv_service ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_dns_type
@@ -5969,16 +7387,17 @@ ALTER TABLE val_dns_srv_service
 CREATE TABLE val_dns_type
 ( 
 	dns_type             varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	id_type              varchar(10)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL ,
+	id_type              varchar(10)  NOT NULL 
 );
 
 ALTER TABLE val_dns_type
 	ADD CONSTRAINT pk_val_dns_type PRIMARY KEY (dns_type);
+
+ALTER TABLE val_dns_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_dns_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_dns_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_dns_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_encapsulation_mode
@@ -5988,11 +7407,7 @@ CREATE TABLE val_encapsulation_mode
 ( 
 	encapsulation_mode   varchar(50)  NOT NULL ,
 	encapsulation_type   character varying(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_encapsulation_mode
@@ -6003,6 +7418,11 @@ CREATE INDEX xif_val_encap_mode_type ON val_encapsulation_mode
 	encapsulation_type
 );
 
+ALTER TABLE val_encapsulation_mode ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_encapsulation_mode ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_encapsulation_mode ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_encapsulation_mode ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_encapsulation_type
  ***********************************************/
@@ -6010,15 +7430,16 @@ CREATE INDEX xif_val_encap_mode_type ON val_encapsulation_mode
 CREATE TABLE val_encapsulation_type
 ( 
 	encapsulation_type   varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_encapsulation_type
 	ADD CONSTRAINT pk_val_encapsulation_type PRIMARY KEY (encapsulation_type);
+
+ALTER TABLE val_encapsulation_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_encapsulation_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_encapsulation_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_encapsulation_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_encryption_key_purpose
@@ -6028,15 +7449,16 @@ CREATE TABLE val_encryption_key_purpose
 ( 
 	encryption_key_purpose varchar(50)  NOT NULL ,
 	encryption_key_purpose_version serial  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_encryption_key_purpose
 	ADD CONSTRAINT pk_val_encryption_key_purpose PRIMARY KEY (encryption_key_purpose,encryption_key_purpose_version);
+
+ALTER TABLE val_encryption_key_purpose ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_encryption_key_purpose ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_encryption_key_purpose ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_encryption_key_purpose ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_encryption_method
@@ -6045,15 +7467,16 @@ ALTER TABLE val_encryption_key_purpose
 CREATE TABLE val_encryption_method
 ( 
 	encryption_method    varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_encryption_method
 	ADD CONSTRAINT pk_val_encryption_method PRIMARY KEY (encryption_method);
+
+ALTER TABLE val_encryption_method ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_encryption_method ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_encryption_method ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_encryption_method ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_filesystem_type
@@ -6062,15 +7485,16 @@ ALTER TABLE val_encryption_method
 CREATE TABLE val_filesystem_type
 ( 
 	filesystem_type      varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_filesystem_type
 	ADD CONSTRAINT pk_val_filesytem_type PRIMARY KEY (filesystem_type);
+
+ALTER TABLE val_filesystem_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_filesystem_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_filesystem_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_filesystem_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_gender
@@ -6079,15 +7503,16 @@ ALTER TABLE val_filesystem_type
 CREATE TABLE val_gender
 ( 
 	gender               varchar(255)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_gender
 	ADD CONSTRAINT pk_val_gemder PRIMARY KEY (gender);
+
+ALTER TABLE val_gender ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_gender ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_gender ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_gender ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_image_type
@@ -6096,15 +7521,16 @@ ALTER TABLE val_gender
 CREATE TABLE val_image_type
 ( 
 	image_type           varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_image_type
 	ADD CONSTRAINT pk_val_image_type PRIMARY KEY (image_type);
+
+ALTER TABLE val_image_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_image_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_image_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_image_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_ip_namespace
@@ -6113,15 +7539,16 @@ ALTER TABLE val_image_type
 CREATE TABLE val_ip_namespace
 ( 
 	ip_namespace         varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_ip_namespace
 	ADD CONSTRAINT pk_val_ip_namespace PRIMARY KEY (ip_namespace);
+
+ALTER TABLE val_ip_namespace ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_ip_namespace ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_ip_namespace ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_ip_namespace ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_iso_currency_code
@@ -6131,15 +7558,16 @@ CREATE TABLE val_iso_currency_code
 ( 
 	iso_currency_code    CHAR(3)  NOT NULL ,
 	description          varchar(255)  NULL ,
-	currency_symbol      varchar(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	currency_symbol      varchar(50)  NOT NULL 
 );
 
 ALTER TABLE val_iso_currency_code
 	ADD CONSTRAINT pk_val_iso_currency_code PRIMARY KEY (iso_currency_code);
+
+ALTER TABLE val_iso_currency_code ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_iso_currency_code ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_iso_currency_code ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_iso_currency_code ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_key_usage_reason_for_assignment
@@ -6148,15 +7576,16 @@ ALTER TABLE val_iso_currency_code
 CREATE TABLE val_key_usage_reason_for_assignment
 ( 
 	key_usage_reason_for_assignment varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_key_usage_reason_for_assignment
 	ADD CONSTRAINT pk_reason_for_assignment PRIMARY KEY (key_usage_reason_for_assignment);
+
+ALTER TABLE val_key_usage_reason_for_assignment ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_key_usage_reason_for_assignment ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_key_usage_reason_for_assignment ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_key_usage_reason_for_assignment ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_layer2_network_collection_type
@@ -6168,15 +7597,16 @@ CREATE TABLE val_layer2_network_collection_type
 	description          varchar(4000)  NULL ,
 	max_num_members      integer  NULL ,
 	max_num_collections  integer  NULL ,
-	can_have_hierarchy   boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	can_have_hierarchy   boolean  NOT NULL 
 );
 
 ALTER TABLE val_layer2_network_collection_type
 	ADD CONSTRAINT pk_val_layer2_network_coll_typ PRIMARY KEY (layer2_network_collection_type);
+
+ALTER TABLE val_layer2_network_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_layer2_network_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_layer2_network_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_layer2_network_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_layer3_interface_purpose
@@ -6185,15 +7615,16 @@ ALTER TABLE val_layer2_network_collection_type
 CREATE TABLE val_layer3_interface_purpose
 ( 
 	layer3_interface_purpose varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_layer3_interface_purpose
 	ADD CONSTRAINT pk_val_network_int_purpose PRIMARY KEY (layer3_interface_purpose);
+
+ALTER TABLE val_layer3_interface_purpose ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_layer3_interface_purpose ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_layer3_interface_purpose ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_layer3_interface_purpose ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_layer3_interface_type
@@ -6202,15 +7633,16 @@ ALTER TABLE val_layer3_interface_purpose
 CREATE TABLE val_layer3_interface_type
 ( 
 	layer3_interface_type varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_layer3_interface_type
 	ADD CONSTRAINT pk_network_int_type PRIMARY KEY (layer3_interface_type);
+
+ALTER TABLE val_layer3_interface_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_layer3_interface_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_layer3_interface_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_layer3_interface_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_layer3_network_collection_type
@@ -6222,15 +7654,16 @@ CREATE TABLE val_layer3_network_collection_type
 	description          varchar(4000)  NULL ,
 	max_num_members      integer  NULL ,
 	max_num_collections  integer  NULL ,
-	can_have_hierarchy   boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	can_have_hierarchy   boolean  NOT NULL 
 );
 
 ALTER TABLE val_layer3_network_collection_type
 	ADD CONSTRAINT pk_val_layer3_network_coll_type PRIMARY KEY (layer3_network_collection_type);
+
+ALTER TABLE val_layer3_network_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_layer3_network_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_layer3_network_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_layer3_network_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_logical_port_type
@@ -6239,15 +7672,16 @@ ALTER TABLE val_layer3_network_collection_type
 CREATE TABLE val_logical_port_type
 ( 
 	logical_port_type    varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_logical_port_type
 	ADD CONSTRAINT pk_val_logical_port_type PRIMARY KEY (logical_port_type);
+
+ALTER TABLE val_logical_port_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_logical_port_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_logical_port_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_logical_port_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_logical_volume_property
@@ -6257,11 +7691,7 @@ CREATE TABLE val_logical_volume_property
 ( 
 	logical_volume_property_name varchar(50)  NOT NULL ,
 	filesystem_type      character varying(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_logical_volume_property
@@ -6272,6 +7702,11 @@ CREATE INDEX xif_val_lvol_prop_fstype ON val_logical_volume_property
 	filesystem_type
 );
 
+ALTER TABLE val_logical_volume_property ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_logical_volume_property ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_logical_volume_property ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_logical_volume_property ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_logical_volume_purpose
  ***********************************************/
@@ -6279,15 +7714,16 @@ CREATE INDEX xif_val_lvol_prop_fstype ON val_logical_volume_property
 CREATE TABLE val_logical_volume_purpose
 ( 
 	logical_volume_purpose varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_logical_volume_purpose
 	ADD CONSTRAINT pk_val_logical_volume_purpose PRIMARY KEY (logical_volume_purpose);
+
+ALTER TABLE val_logical_volume_purpose ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_logical_volume_purpose ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_logical_volume_purpose ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_logical_volume_purpose ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_logical_volume_type
@@ -6296,15 +7732,16 @@ ALTER TABLE val_logical_volume_purpose
 CREATE TABLE val_logical_volume_type
 ( 
 	logical_volume_type  varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_logical_volume_type
 	ADD CONSTRAINT pk_logical_volume_type PRIMARY KEY (logical_volume_type);
+
+ALTER TABLE val_logical_volume_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_logical_volume_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_logical_volume_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_logical_volume_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_netblock_collection_type
@@ -6318,15 +7755,16 @@ CREATE TABLE val_netblock_collection_type
 	max_num_collections  integer  NULL ,
 	can_have_hierarchy   boolean  NOT NULL ,
 	netblock_is_single_address_restriction varchar(3)  NOT NULL ,
-	netblock_ip_family_restriction integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	netblock_ip_family_restriction integer  NULL 
 );
 
 ALTER TABLE val_netblock_collection_type
 	ADD CONSTRAINT pk_val_netblock_collection_type PRIMARY KEY (netblock_collection_type);
+
+ALTER TABLE val_netblock_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_netblock_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_netblock_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_netblock_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_netblock_status
@@ -6335,15 +7773,16 @@ ALTER TABLE val_netblock_collection_type
 CREATE TABLE val_netblock_status
 ( 
 	netblock_status      varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_netblock_status
 	ADD CONSTRAINT pk_val_netblock_status PRIMARY KEY (netblock_status);
+
+ALTER TABLE val_netblock_status ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_netblock_status ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_netblock_status ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_netblock_status ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_netblock_type
@@ -6354,15 +7793,16 @@ CREATE TABLE val_netblock_type
 	netblock_type        varchar(50)  NOT NULL ,
 	description          varchar(4000)  NULL ,
 	db_forced_hierarchy  boolean  NOT NULL ,
-	is_validated_hierarchy boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_validated_hierarchy boolean  NOT NULL 
 );
 
 ALTER TABLE val_netblock_type
 	ADD CONSTRAINT pk_val_netblock_type PRIMARY KEY (netblock_type);
+
+ALTER TABLE val_netblock_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_netblock_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_netblock_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_netblock_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_network_range_type
@@ -6376,11 +7816,7 @@ CREATE TABLE val_network_range_type
 	default_dns_prefix   varchar(50)  NULL ,
 	netblock_type        character varying(50)  NULL ,
 	can_overlap          boolean  NOT NULL ,
-	require_cidr_boundary boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	require_cidr_boundary boolean  NOT NULL 
 );
 
 ALTER TABLE val_network_range_type
@@ -6391,6 +7827,11 @@ CREATE INDEX xif_netrange_type_nb_type ON val_network_range_type
 	netblock_type
 );
 
+ALTER TABLE val_network_range_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_network_range_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_network_range_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_network_range_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_network_service_type
  ***********************************************/
@@ -6398,15 +7839,16 @@ CREATE INDEX xif_netrange_type_nb_type ON val_network_range_type
 CREATE TABLE val_network_service_type
 ( 
 	network_service_type varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_network_service_type
 	ADD CONSTRAINT pk_network_service_type PRIMARY KEY (network_service_type);
+
+ALTER TABLE val_network_service_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_network_service_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_network_service_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_network_service_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_operating_system_family
@@ -6415,15 +7857,16 @@ ALTER TABLE val_network_service_type
 CREATE TABLE val_operating_system_family
 ( 
 	operating_system_family varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_operating_system_family
 	ADD CONSTRAINT pk_val_operating_system_family PRIMARY KEY (operating_system_family);
+
+ALTER TABLE val_operating_system_family ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_operating_system_family ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_operating_system_family ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_operating_system_family ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_operating_system_snapshot_type
@@ -6432,15 +7875,16 @@ ALTER TABLE val_operating_system_family
 CREATE TABLE val_operating_system_snapshot_type
 ( 
 	operating_system_snapshot_type varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_operating_system_snapshot_type
 	ADD CONSTRAINT pk_val_os_snapshot_type PRIMARY KEY (operating_system_snapshot_type);
+
+ALTER TABLE val_operating_system_snapshot_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_operating_system_snapshot_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_operating_system_snapshot_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_operating_system_snapshot_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_ownership_status
@@ -6449,15 +7893,16 @@ ALTER TABLE val_operating_system_snapshot_type
 CREATE TABLE val_ownership_status
 ( 
 	ownership_status     varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_ownership_status
 	ADD CONSTRAINT pk_val_ownership_status PRIMARY KEY (ownership_status);
+
+ALTER TABLE val_ownership_status ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_ownership_status ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_ownership_status ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_ownership_status ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_package_relation_type
@@ -6466,15 +7911,16 @@ ALTER TABLE val_ownership_status
 CREATE TABLE val_package_relation_type
 ( 
 	package_relation_type varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_package_relation_type
 	ADD CONSTRAINT pk_val_package_relation_type PRIMARY KEY (package_relation_type);
+
+ALTER TABLE val_package_relation_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_package_relation_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_package_relation_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_package_relation_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_password_type
@@ -6483,15 +7929,16 @@ ALTER TABLE val_package_relation_type
 CREATE TABLE val_password_type
 ( 
 	password_type        varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_password_type
 	ADD CONSTRAINT pk_val_password_type PRIMARY KEY (password_type);
+
+ALTER TABLE val_password_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_password_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_password_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_password_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_person_company_attribute_data_type
@@ -6500,15 +7947,16 @@ ALTER TABLE val_password_type
 CREATE TABLE val_person_company_attribute_data_type
 ( 
 	person_company_attribute_data_type varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_person_company_attribute_data_type
 	ADD CONSTRAINT pk_val_pers_comp_attr_dataty PRIMARY KEY (person_company_attribute_data_type);
+
+ALTER TABLE val_person_company_attribute_data_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_person_company_attribute_data_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_person_company_attribute_data_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_person_company_attribute_data_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_person_company_attribute_name
@@ -6518,11 +7966,7 @@ CREATE TABLE val_person_company_attribute_name
 ( 
 	person_company_attribute_name varchar(50)  NOT NULL ,
 	person_company_attribute_data_type varchar(50)  NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_person_company_attribute_name
@@ -6533,6 +7977,11 @@ CREATE INDEX xifprescompattr_name_datatyp ON val_person_company_attribute_name
 	person_company_attribute_data_type
 );
 
+ALTER TABLE val_person_company_attribute_name ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_person_company_attribute_name ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_person_company_attribute_name ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_person_company_attribute_name ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_person_company_attribute_value
  ***********************************************/
@@ -6541,11 +7990,7 @@ CREATE TABLE val_person_company_attribute_value
 ( 
 	person_company_attribute_name character varying(50)  NOT NULL ,
 	person_company_attribute_value varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_person_company_attribute_value
@@ -6556,6 +8001,11 @@ CREATE INDEX xifpers_comp_attr_val_name ON val_person_company_attribute_value
 	person_company_attribute_name
 );
 
+ALTER TABLE val_person_company_attribute_value ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_person_company_attribute_value ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_person_company_attribute_value ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_person_company_attribute_value ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_person_company_relation
  ***********************************************/
@@ -6563,15 +8013,16 @@ CREATE INDEX xifpers_comp_attr_val_name ON val_person_company_attribute_value
 CREATE TABLE val_person_company_relation
 ( 
 	person_company_relation varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_person_company_relation
 	ADD CONSTRAINT pk_val_person_company_relation PRIMARY KEY (person_company_relation);
+
+ALTER TABLE val_person_company_relation ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_person_company_relation ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_person_company_relation ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_person_company_relation ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_person_contact_location_type
@@ -6580,15 +8031,16 @@ ALTER TABLE val_person_company_relation
 CREATE TABLE val_person_contact_location_type
 ( 
 	person_contact_location_type varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_person_contact_location_type
 	ADD CONSTRAINT pk_val_person_contact_loc_type PRIMARY KEY (person_contact_location_type);
+
+ALTER TABLE val_person_contact_location_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_person_contact_location_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_person_contact_location_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_person_contact_location_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_person_contact_technology
@@ -6598,11 +8050,7 @@ CREATE TABLE val_person_contact_technology
 ( 
 	person_contact_technology varchar(50)  NOT NULL ,
 	person_contact_type  character varying(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_person_contact_technology
@@ -6613,6 +8061,11 @@ CREATE INDEX xif1val_person_contact_technology ON val_person_contact_technology
 	person_contact_type
 );
 
+ALTER TABLE val_person_contact_technology ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_person_contact_technology ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_person_contact_technology ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_person_contact_technology ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_person_contact_type
  ***********************************************/
@@ -6620,15 +8073,16 @@ CREATE INDEX xif1val_person_contact_technology ON val_person_contact_technology
 CREATE TABLE val_person_contact_type
 ( 
 	person_contact_type  varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_person_contact_type
 	ADD CONSTRAINT pk_val_phone_number_type PRIMARY KEY (person_contact_type);
+
+ALTER TABLE val_person_contact_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_person_contact_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_person_contact_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_person_contact_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_person_image_usage
@@ -6637,15 +8091,16 @@ ALTER TABLE val_person_contact_type
 CREATE TABLE val_person_image_usage
 ( 
 	person_image_usage   varchar(50)  NOT NULL ,
-	is_multivalue        boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_multivalue        boolean  NOT NULL 
 );
 
 ALTER TABLE val_person_image_usage
 	ADD CONSTRAINT pk_val_person_image_usage PRIMARY KEY (person_image_usage);
+
+ALTER TABLE val_person_image_usage ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_person_image_usage ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_person_image_usage ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_person_image_usage ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_person_location_type
@@ -6654,15 +8109,16 @@ ALTER TABLE val_person_image_usage
 CREATE TABLE val_person_location_type
 ( 
 	person_location_type varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_person_location_type
 	ADD CONSTRAINT pk_val_user_location_type PRIMARY KEY (person_location_type);
+
+ALTER TABLE val_person_location_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_person_location_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_person_location_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_person_location_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_person_status
@@ -6675,15 +8131,16 @@ CREATE TABLE val_person_status
 	is_enabled           boolean  NOT NULL ,
 	propagate_from_person boolean  NOT NULL ,
 	is_forced            boolean  NOT NULL ,
-	is_db_enforced       boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_db_enforced       boolean  NOT NULL 
 );
 
 ALTER TABLE val_person_status
 	ADD CONSTRAINT pk_val_person_status PRIMARY KEY (person_status);
+
+ALTER TABLE val_person_status ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_person_status ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_person_status ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_person_status ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_physical_address_type
@@ -6692,15 +8149,16 @@ ALTER TABLE val_person_status
 CREATE TABLE val_physical_address_type
 ( 
 	physical_address_type varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_physical_address_type
 	ADD CONSTRAINT pk_val_physical_address_type PRIMARY KEY (physical_address_type);
+
+ALTER TABLE val_physical_address_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_physical_address_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_physical_address_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_physical_address_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_physicalish_volume_type
@@ -6709,15 +8167,41 @@ ALTER TABLE val_physical_address_type
 CREATE TABLE val_physicalish_volume_type
 ( 
 	physicalish_volume_type varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_physicalish_volume_type
 	ADD CONSTRAINT pk_val_physicalish_volume_type PRIMARY KEY (physicalish_volume_type);
+
+ALTER TABLE val_physicalish_volume_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_physicalish_volume_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_physicalish_volume_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_physicalish_volume_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: val_port_range_type
+ ***********************************************/
+
+CREATE TABLE val_port_range_type
+( 
+	port_range_type      varchar(50)  NOT NULL ,
+	protocol             varchar(50)  NOT NULL ,
+	range_permitted      boolean  NOT NULL ,
+	description          varchar(255)  NULL 
+);
+
+ALTER TABLE val_port_range_type
+	ADD CONSTRAINT xpkval_port_range_type PRIMARY KEY (port_range_type,protocol);
+
+CREATE INDEX xif1val_port_range_type ON val_port_range_type
+( 
+	protocol ASC
+);
+
+ALTER TABLE val_port_range_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_port_range_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_port_range_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_port_range_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_private_key_encryption_type
@@ -6726,15 +8210,16 @@ ALTER TABLE val_physicalish_volume_type
 CREATE TABLE val_private_key_encryption_type
 ( 
 	private_key_encryption_type varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_private_key_encryption_type
 	ADD CONSTRAINT pk_val_pvt_key_encryption_type PRIMARY KEY (private_key_encryption_type);
+
+ALTER TABLE val_private_key_encryption_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_private_key_encryption_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_private_key_encryption_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_private_key_encryption_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_processor_architecture
@@ -6744,15 +8229,16 @@ CREATE TABLE val_processor_architecture
 ( 
 	processor_architecture varchar(50)  NOT NULL ,
 	kernel_bits          integer  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_processor_architecture
 	ADD CONSTRAINT pk_val_processor_architecture PRIMARY KEY (processor_architecture);
+
+ALTER TABLE val_processor_architecture ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_processor_architecture ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_processor_architecture ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_processor_architecture ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_production_state
@@ -6761,15 +8247,16 @@ ALTER TABLE val_processor_architecture
 CREATE TABLE val_production_state
 ( 
 	production_state     varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_production_state
 	ADD CONSTRAINT pk_val_production_state PRIMARY KEY (production_state);
+
+ALTER TABLE val_production_state ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_production_state ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_production_state ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_production_state ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_property
@@ -6813,11 +8300,7 @@ CREATE TABLE val_property
 	permit_service_environment_collection char(10)  NOT NULL ,
 	permit_site_code     CHAR(10)  NOT NULL ,
 	permit_x509_signed_certificate_id char(10)  NOT NULL ,
-	permit_property_rank char(10)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	permit_property_rank char(10)  NOT NULL 
 );
 
 ALTER TABLE val_property
@@ -6898,6 +8381,11 @@ CREATE INDEX xif2val_property ON val_property
 	property_type
 );
 
+ALTER TABLE val_property ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_property ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_property ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_property ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_property_data_type
  ***********************************************/
@@ -6905,15 +8393,16 @@ CREATE INDEX xif2val_property ON val_property
 CREATE TABLE val_property_data_type
 ( 
 	property_data_type   varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_property_data_type
 	ADD CONSTRAINT pk_val_property_data_type PRIMARY KEY (property_data_type);
+
+ALTER TABLE val_property_data_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_property_data_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_property_data_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_property_data_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_property_name_collection_type
@@ -6925,15 +8414,16 @@ CREATE TABLE val_property_name_collection_type
 	description          varchar(4000)  NULL ,
 	max_num_members      integer  NULL ,
 	max_num_collections  integer  NULL ,
-	can_have_hierarchy   boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	can_have_hierarchy   boolean  NOT NULL 
 );
 
 ALTER TABLE val_property_name_collection_type
 	ADD CONSTRAINT pk_property_collction_type PRIMARY KEY (property_name_collection_type);
+
+ALTER TABLE val_property_name_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_property_name_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_property_name_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_property_name_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_property_type
@@ -6944,11 +8434,7 @@ CREATE TABLE val_property_type
 	property_type        varchar(50)  NOT NULL ,
 	description          varchar(255)  NULL ,
 	property_value_account_collection_type_restriction character varying(50)  NULL ,
-	is_multivalue        boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_multivalue        boolean  NOT NULL 
 );
 
 ALTER TABLE val_property_type
@@ -6959,16 +8445,17 @@ CREATE INDEX xif1val_property_type ON val_property_type
 	property_value_account_collection_type_restriction
 );
 
+ALTER TABLE val_property_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_property_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_property_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_property_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 CREATE TABLE val_property_value
 ( 
 	property_name        character varying(255)  NOT NULL ,
 	property_type        character varying(50)  NOT NULL ,
 	valid_property_value varchar(255)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_property_value
@@ -6980,6 +8467,11 @@ CREATE INDEX xifvalproval_namtyp ON val_property_value
 	property_type
 );
 
+ALTER TABLE val_property_value ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_property_value ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_property_value ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_property_value ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_rack_type
  ***********************************************/
@@ -6987,15 +8479,16 @@ CREATE INDEX xifvalproval_namtyp ON val_property_value
 CREATE TABLE val_rack_type
 ( 
 	rack_type            varchar(255)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_rack_type
 	ADD CONSTRAINT pk_val_rack_type PRIMARY KEY (rack_type);
+
+ALTER TABLE val_rack_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_rack_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_rack_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_rack_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_raid_type
@@ -7007,15 +8500,77 @@ CREATE TABLE val_raid_type
 	description          varchar(4000)  NULL ,
 	primary_raid_level   integer  NULL ,
 	secondary_raid_level integer  NULL ,
-	raid_level_qualifier integer  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	raid_level_qualifier integer  NULL 
 );
 
 ALTER TABLE val_raid_type
 	ADD CONSTRAINT pk_raid_type PRIMARY KEY (raid_type);
+
+ALTER TABLE val_raid_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_raid_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_raid_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_raid_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: val_service_affinity
+ ***********************************************/
+
+CREATE TABLE val_service_affinity
+( 
+	service_affinity     varchar(255)  NOT NULL ,
+	service_affinity_rank integer  NOT NULL ,
+	description          varchar(255)  NULL 
+);
+
+ALTER TABLE val_service_affinity
+	ADD CONSTRAINT xpkval_service_affinity PRIMARY KEY (service_affinity);
+
+ALTER TABLE val_service_affinity ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_service_affinity ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_service_affinity ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_service_affinity ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: val_service_endpoint_provider_collection_type
+ ***********************************************/
+
+CREATE TABLE val_service_endpoint_provider_collection_type
+( 
+	service_endpoint_provider_collection_type varchar(50)  NOT NULL ,
+	description          varchar(255)  NULL ,
+	max_num_members      integer  NULL ,
+	max_num_collections  integer  NULL ,
+	can_have_hierarchy   boolean  NOT NULL 
+);
+
+ALTER TABLE val_service_endpoint_provider_collection_type
+	ADD CONSTRAINT xpkval_service_endpoint_provider_collection_type PRIMARY KEY (service_endpoint_provider_collection_type);
+
+ALTER TABLE val_service_endpoint_provider_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_service_endpoint_provider_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_service_endpoint_provider_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_service_endpoint_provider_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: val_service_endpoint_provider_type
+ ***********************************************/
+
+CREATE TABLE val_service_endpoint_provider_type
+( 
+	service_endpoint_provider_type varchar(50)  NOT NULL ,
+	maximum_members      integer  NULL ,
+	translates_addresses boolean  NOT NULL ,
+	proxies_connections  boolean  NOT NULL ,
+	description          varchar(255)  NULL 
+);
+
+ALTER TABLE val_service_endpoint_provider_type
+	ADD CONSTRAINT xpkval_service_endpoint_provider_type PRIMARY KEY (service_endpoint_provider_type);
+
+ALTER TABLE val_service_endpoint_provider_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_service_endpoint_provider_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_service_endpoint_provider_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_service_endpoint_provider_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_service_environment_collection_type
@@ -7027,15 +8582,16 @@ CREATE TABLE val_service_environment_collection_type
 	description          varchar(4000)  NULL ,
 	max_num_members      integer  NULL ,
 	max_num_collections  integer  NULL ,
-	can_have_hierarchy   boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	can_have_hierarchy   boolean  NOT NULL 
 );
 
 ALTER TABLE val_service_environment_collection_type
 	ADD CONSTRAINT pk_val_service_env_coll_type PRIMARY KEY (service_environment_collection_type);
+
+ALTER TABLE val_service_environment_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_service_environment_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_service_environment_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_service_environment_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_service_environment_type
@@ -7044,15 +8600,55 @@ ALTER TABLE val_service_environment_collection_type
 CREATE TABLE val_service_environment_type
 ( 
 	service_environment_type varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_service_environment_type
 	ADD CONSTRAINT pk_val_service_environment_type PRIMARY KEY (service_environment_type);
+
+ALTER TABLE val_service_environment_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_service_environment_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_service_environment_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_service_environment_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: val_service_feature
+ ***********************************************/
+
+CREATE TABLE val_service_feature
+( 
+	service_feature      varchar(50)  NOT NULL ,
+	description          varchar(255)  NULL 
+);
+
+ALTER TABLE val_service_feature
+	ADD CONSTRAINT xpkval_service_feature PRIMARY KEY (service_feature);
+
+ALTER TABLE val_service_feature ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_service_feature ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_service_feature ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_service_feature ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: val_service_version_collection_type
+ ***********************************************/
+
+CREATE TABLE val_service_version_collection_type
+( 
+	service_version_collection_type varchar(50)  NOT NULL ,
+	description          varchar(255)  NULL ,
+	max_num_members      boolean  NOT NULL ,
+	max_num_collections  integer  NULL ,
+	can_have_hierarchy   integer  NULL 
+);
+
+ALTER TABLE val_service_version_collection_type
+	ADD CONSTRAINT xpkval_service_version_collection_type PRIMARY KEY (service_version_collection_type);
+
+ALTER TABLE val_service_version_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_service_version_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_service_version_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_service_version_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_shared_netblock_protocol
@@ -7060,15 +8656,16 @@ ALTER TABLE val_service_environment_type
 
 CREATE TABLE val_shared_netblock_protocol
 ( 
-	shared_netblock_protocol varchar(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	shared_netblock_protocol varchar(50)  NOT NULL 
 );
 
 ALTER TABLE val_shared_netblock_protocol
 	ADD CONSTRAINT pk_val_shared_netblock_protocol PRIMARY KEY (shared_netblock_protocol);
+
+ALTER TABLE val_shared_netblock_protocol ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_shared_netblock_protocol ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_shared_netblock_protocol ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_shared_netblock_protocol ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_slot_function
@@ -7078,15 +8675,16 @@ CREATE TABLE val_slot_function
 ( 
 	slot_function        varchar(50)  NOT NULL ,
 	description          varchar(4000)  NULL ,
-	can_have_mac_address boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	can_have_mac_address boolean  NOT NULL 
 );
 
 ALTER TABLE val_slot_function
 	ADD CONSTRAINT pk_val_slot_function PRIMARY KEY (slot_function);
+
+ALTER TABLE val_slot_function ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_slot_function ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_slot_function ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_slot_function ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_slot_physical_interface
@@ -7095,11 +8693,7 @@ ALTER TABLE val_slot_function
 CREATE TABLE val_slot_physical_interface
 ( 
 	slot_physical_interface_type varchar(50)  NOT NULL ,
-	slot_function        character varying(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	slot_function        character varying(50)  NOT NULL 
 );
 
 ALTER TABLE val_slot_physical_interface
@@ -7110,6 +8704,29 @@ CREATE INDEX xif_slot_phys_int_slot_func ON val_slot_physical_interface
 	slot_function
 );
 
+ALTER TABLE val_slot_physical_interface ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_slot_physical_interface ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_slot_physical_interface ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_slot_physical_interface ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
+/***********************************************
+ * Table: val_source_repository_method
+ ***********************************************/
+
+CREATE TABLE val_source_repository_method
+( 
+	source_repository_method varchar(255)  NOT NULL ,
+	description          varchar(255)  NULL 
+);
+
+ALTER TABLE val_source_repository_method
+	ADD CONSTRAINT xpkval_source_repository_method PRIMARY KEY (source_repository_method);
+
+ALTER TABLE val_source_repository_method ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_source_repository_method ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_source_repository_method ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_source_repository_method ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: val_ssh_key_type
  ***********************************************/
@@ -7117,15 +8734,16 @@ CREATE INDEX xif_slot_phys_int_slot_func ON val_slot_physical_interface
 CREATE TABLE val_ssh_key_type
 ( 
 	ssh_key_type         varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_ssh_key_type
 	ADD CONSTRAINT pk_val_ssh_key_type PRIMARY KEY (ssh_key_type);
+
+ALTER TABLE val_ssh_key_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_ssh_key_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_ssh_key_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_ssh_key_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_sw_package_type
@@ -7134,15 +8752,16 @@ ALTER TABLE val_ssh_key_type
 CREATE TABLE val_sw_package_type
 ( 
 	sw_package_type      varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_sw_package_type
 	ADD CONSTRAINT pk_val_sw_package_type PRIMARY KEY (sw_package_type);
+
+ALTER TABLE val_sw_package_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_sw_package_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_sw_package_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_sw_package_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_token_collection_type
@@ -7154,15 +8773,16 @@ CREATE TABLE val_token_collection_type
 	description          varchar(255)  NULL ,
 	max_num_members      integer  NULL ,
 	max_num_collections  integer  NULL ,
-	can_have_hierarchy   boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	can_have_hierarchy   boolean  NOT NULL 
 );
 
 ALTER TABLE val_token_collection_type
 	ADD CONSTRAINT pk_val_token_collection_type PRIMARY KEY (token_collection_type);
+
+ALTER TABLE val_token_collection_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_token_collection_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_token_collection_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_token_collection_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_token_status
@@ -7171,15 +8791,16 @@ ALTER TABLE val_token_collection_type
 CREATE TABLE val_token_status
 ( 
 	token_status         varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_token_status
 	ADD CONSTRAINT pk_val_token_status PRIMARY KEY (token_status);
+
+ALTER TABLE val_token_status ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_token_status ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_token_status ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_token_status ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_token_type
@@ -7189,15 +8810,16 @@ CREATE TABLE val_token_type
 ( 
 	token_type           varchar(50)  NOT NULL ,
 	description          varchar(4000)  NULL ,
-	token_digit_count    integer  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	token_digit_count    integer  NOT NULL 
 );
 
 ALTER TABLE val_token_type
 	ADD CONSTRAINT pk_val_token_type PRIMARY KEY (token_type);
+
+ALTER TABLE val_token_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_token_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_token_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_token_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_volume_group_purpose
@@ -7206,15 +8828,16 @@ ALTER TABLE val_token_type
 CREATE TABLE val_volume_group_purpose
 ( 
 	volume_group_purpose varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_volume_group_purpose
 	ADD CONSTRAINT pk_val_volume_group_purpose PRIMARY KEY (volume_group_purpose);
+
+ALTER TABLE val_volume_group_purpose ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_volume_group_purpose ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_volume_group_purpose ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_volume_group_purpose ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_volume_group_relation
@@ -7223,15 +8846,16 @@ ALTER TABLE val_volume_group_purpose
 CREATE TABLE val_volume_group_relation
 ( 
 	volume_group_relation varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_volume_group_relation
 	ADD CONSTRAINT pk_val_volume_group_relation PRIMARY KEY (volume_group_relation);
+
+ALTER TABLE val_volume_group_relation ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_volume_group_relation ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_volume_group_relation ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_volume_group_relation ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_volume_group_type
@@ -7240,15 +8864,16 @@ ALTER TABLE val_volume_group_relation
 CREATE TABLE val_volume_group_type
 ( 
 	volume_group_type    varchar(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE val_volume_group_type
 	ADD CONSTRAINT pk_volume_group_type PRIMARY KEY (volume_group_type);
+
+ALTER TABLE val_volume_group_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_volume_group_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_volume_group_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_volume_group_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_x509_certificate_file_format
@@ -7257,15 +8882,16 @@ ALTER TABLE val_volume_group_type
 CREATE TABLE val_x509_certificate_file_format
 ( 
 	x509_certificate_file_format varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_x509_certificate_file_format
 	ADD CONSTRAINT pk_certificate_file_format PRIMARY KEY (x509_certificate_file_format);
+
+ALTER TABLE val_x509_certificate_file_format ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_x509_certificate_file_format ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_x509_certificate_file_format ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_x509_certificate_file_format ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_x509_certificate_type
@@ -7274,15 +8900,16 @@ ALTER TABLE val_x509_certificate_file_format
 CREATE TABLE val_x509_certificate_type
 ( 
 	x509_certificate_type varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_x509_certificate_type
 	ADD CONSTRAINT pk_x509_certificate_type PRIMARY KEY (x509_certificate_type);
+
+ALTER TABLE val_x509_certificate_type ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_x509_certificate_type ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_x509_certificate_type ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_x509_certificate_type ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_x509_key_usage
@@ -7292,15 +8919,16 @@ CREATE TABLE val_x509_key_usage
 ( 
 	x509_key_usage       varchar(50)  NOT NULL ,
 	description          varchar(255)  NULL ,
-	is_extended          boolean  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	is_extended          boolean  NOT NULL 
 );
 
 ALTER TABLE val_x509_key_usage
 	ADD CONSTRAINT pk_x509_key_usage PRIMARY KEY (x509_key_usage);
+
+ALTER TABLE val_x509_key_usage ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_x509_key_usage ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_x509_key_usage ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_x509_key_usage ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_x509_key_usage_category
@@ -7309,15 +8937,16 @@ ALTER TABLE val_x509_key_usage
 CREATE TABLE val_x509_key_usage_category
 ( 
 	x509_key_usage_category varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_x509_key_usage_category
 	ADD CONSTRAINT pk_x509_key_usage_category PRIMARY KEY (x509_key_usage_category);
+
+ALTER TABLE val_x509_key_usage_category ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_x509_key_usage_category ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_x509_key_usage_category ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_x509_key_usage_category ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: val_x509_revocation_reason
@@ -7326,15 +8955,16 @@ ALTER TABLE val_x509_key_usage_category
 CREATE TABLE val_x509_revocation_reason
 ( 
 	x509_revocation_reason varchar(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE val_x509_revocation_reason
 	ADD CONSTRAINT pk_val_x509_revocation_reason PRIMARY KEY (x509_revocation_reason);
+
+ALTER TABLE val_x509_revocation_reason ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE val_x509_revocation_reason ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE val_x509_revocation_reason ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE val_x509_revocation_reason ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: volume_group
@@ -7348,11 +8978,7 @@ CREATE TABLE volume_group
 	volume_group_name    varchar(50)  NOT NULL ,
 	volume_group_type    varchar(50)  NULL ,
 	volume_group_size_in_bytes bigint  NOT NULL ,
-	raid_type            varchar(50)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	raid_type            varchar(50)  NULL 
 );
 
 ALTER TABLE volume_group
@@ -7392,6 +9018,11 @@ CREATE INDEX xi_volume_group_name ON volume_group
 	volume_group_name
 );
 
+ALTER TABLE volume_group ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE volume_group ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE volume_group ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE volume_group ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: volume_group_physicalish_volume
  ***********************************************/
@@ -7403,11 +9034,7 @@ CREATE TABLE volume_group_physicalish_volume
 	device_id            integer  NULL ,
 	volume_group_primary_position integer  NULL ,
 	volume_group_secondary_position integer  NULL ,
-	volume_group_relation varchar(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	volume_group_relation varchar(50)  NOT NULL 
 );
 
 ALTER TABLE volume_group_physicalish_volume
@@ -7450,6 +9077,11 @@ CREATE INDEX xiq_volgrp_pv_position ON volume_group_physicalish_volume
 	volume_group_primary_position ASC
 );
 
+ALTER TABLE volume_group_physicalish_volume ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE volume_group_physicalish_volume ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE volume_group_physicalish_volume ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE volume_group_physicalish_volume ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: volume_group_purpose
  ***********************************************/
@@ -7458,11 +9090,7 @@ CREATE TABLE volume_group_purpose
 ( 
 	volume_group_id      integer  NOT NULL ,
 	volume_group_purpose character varying(50)  NOT NULL ,
-	description          varchar(4000)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(4000)  NULL 
 );
 
 ALTER TABLE volume_group_purpose
@@ -7478,6 +9106,11 @@ CREATE INDEX xif_val_volgrp_purp_vgpurp ON volume_group_purpose
 	volume_group_purpose
 );
 
+ALTER TABLE volume_group_purpose ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE volume_group_purpose ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE volume_group_purpose ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE volume_group_purpose ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
+
 /***********************************************
  * Table: x509_key_usage_attribute
  ***********************************************/
@@ -7486,15 +9119,16 @@ CREATE TABLE x509_key_usage_attribute
 ( 
 	x509_signed_certificate_id integer  NOT NULL ,
 	x509_key_usage       character varying(50)  NOT NULL ,
-	x509_key_usgage_category varchar(50)  NOT NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	x509_key_usgage_category varchar(50)  NOT NULL 
 );
 
 ALTER TABLE x509_key_usage_attribute
 	ADD CONSTRAINT pk_key_usage_attribute PRIMARY KEY (x509_signed_certificate_id,x509_key_usage);
+
+ALTER TABLE x509_key_usage_attribute ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE x509_key_usage_attribute ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE x509_key_usage_attribute ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE x509_key_usage_attribute ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: x509_key_usage_categorization
@@ -7504,15 +9138,16 @@ CREATE TABLE x509_key_usage_categorization
 ( 
 	x509_key_usage_category character varying(50)  NOT NULL ,
 	x509_key_usage       character varying(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE x509_key_usage_categorization
 	ADD CONSTRAINT pk_key_usage_cat PRIMARY KEY (x509_key_usage_category,x509_key_usage);
+
+ALTER TABLE x509_key_usage_categorization ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE x509_key_usage_categorization ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE x509_key_usage_categorization ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE x509_key_usage_categorization ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: x509_key_usage_default
@@ -7522,11 +9157,7 @@ CREATE TABLE x509_key_usage_default
 ( 
 	x509_signed_certificate_id integer  NOT NULL ,
 	x509_key_usage       character varying(50)  NOT NULL ,
-	description          varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	description          varchar(255)  NULL 
 );
 
 ALTER TABLE x509_key_usage_default
@@ -7541,6 +9172,11 @@ CREATE INDEX fk_x509keyusgdef_signcertid ON x509_key_usage_default
 ( 
 	x509_signed_certificate_id
 );
+
+ALTER TABLE x509_key_usage_default ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE x509_key_usage_default ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE x509_key_usage_default ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE x509_key_usage_default ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 /***********************************************
  * Table: x509_signed_certificate
@@ -7565,11 +9201,7 @@ CREATE TABLE x509_signed_certificate
 	x509_revocation_date timestamp with time zone  NULL ,
 	x509_revocation_reason varchar(50)  NULL ,
 	ocsp_uri             varchar(255)  NULL ,
-	crl_uri              varchar(255)  NULL ,
-	data_ins_user        varchar(255)  NULL ,
-	data_ins_date        timestamp with time zone  NULL ,
-	data_upd_user        varchar(255)  NULL ,
-	data_upd_date        timestamp with time zone  NULL 
+	crl_uri              varchar(255)  NULL 
 );
 
 ALTER TABLE x509_signed_certificate
@@ -7597,6 +9229,11 @@ CREATE INDEX xif6x509_signed_certificate ON x509_signed_certificate
 ( 
 	x509_certificate_type
 );
+
+ALTER TABLE x509_signed_certificate ADD COLUMN data_ins_user varchar(255);
+ALTER TABLE x509_signed_certificate ADD COLUMN data_ins_date TIMESTAMP WITH TIME ZONE;
+ALTER TABLE x509_signed_certificate ADD COLUMN data_upd_user varchar(255);
+ALTER TABLE x509_signed_certificate ADD COLUMN data_upd_date TIMESTAMP WITH TIME ZONE;
 
 
 ALTER TABLE account
@@ -7801,6 +9438,43 @@ ALTER TABLE account_unix_info
 
 ALTER TABLE account_unix_info
 	ADD CONSTRAINT fk_auxifo_acct_id FOREIGN KEY (account_id) REFERENCES account(account_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE acl_group
+	ADD CONSTRAINT r_895 FOREIGN KEY (acl_group_type) REFERENCES val_acl_group_type(acl_group_type)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE acl_rule
+	ADD CONSTRAINT r_896 FOREIGN KEY (acl_group_id) REFERENCES acl_group(acl_group_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE acl_rule
+	ADD CONSTRAINT r_897 FOREIGN KEY (service_depend_id) REFERENCES service_acl(service_depend_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE acl_rule
+	ADD CONSTRAINT r_900 FOREIGN KEY (source_port_range_id) REFERENCES port_range(port_range_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE acl_rule
+	ADD CONSTRAINT r_901 FOREIGN KEY (destination_port_range_id) REFERENCES port_range(port_range_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE acl_rule
+	ADD CONSTRAINT r_965 FOREIGN KEY (source_netblock_collection_id) REFERENCES netblock_collection(netblock_collection_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE acl_rule
+	ADD CONSTRAINT r_966 FOREIGN KEY (destination_netblock_collection_id) REFERENCES netblock_collection(netblock_collection_id)
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION;
 
@@ -8464,7 +10138,7 @@ ALTER TABLE device_management_controller
 		ON DELETE NO ACTION;
 
 ALTER TABLE device_management_controller
-	ADD CONSTRAINT fk_dev_mgmt_cntrl_val_ctrl_typ FOREIGN KEY (device_management_control_type) REFERENCES val_device_management_controller_type(device_mgmt_control_type)
+	ADD CONSTRAINT fk_dev_mgmt_cntrl_val_ctrl_typ FOREIGN KEY (device_management_control_type) REFERENCES val_device_management_controller_type(device_management_controller_type)
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION;
 
@@ -8913,6 +10587,23 @@ ALTER TABLE layer3_interface
 
 ALTER TABLE layer3_interface
 	ADD CONSTRAINT fk_netint_netinttyp_id FOREIGN KEY (layer3_interface_type) REFERENCES val_layer3_interface_type(layer3_interface_type)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE layer3_interface_acl
+	ADD CONSTRAINT r_969 FOREIGN KEY (layer3_interface_acl_id) REFERENCES layer3_interface_acl_chain(layer3_interface_acl_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE layer3_interface_acl
+	ADD CONSTRAINT r_970 FOREIGN KEY (layer3_interface_id) REFERENCES layer3_interface(layer3_interface_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE layer3_interface_acl_chain
+	ADD CONSTRAINT r_902 FOREIGN KEY (acl_group_id) REFERENCES acl_group(acl_group_id)
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION;
 
@@ -9498,6 +11189,12 @@ ALTER TABLE physicalish_volume
 		ON DELETE NO ACTION
 		DEFERRABLE  ;
 
+
+ALTER TABLE port_range
+	ADD CONSTRAINT r_848 FOREIGN KEY (port_range_type,protocol) REFERENCES val_port_range_type(port_range_type,protocol)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
 ALTER TABLE private_key
 	ALTER COLUMN is_active
 		SET DEFAULT true;
@@ -9517,6 +11214,16 @@ ALTER TABLE property
 	ALTER COLUMN is_enabled
 		SET DEFAULT true;
 
+
+ALTER TABLE property
+	ADD CONSTRAINT r_893 FOREIGN KEY (service_version_collection_id) REFERENCES service_version_collection(service_version_collection_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE property
+	ADD CONSTRAINT r_894 FOREIGN KEY (property_value_service_version_collection_id) REFERENCES service_version_collection(service_version_collection_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
 
 ALTER TABLE property
 	ADD CONSTRAINT fk_property_acctid FOREIGN KEY (account_id) REFERENCES account(account_id)
@@ -9712,6 +11419,255 @@ ALTER TABLE rack_location
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION;
 
+ALTER TABLE service
+	ALTER COLUMN is_active
+		SET DEFAULT true;
+
+ALTER TABLE service
+	ALTER COLUMN is_synthesized
+		SET DEFAULT false;
+
+ALTER TABLE service_acl
+	ALTER COLUMN is_enabled
+		SET DEFAULT true;
+
+
+ALTER TABLE service_acl
+	ADD CONSTRAINT r_886 FOREIGN KEY (service_depend_id) REFERENCES service_depend(service_depend_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_depend
+	ADD CONSTRAINT r_878 FOREIGN KEY (service_version_id) REFERENCES service_version(service_version_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_depend
+	ADD CONSTRAINT r_879 FOREIGN KEY (service_id) REFERENCES service(service_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_depend
+	ADD CONSTRAINT r_880 FOREIGN KEY (minimum_service_version_id) REFERENCES service_version(service_version_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_depend
+	ADD CONSTRAINT r_881 FOREIGN KEY (maximum_service_version_id) REFERENCES service_version(service_version_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_depend
+	ADD CONSTRAINT r_882 FOREIGN KEY (service_sla_id) REFERENCES service_sla(service_sla_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_depend
+	ADD CONSTRAINT r_883 FOREIGN KEY (service_endpoint_provider_id) REFERENCES service_endpoint_provider(service_endpoint_provider_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_depend_service_feature
+	ADD CONSTRAINT r_884 FOREIGN KEY (service_depend_id) REFERENCES service_depend(service_depend_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_depend_service_feature
+	ADD CONSTRAINT r_885 FOREIGN KEY (service_feature) REFERENCES val_service_feature(service_feature)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint
+	ALTER COLUMN is_synthesized
+		SET DEFAULT false;
+
+
+ALTER TABLE service_endpoint
+	ADD CONSTRAINT r_853 FOREIGN KEY (service_id) REFERENCES service(service_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint
+	ADD CONSTRAINT r_854 FOREIGN KEY (dns_record_id) REFERENCES dns_record(dns_record_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint
+	ADD CONSTRAINT r_855 FOREIGN KEY (dns_domain_id) REFERENCES dns_domain(dns_domain_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint
+	ADD CONSTRAINT r_856 FOREIGN KEY (port_range_id) REFERENCES port_range(port_range_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_health_check
+	ALTER COLUMN rank
+		SET DEFAULT 10;
+
+ALTER TABLE service_endpoint_health_check
+	ALTER COLUMN is_enabled
+		SET DEFAULT true;
+
+
+ALTER TABLE service_endpoint_health_check
+	ADD CONSTRAINT r_863 FOREIGN KEY (service_endpoint_id) REFERENCES service_endpoint(service_endpoint_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_health_check
+	ADD CONSTRAINT r_864 FOREIGN KEY (protocol) REFERENCES protocol(protocol)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_provider
+	ALTER COLUMN is_synthesized
+		SET DEFAULT false;
+
+
+ALTER TABLE service_endpoint_provider
+	ADD CONSTRAINT r_849 FOREIGN KEY (service_endpoint_provider_type) REFERENCES val_service_endpoint_provider_type(service_endpoint_provider_type)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_provider
+	ADD CONSTRAINT r_850 FOREIGN KEY (dns_record_id) REFERENCES dns_record(dns_record_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_provider
+	ADD CONSTRAINT r_851 FOREIGN KEY (netblock_id) REFERENCES netblock(netblock_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_endpoint_provider_collection
+	ADD CONSTRAINT r_852 FOREIGN KEY (service_endpoint_provider_collection_type) REFERENCES val_service_endpoint_provider_collection_type(service_endpoint_provider_collection_type)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_endpoint_provider_collection_service_endpoint_provider
+	ADD CONSTRAINT r_971 FOREIGN KEY (service_endpoint_provider_collection_id) REFERENCES service_endpoint_provider_collection(service_endpoint_provider_collection_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_provider_collection_service_endpoint_provider
+	ADD CONSTRAINT r_972 FOREIGN KEY (service_endpoint_provider_id) REFERENCES service_endpoint_provider(service_endpoint_provider_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_provider_service_instance
+	ALTER COLUMN rank
+		SET DEFAULT 10;
+
+ALTER TABLE service_endpoint_provider_service_instance
+	ALTER COLUMN is_enabled
+		SET DEFAULT true;
+
+
+ALTER TABLE service_endpoint_provider_service_instance
+	ADD CONSTRAINT r_875 FOREIGN KEY (service_endpoint_provider_id) REFERENCES service_endpoint_provider(service_endpoint_provider_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_provider_service_instance
+	ADD CONSTRAINT r_876 FOREIGN KEY (service_instance_id) REFERENCES service_instance(service_instance_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_provider_service_instance
+	ADD CONSTRAINT r_877 FOREIGN KEY (port_range_id) REFERENCES port_range(port_range_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_provider_x509_certificate
+	ALTER COLUMN x509_certificate_rank
+		SET DEFAULT 10;
+
+
+ALTER TABLE service_endpoint_provider_x509_certificate
+	ADD CONSTRAINT r_860 FOREIGN KEY (service_endpoint_provider_id) REFERENCES service_endpoint_provider(service_endpoint_provider_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_provider_x509_certificate
+	ADD CONSTRAINT r_861 FOREIGN KEY (x509_signed_certificate_id) REFERENCES x509_signed_certificate(x509_signed_certificate_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_service_endpoint_provider_collection
+	ALTER COLUMN service_endpoint_relation_key
+		SET DEFAULT 'none';
+
+ALTER TABLE service_endpoint_service_endpoint_provider_collection
+	ALTER COLUMN weight
+		SET DEFAULT 0;
+
+ALTER TABLE service_endpoint_service_endpoint_provider_collection
+	ALTER COLUMN maximum_capacity
+		SET DEFAULT 100;
+
+ALTER TABLE service_endpoint_service_endpoint_provider_collection
+	ALTER COLUMN is_enabled
+		SET DEFAULT true;
+
+
+ALTER TABLE service_endpoint_service_endpoint_provider_collection
+	ADD CONSTRAINT r_857 FOREIGN KEY (service_endpoint_id) REFERENCES service_endpoint(service_endpoint_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_service_endpoint_provider_collection
+	ADD CONSTRAINT r_858 FOREIGN KEY (service_endpoint_provider_collection_id) REFERENCES service_endpoint_provider_collection(service_endpoint_provider_collection_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_endpoint_service_sla
+	ADD CONSTRAINT r_870 FOREIGN KEY (service_endpoint_id) REFERENCES service_endpoint(service_endpoint_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_service_sla
+	ADD CONSTRAINT r_871 FOREIGN KEY (service_sla_id) REFERENCES service_sla(service_sla_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_service_sla
+	ADD CONSTRAINT r_872 FOREIGN KEY (service_environment_id) REFERENCES service_environment(service_environment_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_endpoint_service_sla_service_feature
+	ADD CONSTRAINT r_873 FOREIGN KEY (service_endpoint_service_sla_id) REFERENCES service_endpoint_service_sla(service_endpoint_service_sla_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_service_sla_service_feature
+	ADD CONSTRAINT r_874 FOREIGN KEY (service_feature) REFERENCES val_service_feature(service_feature)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_x509_certificate
+	ALTER COLUMN x509_certificate_rank
+		SET DEFAULT 10;
+
+
+ALTER TABLE service_endpoint_x509_certificate
+	ADD CONSTRAINT r_859 FOREIGN KEY (service_endpoint_id) REFERENCES service_endpoint(service_endpoint_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_endpoint_x509_certificate
+	ADD CONSTRAINT r_862 FOREIGN KEY (x509_signed_certificate_id) REFERENCES x509_signed_certificate(x509_signed_certificate_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
 
 ALTER TABLE service_environment
 	ADD CONSTRAINT fk_val_svcenv_prodstate FOREIGN KEY (production_state) REFERENCES val_production_state(production_state)
@@ -9748,6 +11704,150 @@ ALTER TABLE service_environment_collection_service_environment
 
 ALTER TABLE service_environment_collection_service_environment
 	ADD CONSTRAINT fk_svc_env_coll_svc_coll_id FOREIGN KEY (service_environment_collection_id) REFERENCES service_environment_collection(service_environment_collection_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_instance
+	ADD CONSTRAINT r_865 FOREIGN KEY (device_id) REFERENCES device(device_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_instance
+	ADD CONSTRAINT r_866 FOREIGN KEY (netblock_id) REFERENCES netblock(netblock_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_instance
+	ADD CONSTRAINT r_867 FOREIGN KEY (service_version_id) REFERENCES service_version(service_version_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_instance_provided_feature
+	ADD CONSTRAINT r_868 FOREIGN KEY (service_instance_id) REFERENCES service_instance(service_instance_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_instance_provided_feature
+	ADD CONSTRAINT r_869 FOREIGN KEY (service_feature) REFERENCES val_service_feature(service_feature)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_sla
+	ADD CONSTRAINT r_845 FOREIGN KEY (minimum_service_affinity) REFERENCES val_service_affinity(service_affinity)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_sla
+	ADD CONSTRAINT r_846 FOREIGN KEY (maximum_service_affinity) REFERENCES val_service_affinity(service_affinity)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_software_repository
+	ADD CONSTRAINT r_835 FOREIGN KEY (service_id) REFERENCES service(service_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_source_repository
+	ALTER COLUMN is_enabled
+		SET DEFAULT true;
+
+ALTER TABLE service_source_repository
+	ALTER COLUMN is_primary
+		SET DEFAULT true;
+
+
+ALTER TABLE service_source_repository
+	ADD CONSTRAINT r_829 FOREIGN KEY (service_id) REFERENCES service(service_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_source_repository
+	ADD CONSTRAINT r_830 FOREIGN KEY (source_repository_location_id) REFERENCES source_repository_location(source_repository_location_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_version
+	ALTER COLUMN is_enabled
+		SET DEFAULT true;
+
+ALTER TABLE service_version
+	ALTER COLUMN is_deprecated
+		SET DEFAULT false;
+
+
+ALTER TABLE service_version
+	ADD CONSTRAINT r_831 FOREIGN KEY (service_id) REFERENCES service(service_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_version_artifact
+	ADD CONSTRAINT r_834 FOREIGN KEY (service_version_id) REFERENCES service_version(service_version_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_version_collection
+	ADD CONSTRAINT r_837 FOREIGN KEY (service_version_collection_type) REFERENCES val_service_version_collection_type(service_version_collection_type)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_version_collection_hier
+	ADD CONSTRAINT r_838 FOREIGN KEY (service_version_collection_id) REFERENCES service_version_collection(service_version_collection_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_version_collection_hier
+	ADD CONSTRAINT r_839 FOREIGN KEY (child_service_version_collection_id) REFERENCES service_version_collection(service_version_collection_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_version_collection_permitted_feature
+	ADD CONSTRAINT r_843 FOREIGN KEY (service_version_collection_id) REFERENCES service_version_collection(service_version_collection_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_version_collection_permitted_feature
+	ADD CONSTRAINT r_844 FOREIGN KEY (service_feature) REFERENCES val_service_feature(service_feature)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_version_collection_service_version
+	ADD CONSTRAINT r_841 FOREIGN KEY (service_version_collection_id) REFERENCES service_version_collection(service_version_collection_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_version_collection_service_version
+	ADD CONSTRAINT r_842 FOREIGN KEY (service_version_id) REFERENCES service_version(service_version_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_version_software_artifact_repository
+	ADD CONSTRAINT r_836 FOREIGN KEY (service_version_id) REFERENCES service_version(service_version_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_version_software_artifact_repository
+	ADD CONSTRAINT r_974 FOREIGN KEY (software_artifact_repository_id) REFERENCES software_artifact_repository(software_artifact_repository_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE service_version_source_repository
+	ADD CONSTRAINT r_832 FOREIGN KEY (service_source_repository_id) REFERENCES service_source_repository(service_source_repository_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE service_version_source_repository
+	ADD CONSTRAINT r_833 FOREIGN KEY (service_version_id) REFERENCES service_version(service_version_id)
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION;
 
@@ -9847,6 +11947,51 @@ ALTER TABLE slot_type_permitted_remote_slot_type
 
 ALTER TABLE slot_type_permitted_remote_slot_type
 	ADD CONSTRAINT fk_stprst_slot_type_id FOREIGN KEY (slot_type_id) REFERENCES slot_type(slot_type_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE software_artifact_repository
+	ADD CONSTRAINT r_887 FOREIGN KEY (software_artifact_system_id) REFERENCES software_artifact_system(software_artifact_system_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE software_artifact_repository_location
+	ADD CONSTRAINT r_890 FOREIGN KEY (software_artifact_repository_id) REFERENCES software_artifact_repository(software_artifact_repository_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE software_artifact_repository_location
+	ADD CONSTRAINT r_891 FOREIGN KEY (sw_package_type) REFERENCES val_sw_package_type(sw_package_type)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE software_artifact_repository_location
+	ADD CONSTRAINT r_892 FOREIGN KEY (service_environment_collection_id) REFERENCES service_environment_collection(service_environment_collection_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE software_artifact_repository_relation
+	ADD CONSTRAINT r_888 FOREIGN KEY (software_artifact_repository_id) REFERENCES software_artifact_repository(software_artifact_repository_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+ALTER TABLE software_artifact_repository_relation
+	ADD CONSTRAINT r_889 FOREIGN KEY (related_software_artifact_repository_id) REFERENCES software_artifact_repository(software_artifact_repository_id)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE source_repository
+	ADD CONSTRAINT r_975 FOREIGN KEY (source_repository_method) REFERENCES val_source_repository_method(source_repository_method)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
+
+ALTER TABLE source_repository_location
+	ADD CONSTRAINT r_828 FOREIGN KEY (source_repository_id) REFERENCES source_repository(source_repository_id)
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION;
 
@@ -10225,6 +12370,16 @@ ALTER TABLE val_person_status
 	ALTER COLUMN is_db_enforced
 		SET DEFAULT false;
 
+ALTER TABLE val_port_range_type
+	ALTER COLUMN range_permitted
+		SET DEFAULT true;
+
+
+ALTER TABLE val_port_range_type
+	ADD CONSTRAINT r_847 FOREIGN KEY (protocol) REFERENCES protocol(protocol)
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION;
+
 
 ALTER TABLE val_processor_architecture
 	ADD CONSTRAINT ckc_kernel_bits_val_proc CHECK  ( KERNEL_BITS in (0,32,64) ) ;
@@ -10455,6 +12610,18 @@ ALTER TABLE val_property_value
 	ADD CONSTRAINT fk_valproval_namtyp FOREIGN KEY (property_name,property_type) REFERENCES val_property(property_name,property_type)
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION;
+
+ALTER TABLE val_service_endpoint_provider_collection_type
+	ALTER COLUMN can_have_hierarchy
+		SET DEFAULT true;
+
+ALTER TABLE val_service_endpoint_provider_type
+	ALTER COLUMN translates_addresses
+		SET DEFAULT false;
+
+ALTER TABLE val_service_endpoint_provider_type
+	ALTER COLUMN proxies_connections
+		SET DEFAULT true;
 
 ALTER TABLE val_service_environment_collection_type
 	ALTER COLUMN can_have_hierarchy
@@ -10903,9 +13070,23 @@ COMMENT ON COLUMN property_name_collection_property_name.property_name IS 'prope
 
 COMMENT ON COLUMN property_name_collection_property_name.property_type IS 'property type for validation purposes';
 
+COMMENT ON COLUMN service_endpoint.dns_domain_id IS 'XXX - Temporary - SHOULD BE REMOVED BEFORE MERGE TO MASTER';
+
+COMMENT ON COLUMN service_endpoint.dns_name IS 'XXX - Temporary - SHOULD BE REMOVED BEFORE MERGE TO MASTER';
+
+COMMENT ON COLUMN service_endpoint_provider.dns_value IS 'XXX - THIS COLUMN WILL BE DROPPED BEFORE RELEASE -  XXX';
+
+COMMENT ON COLUMN service_endpoint_provider_x509_certificate.x509_signed_certificate_id IS 'Uniquely identifies Certificate';
+
+COMMENT ON TABLE service_endpoint_x509_certificate IS 'XXX - This table may go away in favor of service_endpoint_provider_x509_signed_certificate (or both may need to exist and relate?)XX ';
+
+COMMENT ON COLUMN service_endpoint_x509_certificate.x509_signed_certificate_id IS 'Uniquely identifies Certificate';
+
 COMMENT ON COLUMN service_environment.external_id IS 'opaque id used in remote system to identifty this object.  Used for syncing an authoritative copy.';
 
 COMMENT ON COLUMN service_environment_collection.external_id IS 'opaque id used in remote system to identifty this object.  Used for syncing an authoritative copy.';
+
+COMMENT ON COLUMN service_version_collection.external_id IS 'opaque id used in remote system to identifty this object.  Used for syncing an authoritative copy.';
 
 COMMENT ON COLUMN token.encryption_key_id IS 'encryption information for token_key, if used';
 

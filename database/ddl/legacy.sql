@@ -3299,10 +3299,13 @@ SELECT
 FROM jazzhands.val_device_collection_type;
 
 CREATE OR REPLACE VIEW jazzhands_legacy.val_device_mgmt_ctrl_type AS
-SELECT device_mgmt_control_type,description,data_ins_user,data_ins_date,data_upd_user,data_upd_date
+SELECT device_management_controller_type AS device_mgmt_control_type,
+	description,
+	data_ins_user,
+	data_ins_date,
+	data_upd_user,
+	data_upd_date
 FROM jazzhands.val_device_management_controller_type;
-
-
 
 CREATE OR REPLACE VIEW jazzhands_legacy.val_device_status AS
 SELECT device_status,description,data_ins_user,data_ins_date,data_upd_user,data_upd_date

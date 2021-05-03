@@ -513,6 +513,8 @@ CREATE OR REPLACE FUNCTION schema_support.build_audit_table(
 	first_time boolean DEFAULT true
 )
 RETURNS VOID AS $FUNC$
+DECLARE
+	name_base	TEXT;
 BEGIN
 	BEGIN
 	EXECUTE 'CREATE SEQUENCE ' || quote_ident(aud_schema) || '.'
@@ -543,18 +545,27 @@ BEGIN
 		|| '.' || quote_ident('aud#seq');
 
 
+	name_base := 'aud_' || quote_ident( table_name );
+	-- 19 is length of _aud#
+	-- md5 is just to make the name unique
+	IF char_length(name_base) > 63 - 19 THEN
+		-- using lpad as a truncate
+		name_base := 'aud_' || lpad(md5(table_name), 10) || lpad(table_name, 63 - 19 - 10 );
+	END IF;
+
+
 	EXECUTE 'CREATE INDEX '
-		|| quote_ident( table_name || '_aud#timestamp_idx')
+		|| quote_ident( name_base || '_aud#timestamp_idx')
 		|| ' ON ' || quote_ident(aud_schema) || '.'
 		|| quote_ident(table_name) || '("aud#timestamp")';
 
 	EXECUTE 'CREATE INDEX '
-		|| quote_ident( table_name || '_aud#realtime_idx')
+		|| quote_ident( name_base || '_aud#realtime_idx')
 		|| ' ON ' || quote_ident(aud_schema) || '.'
 		|| quote_ident(table_name) || '("aud#realtime")';
 
 	EXECUTE 'CREATE INDEX '
-		|| quote_ident( table_name || '_aud#txid_idx')
+		|| quote_ident( name_base || '_aud#txid_idx')
 		|| ' ON ' || quote_ident(aud_schema) || '.'
 		|| quote_ident(table_name) || '("aud#txid")';
 

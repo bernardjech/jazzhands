@@ -2443,7 +2443,11 @@ FROM jazzhands_audit.val_device_collection_type;
 
 
 CREATE OR REPLACE VIEW audit.val_device_mgmt_ctrl_type AS
-SELECT "device_mgmt_control_type","description","data_ins_user","data_ins_date","data_upd_user","data_upd_date","aud#action","aud#timestamp","aud#realtime","aud#txid","aud#user","aud#seq"
+SELECT device_management_controller_type AS device_mgmt_control_type,
+	"description",
+	"data_ins_user","data_ins_date","data_upd_user","data_upd_date",
+	"aud#action","aud#timestamp","aud#realtime","aud#txid",
+	"aud#user","aud#seq"
 FROM jazzhands_audit.val_device_management_controller_type;
 
 
